@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
+    <ProjectReference Include="..\..\VNet.Math\VNet.Math\VNet.Mathematics.csproj" />
+    <ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="VNet.Math">
+      <HintPath>..\..\VNet bin\VNet.Math.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
+  </Target>
+
+</Project>
