@@ -62,7 +62,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
 
     public void Fill()
     {
-        for (var i = 0; i < Capacity; i++) _data.Add(Generic.ConvertFromObject<T>(RandomGenerator.Next()));
+        for (var i = 0; i < Capacity; i++) _data.Add(GenericNumber<T>.FromDouble(RandomGenerator.Next()));
         Shuffle();
     }
 
