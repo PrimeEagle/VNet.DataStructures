@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\VNet.CommandLine\VNet.CommandLine\VNet.CommandLine.csproj" />
     <ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
     <ProjectReference Include="..\..\VNet.Math\VNet.Math\VNet.Mathematics.csproj" />
     <ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
