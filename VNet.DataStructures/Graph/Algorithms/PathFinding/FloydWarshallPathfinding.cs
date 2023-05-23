@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Algorithms.Pathfinding
+﻿namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Floyd–Warshall algorithm, also known as Floyd's algorithm, the Roy–Warshall algorithm, the Roy–Floyd algorithm, or the WFI algorithm, is an algorithm for finding shortest paths
     // in a weighted graph with positive or negative edge weights (but with no negative cycles). A single execution of the algorithm will find the lengths (summed weights) of the
@@ -31,7 +31,7 @@
             return distance;
         }
 
-        public int[,] Find(Graph.Graph graph, int source = 0)
+        public int[,] Find(Basic.Graph graph, int source = 0)
         {
             int[,] distance = new int[graph.VertexCount, graph.VertexCount];
 
@@ -39,7 +39,7 @@
             {
                 for (int j = 0; j < graph.VertexCount; ++j)
                 {
-                    var edge = graph.Edges.Where(e => (e.Source == i && e.Destination == j)).FirstOrDefault();
+                    var edge = graph.Edges.Where(e => e.Source == i && e.Destination == j).FirstOrDefault();
                     distance[i, j] = edge == null ? 0 : edge.Weight;
                 }
             }

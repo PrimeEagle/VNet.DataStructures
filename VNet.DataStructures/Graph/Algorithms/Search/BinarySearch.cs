@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Algorithms.Search
+﻿namespace VNet.DataStructures.Graph.Algorithms.Search
 {
     // Binary search (a.k.a Half-Interval Search) algorithms finds the position of a target value within an array.
     public class BinarySearch

@@ -1,6 +1,6 @@
-﻿using VNet.DataStructures.Graph;
+﻿using VNet.DataStructures.Graph.Basic;
 
-namespace VNet.DataStructures.Algorithms.Pathfinding
+namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Bellman–Ford algorithm, also known as Bellman–Ford–Moore algorithm, is an algorithm that computes shortest paths from a single source vertex to all
     // of the other vertices in a weighted digraph. It is slower than Dijkstra's algorithm for the same problem, but more versatile, as it is capable of
@@ -8,7 +8,7 @@ namespace VNet.DataStructures.Algorithms.Pathfinding
 
     public class BellmanFordPathfinding : IPathfindingAlgorithm
     {
-        public int[] Find(Graph.Graph graph, int source = 0)
+        public int[] Find(Basic.Graph graph, int source = 0)
         {
             int vertices = graph.VertexCount;
             int[] distances = new int[vertices];

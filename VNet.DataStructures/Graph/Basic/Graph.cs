@@ -1,13 +1,12 @@
-﻿
-namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph.Basic
 {
     public class Graph
     {
-        public int VertexCount 
-        { 
-            get 
-            { 
-                return Vertices.Count; 
+        public int VertexCount
+        {
+            get
+            {
+                return Vertices.Count;
             }
         }
 

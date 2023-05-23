@@ -1,5 +1,4 @@
-﻿
-namespace VNet.DataStructures.Algorithms.Pathfinding
+﻿namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Breadth first traversal, also known as breadth first search or BFS, is an algorithm for traversing or searching tree or graph data structures.
     // It starts at the tree root (or some arbitrary node of a graph, sometimes referred to as a 'search key') and explores the neighbor nodes first,
@@ -28,7 +27,7 @@ namespace VNet.DataStructures.Algorithms.Pathfinding
             return _queueItemCount == 0;
         }
 
-        private int GetAdjacentUnvisitedVertex(Graph.Graph graph, int vertexIndex)
+        private int GetAdjacentUnvisitedVertex(Basic.Graph graph, int vertexIndex)
         {
             int i;
 
@@ -44,7 +43,7 @@ namespace VNet.DataStructures.Algorithms.Pathfinding
             return -1;
         }
 
-        public int[] Find(Graph.Graph graph, int source = 0)
+        public int[] Find(Basic.Graph graph, int source = 0)
         {
             int i;
 

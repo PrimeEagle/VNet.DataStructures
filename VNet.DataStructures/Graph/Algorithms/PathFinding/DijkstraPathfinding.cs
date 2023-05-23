@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Algorithms.Pathfinding
+﻿namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Dijkstra's algorithm, also known as single-source shortest paths, solves the problem of finding the shortest path from a point in a graph (the source) to a destination.
     // It is a greedy algorithm and similar to Prim's algorithm. Algorithm starts at the source vertex, s, it grows a tree, T, that ultimately spans all vertices reachable
@@ -23,7 +23,7 @@
             return minIndex;
         }
 
-        public int[] Find(Graph.Graph graph, int source = 0)
+        public int[] Find(Basic.Graph graph, int source = 0)
         {
             int[] distance = new int[graph.VertexCount];
             bool[] shortestPathTreeSet = new bool[graph.VertexCount];

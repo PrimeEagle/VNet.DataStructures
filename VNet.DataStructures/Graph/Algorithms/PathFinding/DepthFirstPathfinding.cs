@@ -1,10 +1,10 @@
-﻿namespace VNet.DataStructures.Algorithms.Pathfinding
+﻿namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Depth first traversal, also known as depth first search or DFS, is an algorithm for traversing or searching tree or graph data structures.
     // One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking.
     public class DepthFirstPathfinding : IPathfindingAlgorithm
     {
-        private int GetAdjacentUnvisitedVertex(Graph.Graph graph, int vertexIndex)
+        private int GetAdjacentUnvisitedVertex(Basic.Graph graph, int vertexIndex)
         {
             for (int i = 0; i < graph.VertexCount; ++i)
             {
@@ -18,7 +18,7 @@
             return -1;
         }
 
-        public int[] Find(Graph.Graph graph, int source = 0)
+        public int[] Find(Basic.Graph graph, int source = 0)
         {
             Stack<int> result = new Stack<int>();
 

@@ -1,6 +1,6 @@
-﻿using VNet.DataStructures.Graph;
+﻿using VNet.DataStructures.Graph.Basic;
 
-namespace VNet.DataStructures.Algorithms.Pathfinding
+namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     // Kruskal's algorithm is a minimum-spanning-tree algorithm which finds an edge of the least possible weight that connects any two trees in the forest.
     // It is a greedy algorithm in graph theory as it finds a minimum spanning tree for a connected weighted graph adding increasing cost arcs at each step.
@@ -13,7 +13,7 @@ namespace VNet.DataStructures.Algorithms.Pathfinding
             if (subsets[i].Parent != i)
             {
                 var temp = subsets[i];
-                
+
                 temp.Parent = FindSubset(subsets, subsets[i].Parent);
                 subsets[i] = temp;
             }
@@ -50,7 +50,7 @@ namespace VNet.DataStructures.Algorithms.Pathfinding
             }
         }
 
-        public int[] Find(Graph.Graph graph, int source = 0)
+        public int[] Find(Basic.Graph graph, int source = 0)
         {
             int verticesCount = graph.VertexCount;
             List<Edge> result = new List<Edge>();
