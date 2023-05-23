@@ -3,10 +3,10 @@ using System.Collections.ObjectModel;
 
 namespace VNet.DataStructures.List
 {
-    public class RestrictedList<T> : IEnumerable<T>
+    public class RestrictedList<T> : IEnumerable<T> where T : notnull
     {
         private readonly List<T> _list;
-
+        private Type? _restrictedType;
 
 
         public RestrictedList()
@@ -57,12 +57,19 @@ namespace VNet.DataStructures.List
 
         public void Add(T item)
         {
+            if (_list.Count == 0) _restrictedType = item.GetType();
+            if (item.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted list must match.");
+
             _list.Add(item);
         }
 
         public void AddRange(IEnumerable<T> collection)
         {
-            _list.AddRange(collection);
+            var enumerable = collection.ToList();
+            if (_list.Count == 0) _restrictedType = enumerable.ElementAt(0).GetType();
+            if (enumerable.Any(i => i.GetType() != _restrictedType)) throw new ArgumentException("All types in a restricted list must match.");
+
+            _list.AddRange(enumerable);
         }
 
         public ReadOnlyCollection<T> AsReadOnly()

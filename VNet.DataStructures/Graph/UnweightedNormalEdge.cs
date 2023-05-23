@@ -1,13 +1,15 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class UnweightedNormalEdge : Edge, IUnweightedNormalEdge
+    public class UnweightedNormalEdge<T> : IUnweightedNormalEdge<T> where T : notnull
     {
-        public INode StartNode { get; init; }
-        public INode EndNode { get; init; }
+        public bool Directed { get; init; }
+        public INode<T> StartNode { get; init; }
+        public INode<T> EndNode { get; init; }
 
 
-        public UnweightedNormalEdge(INode startNode, INode endNode, bool directed) : base(directed)
+        public UnweightedNormalEdge(INode<T> startNode, INode<T> endNode, bool directed)
         {
+            Directed = directed;
             StartNode = startNode;
             EndNode = endNode;
         }

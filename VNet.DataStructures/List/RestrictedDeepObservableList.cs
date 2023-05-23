@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Specialized;
+using System.Diagnostics.CodeAnalysis;
 
 namespace VNet.DataStructures.List
 {
-    public class DeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , IEnumerable<T> where T : notnull
+    public class RestrictedDeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , IEnumerable<T> where T : notnull
     {
         private readonly List<T> _list;
+        [AllowNull]
+        private Type? _restrictedType;
 
         public T this[int index]
         {
@@ -20,12 +23,12 @@ namespace VNet.DataStructures.List
         }
 
 
-        public DeepObservableList()
+        public RestrictedDeepObservableList()
         {
             _list = new List<T>();
         }
 
-        public DeepObservableList(IEnumerable<T> enumerable)
+        public RestrictedDeepObservableList(IEnumerable<T> enumerable)
         {
             _list = new List<T>(enumerable);
         }
@@ -33,6 +36,10 @@ namespace VNet.DataStructures.List
         public void Add(T item)
         {
             CheckReentrancy();
+
+            if (_list.Count == 0) _restrictedType = item.GetType();
+            if (item.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted list must match.");
+
             _list.Add(item);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item));
         }
@@ -40,7 +47,12 @@ namespace VNet.DataStructures.List
         public void AddRange(IEnumerable<T> collection)
         {
             CheckReentrancy();
-            _list.AddRange(collection);
+
+            var enumerable = collection.ToList();
+            if (_list.Count == 0) _restrictedType = enumerable.ElementAt(0).GetType();
+            if (enumerable.Any(i => i.GetType() != _restrictedType)) throw new ArgumentException("All types in a restricted list must match.");
+
+            _list.AddRange(enumerable);
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, collection));
         }
 

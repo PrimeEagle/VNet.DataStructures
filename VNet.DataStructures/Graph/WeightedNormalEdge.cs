@@ -1,11 +1,11 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class  WeightedNormalEdge : UnweightedNormalEdge, IUnweightedNormalEdge
+    public class  WeightedNormalEdge<T> : UnweightedNormalEdge<T>, IWeightedNormalEdge<T> where T : notnull
     {
         public double Weight { get; init; }
 
 
-        public WeightedNormalEdge(INode startNode, INode endNode, bool directed, double weight) : base(startNode, endNode, directed)
+        public WeightedNormalEdge(INode<T> startNode, INode<T> endNode, bool directed, double weight) : base(startNode, endNode, directed)
         {
             Weight = weight;
         }

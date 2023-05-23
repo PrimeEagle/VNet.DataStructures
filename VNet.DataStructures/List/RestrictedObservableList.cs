@@ -4,9 +4,10 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.List
 {
-    public class ObservableList<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class RestrictedObservableList<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
     {
         private readonly List<T> _list;
+        private Type? _restrictedType;
 
         public T this[int index]
         {
@@ -21,17 +22,17 @@ namespace VNet.DataStructures.List
         }
 
         #region Constructors
-        public ObservableList()
+        public RestrictedObservableList()
         {
             _list = new List<T>();
         }
 
-        public ObservableList(IEnumerable<T> enumerable)
+        public RestrictedObservableList(IEnumerable<T> enumerable)
         {
             _list = new List<T>(enumerable);
         }
 
-        public ObservableList(int capacity)
+        public RestrictedObservableList(int capacity)
         {
             _list = new List<T>(capacity);
         }
@@ -40,6 +41,10 @@ namespace VNet.DataStructures.List
         public void Add(T item)
         {
             CheckReentrancy();
+
+            if (_list.Count == 0) _restrictedType = item.GetType();
+            if (item.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted list must match.");
+
             _list.Add(item);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, item));
         }
@@ -47,7 +52,12 @@ namespace VNet.DataStructures.List
         public void AddRange(IEnumerable<T> collection)
         {
             CheckReentrancy();
-            _list.AddRange(collection);
+
+            var enumerable = collection.ToList();
+            if (_list.Count == 0) _restrictedType = enumerable.ElementAt(0).GetType();
+            if (enumerable.Any(i => i.GetType() != _restrictedType)) throw new ArgumentException("All types in a restricted list must match.");
+
+            _list.AddRange(enumerable);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, collection));
         }
 

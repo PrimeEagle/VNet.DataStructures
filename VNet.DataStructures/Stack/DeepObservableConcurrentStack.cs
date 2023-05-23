@@ -4,7 +4,7 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Stack
 {
-    public class DeepObservableConcurrentStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class DeepObservableConcurrentStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
     {
         private readonly ConcurrentStack<T> _stack;
 

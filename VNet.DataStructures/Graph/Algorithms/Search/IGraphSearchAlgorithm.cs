@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Search
 {
-    public interface IGraphSearchAlgorithm<TNode, TEdge> where TNode : notnull, INode
-                                                         where TEdge : notnull, IEdge
+    public interface IGraphSearchAlgorithm<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
+                                                                 where TEdge : notnull, IEdge<TValue>
+                                                                 where TValue : notnull
     {
-        public List<TNode> Search();
+        public int Search(int[] list, int value);
     }
 }

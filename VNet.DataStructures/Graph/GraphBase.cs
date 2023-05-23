@@ -3,8 +3,9 @@ using VNet.DataStructures.Graph.Algorithms.Search;
 
 namespace VNet.DataStructures.Graph
 {
-    public abstract class GraphBase<TNode, TEdge> where TNode : notnull, INode
-                                                  where TEdge : notnull, IEdge
+    public abstract class GraphBase<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
+                                                          where TEdge : notnull, IEdge<TValue>
+                                                          where TValue : notnull
     {
         protected virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; }
 
@@ -25,16 +26,24 @@ namespace VNet.DataStructures.Graph
         public abstract void RemoveNode(TNode node);
         public abstract void AddEdge(TNode startNode, TNode endNode);
         public abstract void RemoveEdge(TNode startNode, TNode endNode);
-        public abstract GraphBase<TNode, TEdge> Clone();
-        
-        public List<TNode> Search(IGraphSearchAlgorithm<TNode, TEdge> searchAlgorithm)
+
+        public virtual void RemoveEdge(TEdge edge)
         {
-            var results = searchAlgorithm.Search();
+            foreach (var edgeList in AdjacencyList.Values)
+            {
+                edgeList.RemoveAll(e => e.Equals(edge));
+            }
+        }
+        public abstract GraphBase<TNode, TEdge, TValue> Clone();
+        
+        public int Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm)
+        {
+            var results = searchAlgorithm.Search(this);
 
             return results;
         }
         
-        public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge> pathFindingAlgorithm)
+        public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> pathFindingAlgorithm)
         {
             var results = pathFindingAlgorithm.Find();
 

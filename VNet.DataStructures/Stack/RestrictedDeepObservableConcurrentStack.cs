@@ -4,19 +4,20 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Stack
 {
-    public class ObservableConcurrentStack<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class RestrictedDeepObservableConcurrentStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
     {
         private readonly ConcurrentStack<T> _stack;
+        private Type? _restrictedType;
 
 
 
         #region Constructors
-        public ObservableConcurrentStack()
+        public RestrictedDeepObservableConcurrentStack()
         {
             _stack = new ConcurrentStack<T>();
         }
 
-        public ObservableConcurrentStack(IEnumerable<T> enumerable)
+        public RestrictedDeepObservableConcurrentStack(IEnumerable<T> enumerable)
         {
             _stack = new ConcurrentStack<T>(enumerable);
         }
@@ -48,6 +49,10 @@ namespace VNet.DataStructures.Stack
         public void Push(T item)
         {
             CheckReentrancy();
+
+            if (_stack.Count == 0) _restrictedType = item.GetType();
+            if (item.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted stack must match.");
+
             _stack.Push(item);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, item));
         }
@@ -77,6 +82,10 @@ namespace VNet.DataStructures.Stack
         public void PushRange(T[] items)
         {
             CheckReentrancy();
+
+            if (_stack is { IsEmpty: true }) _restrictedType = items.ElementAt(0).GetType();
+            if (items.Any(i => i.GetType() != _restrictedType)) throw new ArgumentException("All types in a restricted stack must match.");
+
             _stack.PushRange(items);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, items));
         }
@@ -84,6 +93,10 @@ namespace VNet.DataStructures.Stack
         public void PushRange(T[] items, int startIndex, int count)
         {
             CheckReentrancy();
+
+            if (_stack is {IsEmpty: true}) _restrictedType = items.ElementAt(0).GetType();
+            if (items.Any(i => i.GetType() != _restrictedType)) throw new ArgumentException("All types in a restricted stack must match.");
+
             _stack.PushRange(items, startIndex, count);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, items));
         }

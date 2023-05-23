@@ -1,61 +1,44 @@
-﻿using VNet.DataStructures.Graph.Basic;
-
-namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph
 {
-    public class DirectedGraph<T> : NormalGraphBase<T> where T : notnull, INode<T>
+    public class UndirectedUnweightedGraph<TNode, TValue> : NormalGraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue>
+                                                            where TNode : notnull, INode<TValue>
+                                                            where TValue : notnull
     {
-        public override void AddEdge(INode<T> startNode, INode<T> endNode, double weight)
+        public override void AddEdge(TNode startNode, TNode endNode)
         {
-            if (IsEdgeFunctionallyDuplicate(startNode, endNode)) throw new ArgumentException("Edge already exists in adjacency list.");
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedNormalEdge<TValue>>());
 
-            var edge = new WeightedEdge<T>(startNode, endNode, weight, true);
-            AddEdge(edge);
+            AdjacencyList[startNode].Add(new UnweightedNormalEdge<TValue>(startNode, endNode, false));
+            AdjacencyList[endNode].Add(new UnweightedNormalEdge<TValue>(endNode, startNode, false));
         }
 
-        public override void AddEdge(INode<T> startNode, INode<T> endNode)
+        public void AddEdge(IUnweightedNormalEdge<TValue> edge)
         {
-            if (IsEdgeFunctionallyDuplicate(startNode, endNode)) throw new ArgumentException("Edge already exists in adjacency list.");
+            if (edge.Directed) throw new ArgumentException("Edge must be undirected.");
 
-            var edge = new NormalEdge<T>(startNode, endNode, true);
-            AddEdge(edge);
+            var startNode = (TNode)edge.StartNode;
+            var endNode = (TNode) edge.EndNode;
+
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedNormalEdge<TValue>>());
+
+            AdjacencyList[startNode].Add(edge);
+            AdjacencyList[endNode].Add(edge);
         }
 
-        public override void AddEdge(IUnweightedNormalEdge<T> edge)
+        public override void RemoveEdge(TNode startNode, TNode endNode)
         {
-            if (IsEdgeDuplicate(edge)) throw new ArgumentException("Edge already exists in adjacency list.");
-
-            if (!AdjacencyList.ContainsKey(edge.StartNode))
+            foreach (var edgeList in AdjacencyList.Values)
             {
-                AdjacencyList.Add(edge.StartNode, new List<IEdge<T>>());
+                edgeList.RemoveAll(e => e.StartNode.Equals(endNode) && e.EndNode.Equals(startNode));
+                edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
             }
-
-            AdjacencyList[edge.StartNode].Add(edge);
         }
 
-        public override void RemoveEdge(INode<T> startNode, INode<T> endNode)
+        public override UndirectedUnweightedGraph<TNode, TValue> Clone()
         {
-            IEdge<T> edge = null;
-            if (AdjacencyList.TryGetValue(startNode, out var value))
-            {
-                edge = value.FirstOrDefault(e => ((IUnweightedNormalEdge<T>)e).EndNode.Equals(endNode))!;
-            }
-
-            if (edge != null) RemoveEdge(edge);
-        }
-
-        public override void RemoveEdge(IUnweightedNormalEdge<T> edge)
-        {
-            if (AdjacencyList.TryGetValue(edge.StartNode, out var value))
-            {
-                edge = value.FirstOrDefault(e => ((IUnweightedNormalEdge<T>)e).EndNode.Equals(edge.EndNode))!;
-            }
-
-            if (edge != null) AdjacencyList[edge.StartNode].Remove(edge);
-        }
-
-        public override DirectedGraph<T> Clone()
-        {
-            var result = new DirectedGraph<T>();
+            var result = new UndirectedUnweightedGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {

@@ -1,26 +1,30 @@
 ﻿using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Stack
 {
-    public class ObservableConcurrentStack<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class RestrictedDeepObservableStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
     {
-        private readonly ConcurrentStack<T> _stack;
+        private readonly Stack<T> _stack;
+        private Type? _restrictedType;
 
 
 
         #region Constructors
-        public ObservableConcurrentStack()
+        public RestrictedDeepObservableStack()
         {
-            _stack = new ConcurrentStack<T>();
+            _stack = new Stack<T>();
         }
 
-        public ObservableConcurrentStack(IEnumerable<T> enumerable)
+        public RestrictedDeepObservableStack(IEnumerable<T> enumerable)
         {
-            _stack = new ConcurrentStack<T>(enumerable);
+            _stack = new Stack<T>(enumerable);
         }
 
+        public RestrictedDeepObservableStack(int capacity)
+        {
+            _stack = new Stack<T>(capacity);
+        }
         #endregion Constructors
 
 
@@ -45,9 +49,22 @@ namespace VNet.DataStructures.Stack
 
 
 
+        public T Pop()
+        {
+            CheckReentrancy();
+            var result = _stack.Pop();
+            OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Remove, result));
+
+            return result;
+        }
+
         public void Push(T item)
         {
             CheckReentrancy();
+
+            if (_stack.Count == 0) _restrictedType = item.GetType();
+            if (item.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted stack must match.");
+
             _stack.Push(item);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, item));
         }
@@ -74,43 +91,6 @@ namespace VNet.DataStructures.Stack
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Reset, new List<T>(removedItems)));
         }
 
-        public void PushRange(T[] items)
-        {
-            CheckReentrancy();
-            _stack.PushRange(items);
-            OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, items));
-        }
-
-        public void PushRange(T[] items, int startIndex, int count)
-        {
-            CheckReentrancy();
-            _stack.PushRange(items, startIndex, count);
-            OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, items));
-        }
-
-        public int TryPopRange(T[] items)
-        {
-            CheckReentrancy();
-            int result = _stack.TryPopRange(items);
-            if (result > 0)
-            {
-                OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Remove, items));
-            }
-
-            return result;
-        }
-
-        public int TryPopRange(T[] items, int startIndex, int count)
-        {
-            CheckReentrancy();
-            int result = _stack.TryPopRange(items, startIndex, count);
-            if (result > 0)
-            {
-                OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Remove, items));
-            }
-
-            return result;
-        }
 
         #region Wrapper Methods
         public bool Contains(T item)
@@ -123,9 +103,24 @@ namespace VNet.DataStructures.Stack
             _stack.CopyTo(array, arrayIndex);
         }
 
+        public T Peek()
+        {
+            return _stack.Peek();
+        }
+
+        public int EnsureCapacity(int capacity)
+        {
+            return _stack.EnsureCapacity(capacity);
+        }
+
         public T[] ToArray()
         {
             return _stack.ToArray();
+        }
+
+        public void TrimExcess()
+        {
+            _stack.TrimExcess();
         }
 
         public bool TryPeek(out T result)

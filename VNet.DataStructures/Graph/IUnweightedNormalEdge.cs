@@ -1,8 +1,11 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface IUnweightedNormalEdge : IEdge
+    //public interface IUnweightedNormalEdge : INormalEdge
+    //{
+    //}
+
+    public interface IUnweightedNormalEdge<T> : INormalEdge<T> where T : notnull
     {
-        public INode StartNode { get; init; }
-        public INode EndNode { get; init; }
+
     }
 }

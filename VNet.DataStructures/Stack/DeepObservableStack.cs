@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Stack
 {
-    public class DeepObservableStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class DeepObservableStack<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
     {
         private readonly Stack<T> _stack;
 

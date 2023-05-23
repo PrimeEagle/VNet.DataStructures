@@ -1,28 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Specialized;
 
-namespace VNet.DataStructures.Stack
+namespace VNet.DataStructures.Queue
 {
-    public class ObservableStack<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class RestrictedDeepObservableQueue<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T>
     {
-        private readonly Stack<T> _stack;
+        private readonly Queue<T> _queue;
+        private Type? _restrictedType;
 
 
 
         #region Constructors
-        public ObservableStack()
+        public RestrictedDeepObservableQueue()
         {
-            _stack = new Stack<T>();
+            _queue = new Queue<T>();
         }
 
-        public ObservableStack(IEnumerable<T> enumerable)
+        public RestrictedDeepObservableQueue(IEnumerable<T> enumerable)
         {
-            _stack = new Stack<T>(enumerable);
+            _queue = new Queue<T>(enumerable);
         }
 
-        public ObservableStack(int capacity)
+        public RestrictedDeepObservableQueue(int capacity)
         {
-            _stack = new Stack<T>(capacity);
+            _queue = new Queue<T>(capacity);
         }
         #endregion Constructors
 
@@ -30,44 +31,45 @@ namespace VNet.DataStructures.Stack
 
         public IEnumerator<T> GetEnumerator()
         {
-            return _stack.GetEnumerator();
+            return _queue.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return ((IEnumerable)_stack).GetEnumerator();
+            return ((IEnumerable)_queue).GetEnumerator();
         }
 
         #region Wrapper Properties
-        public bool IsSynchronized => ((ICollection)_stack).IsSynchronized;
+        public bool IsSynchronized => ((ICollection)_queue).IsSynchronized;
 
-        public object SyncRoot => ((ICollection)_stack).SyncRoot;
-        public int Count => _stack.Count;
+        public object SyncRoot => ((ICollection)_queue).SyncRoot;
+        public int Count => _queue.Count;
         #endregion Wrapper Properties
 
-
-
-
-        public T Pop()
+        public T Dequeue()
         {
             CheckReentrancy();
-            var result = _stack.Pop();
+            var result = _queue.Dequeue();
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Remove, result));
 
             return result;
         }
 
-        public void Push(T item)
+        public void Enqueue(T item)
         {
             CheckReentrancy();
-            _stack.Push(item);
+
+            if (_queue.Count == 0) _restrictedType = item?.GetType();
+            if (item?.GetType() != _restrictedType) throw new ArgumentException("All types in a restricted queue must match.");
+
+            _queue.Enqueue(item);
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Add, item));
         }
 
-        public bool TryPop(out T item)
+        public bool TryDequeue(out T item)
         {
             CheckReentrancy();
-            bool result = _stack.TryPop(out item);
+            bool result = _queue.TryDequeue(out item);
             if (result)
             {
                 OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Remove, item));
@@ -80,47 +82,46 @@ namespace VNet.DataStructures.Stack
         {
             CheckReentrancy();
             T[] removedItems = new T[] { };
-            _stack.CopyTo(removedItems, 0);
+            _queue.CopyTo(removedItems, 0);
 
-            _stack.Clear();
+            _queue.Clear();
             OnExtendedCollectionChanged(new NotifyExtendedSingleTypeCollectionChangedEventArgs<T>(NotifyCollectionChangedAction.Reset, new List<T>(removedItems)));
         }
-
 
         #region Wrapper Methods
         public bool Contains(T item)
         {
-            return _stack.Contains(item);
+            return _queue.Contains(item);
         }
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            _stack.CopyTo(array, arrayIndex);
+            _queue.CopyTo(array, arrayIndex);
         }
 
         public T Peek()
         {
-            return _stack.Peek();
-        }
-
-        public int EnsureCapacity(int capacity)
-        {
-            return _stack.EnsureCapacity(capacity);
+            return _queue.Peek();
         }
 
         public T[] ToArray()
         {
-            return _stack.ToArray();
+            return _queue.ToArray();
         }
 
         public void TrimExcess()
         {
-            _stack.TrimExcess();
+            _queue.TrimExcess();
+        }
+
+        public int EnsureCapacity(int capacity)
+        {
+            return _queue.EnsureCapacity(capacity);
         }
 
         public bool TryPeek(out T result)
         {
-            return _stack.TryPeek(out result);
+            return _queue.TryPeek(out result);
         }
         #endregion Wrapper Methods
     }

@@ -1,54 +1,27 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class DirectedUnweightedParallelHyperGraph<INode<T>> : GraphBase<INode<T>> where T : notnull
+    public class DirectedUnweightedParallelHyperGraph<TNode, TValue> : ParallelHyperGraphBase<TNode, IUnweightedHyperEdge<TValue>, TValue>
+        where TNode : notnull, INode<TValue>
+        where TValue : notnull
     {
-        public override void AddEdge(T startNode, T endNode, double weight)
+        public override void RemoveNode(TNode node)
         {
-            var edge = new WeightedEdge<INode<T>>(startNode, endNode, weight);
-            AddEdge(edge);
+            throw new NotImplementedException();
         }
 
-        public override void AddEdge(T startNode, T endNode)
+        public override void AddEdge(TNode startNode, TNode endNode)
         {
-            var edge = new Edge<INode<T>>(startNode, endNode);
-            AddEdge(edge);
+            throw new NotImplementedException();
         }
 
-        public override void AddEdge(Edge<INode<T>> edge)
+        public override void RemoveEdge(TNode startNode, TNode endNode)
         {
-            if (!edge.IsDirected) throw new ArgumentException("Edge must be directed.");
-            if (AdjacencyList != null && AdjacencyList.ContainsKey(edge.StartNode) &&
-                AdjacencyList[edge.StartNode].Contains(edge))
-                throw new ArgumentException("Edge already exists in adjacency list.");
-
-            base.AddVertex(edge.StartNode);
-            base.AddVertex(edge.EndNode);
-            AdjacencyList?[edge.StartNode].Add(edge);
+            throw new NotImplementedException();
         }
 
-        public override void RemoveEdge(T startNode, T endNode)
+        public override GraphBase<TNode, IUnweightedHyperEdge<TValue>, TValue> Clone()
         {
-            var edge = AdjacencyList[startNode].Find(e => e.EndNode.Equals(endNode));
-
-            if (edge != null) RemoveEdge(edge);
-        }
-
-        public override void RemoveEdge(Edge<INode<T>> edge)
-        {
-            AdjacencyList[edge.StartNode].Remove(edge);
-        }
-
-        public override DirectedMultiGraph<INode<T>> Clone()
-        {
-            var result = new DirectedMultiGraph<INode<T>>();
-
-            foreach (var key in AdjacencyList.Keys)
-            {
-                var edgeList = AdjacencyList[key].ToList();
-                result.AdjacencyList.Add(key, edgeList);
-            }
-
-            return result;
+            throw new NotImplementedException();
         }
     }
 }

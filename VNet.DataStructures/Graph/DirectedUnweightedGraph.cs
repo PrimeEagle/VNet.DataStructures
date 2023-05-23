@@ -1,56 +1,38 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class DirectedUnweightedGraph<TNode> : GraphBase<TNode, IUnweightedNormalEdge> where TNode : notnull, INode
+    public class DirectedUnweightedGraph<TNode, TValue> : NormalGraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue>
+                                                          where TNode : notnull, INode<TValue>
+                                                          where TValue : notnull
     {
-        public override void RemoveNode(TNode node)
-        {
-            AdjacencyList.Remove(node);
-
-            foreach (var edgeList in AdjacencyList.Values)
-            {
-                edgeList.RemoveAll(e => e.StartNode.Equals(node) || e.EndNode.Equals(node));
-            }
-        }
-
         public override void AddEdge(TNode startNode, TNode endNode)
         {
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
 
-            AdjacencyList[startNode].Add(new UnweightedNormalEdge(startNode, endNode, true));
+            AdjacencyList[startNode].Add(new UnweightedNormalEdge<TValue>(startNode, endNode, true));
         }
 
-        public void AddEdge(IUnweightedNormalEdge edge)
+        public void AddEdge(IUnweightedNormalEdge<TValue> edge)
         {
             if (!edge.Directed) throw new ArgumentException("Edge must be directed.");
 
             var startNode = (TNode)edge.StartNode;
 
-            if(!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge>());
+            if(!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
 
             AdjacencyList[startNode].Add(edge);
         }
 
         public override void RemoveEdge(TNode startNode, TNode endNode)
         {
-            if(AdjacencyList.TryGetValue(startNode, out var value)) value.Clear();
-
             foreach (var edgeList in AdjacencyList.Values)
             {
-                edgeList.RemoveAll(e => e.StartNode.Equals(endNode) && e.EndNode.Equals(startNode));
+                edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
             }
         }
 
-        public void RemoveEdge(IUnweightedNormalEdge edge)
+        public override DirectedUnweightedGraph<TNode, TValue> Clone()
         {
-            var startNode = (TNode)edge.StartNode;
-            var endNode = (TNode)edge.EndNode;
-
-            if (AdjacencyList.TryGetValue(startNode, out var value)) value.RemoveAll(e => e.EndNode.Equals(endNode));
-        }
-
-        public override DirectedUnweightedGraph<TNode> Clone()
-        {
-            var result = new DirectedUnweightedGraph<TNode>();
+            var result = new DirectedUnweightedGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {

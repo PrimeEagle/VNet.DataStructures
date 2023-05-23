@@ -1,61 +1,44 @@
-﻿using VNet.DataStructures.Graph.Basic;
-
+﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph
 {
-    public class DirectedGraph<T> : NormalGraphBase<T> where T : notnull, INode<T>
+    public class DirectedWeightedGraph<TNode, TValue> : NormalGraphBase<TNode, IWeightedNormalEdge<TValue>, TValue>
+                                                        where TNode : notnull, INode<TValue>
+                                                        where TValue : notnull
     {
-        public override void AddEdge(INode<T> startNode, INode<T> endNode, double weight)
+        public override void AddEdge(TNode startNode, TNode endNode)
         {
-            if (IsEdgeFunctionallyDuplicate(startNode, endNode)) throw new ArgumentException("Edge already exists in adjacency list.");
-
-            var edge = new WeightedEdge<T>(startNode, endNode, weight, true);
-            AddEdge(edge);
+            throw new NotImplementedException();
         }
 
-        public override void AddEdge(INode<T> startNode, INode<T> endNode)
+        public void AddEdge(TNode startNode, TNode endNode, double weight)
         {
-            if (IsEdgeFunctionallyDuplicate(startNode, endNode)) throw new ArgumentException("Edge already exists in adjacency list.");
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedNormalEdge<TValue>>());
 
-            var edge = new NormalEdge<T>(startNode, endNode, true);
-            AddEdge(edge);
+            AdjacencyList[startNode].Add(new WeightedNormalEdge<TValue>(startNode, endNode, true, weight));
         }
 
-        public override void AddEdge(IUnweightedNormalEdge<T> edge)
+        public void AddEdge(IWeightedNormalEdge<TValue> edge)
         {
-            if (IsEdgeDuplicate(edge)) throw new ArgumentException("Edge already exists in adjacency list.");
+            if (!edge.Directed) throw new ArgumentException("Edge must be directed.");
 
-            if (!AdjacencyList.ContainsKey(edge.StartNode))
+            var startNode = (TNode)edge.StartNode;
+
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedNormalEdge<TValue>>());
+
+            AdjacencyList[startNode].Add(edge);
+        }
+
+        public override void RemoveEdge(TNode startNode, TNode endNode)
+        {
+            foreach (var edgeList in AdjacencyList.Values)
             {
-                AdjacencyList.Add(edge.StartNode, new List<IEdge<T>>());
+                edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
             }
-
-            AdjacencyList[edge.StartNode].Add(edge);
         }
 
-        public override void RemoveEdge(INode<T> startNode, INode<T> endNode)
+        public override DirectedWeightedGraph<TNode, TValue> Clone()
         {
-            IEdge<T> edge = null;
-            if (AdjacencyList.TryGetValue(startNode, out var value))
-            {
-                edge = value.FirstOrDefault(e => ((IUnweightedNormalEdge<T>)e).EndNode.Equals(endNode))!;
-            }
-
-            if (edge != null) RemoveEdge(edge);
-        }
-
-        public override void RemoveEdge(IUnweightedNormalEdge<T> edge)
-        {
-            if (AdjacencyList.TryGetValue(edge.StartNode, out var value))
-            {
-                edge = value.FirstOrDefault(e => ((IUnweightedNormalEdge<T>)e).EndNode.Equals(edge.EndNode))!;
-            }
-
-            if (edge != null) AdjacencyList[edge.StartNode].Remove(edge);
-        }
-
-        public override DirectedGraph<T> Clone()
-        {
-            var result = new DirectedGraph<T>();
+            var result = new DirectedWeightedGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {
