@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class DirectedUnweightedMultiGraph<TNode, TValue> : MultiGraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue>
+    public class DirectedUnweightedMultiGraph<TNode, TValue> : MultiGraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue>
                                                                where TNode : notnull, INode<TValue>
                                                                where TValue : notnull
     {
@@ -19,7 +19,7 @@
             throw new NotImplementedException();
         }
 
-        public override GraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue> Clone()
+        public override GraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue> Clone()
         {
             throw new NotImplementedException();
         }

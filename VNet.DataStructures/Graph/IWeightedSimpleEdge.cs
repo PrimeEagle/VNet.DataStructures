@@ -5,7 +5,7 @@
     //    public double Weight { get; init; }
     //}
 
-    public interface IWeightedNormalEdge<T> : INormalEdge<T> where T : notnull
+    public interface IWeightedSimpleEdge<T> : INormalEdge<T> where T : notnull
     {
         public new double Weight { get; init; }
     }

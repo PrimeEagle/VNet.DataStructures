@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public abstract class NormalGraphBase<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
+    public abstract class SimpleGraphBase<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
                                                                                                   where TEdge : notnull, INormalEdge<TValue>
                                                                                                   where TValue : notnull
     {

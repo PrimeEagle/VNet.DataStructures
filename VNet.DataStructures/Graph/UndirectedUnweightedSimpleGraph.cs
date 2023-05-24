@@ -1,27 +1,27 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class UndirectedUnweightedGraph<TNode, TValue> : NormalGraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue>
+    public class UndirectedUnweightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue>
                                                             where TNode : notnull, INode<TValue>
                                                             where TValue : notnull
     {
         public override void AddEdge(TNode startNode, TNode endNode)
         {
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
-            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedSimpleEdge<TValue>>());
 
-            AdjacencyList[startNode].Add(new UnweightedNormalEdge<TValue>(startNode, endNode, false));
-            AdjacencyList[endNode].Add(new UnweightedNormalEdge<TValue>(endNode, startNode, false));
+            AdjacencyList[startNode].Add(new UnweightedSimpleEdge<TValue>(startNode, endNode, false));
+            AdjacencyList[endNode].Add(new UnweightedSimpleEdge<TValue>(endNode, startNode, false));
         }
 
-        public void AddEdge(IUnweightedNormalEdge<TValue> edge)
+        public void AddEdge(IUnweightedSimpleEdge<TValue> edge)
         {
             if (edge.Directed) throw new ArgumentException("Edge must be undirected.");
 
             var startNode = (TNode)edge.StartNode;
             var endNode = (TNode) edge.EndNode;
 
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
-            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedSimpleEdge<TValue>>());
 
             AdjacencyList[startNode].Add(edge);
             AdjacencyList[endNode].Add(edge);
@@ -36,9 +36,9 @@
             }
         }
 
-        public override UndirectedUnweightedGraph<TNode, TValue> Clone()
+        public override UndirectedUnweightedSimpleGraph<TNode, TValue> Clone()
         {
-            var result = new UndirectedUnweightedGraph<TNode, TValue>();
+            var result = new UndirectedUnweightedSimpleGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {

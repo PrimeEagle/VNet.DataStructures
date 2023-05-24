@@ -4,6 +4,6 @@
                                                                  where TEdge : notnull, IEdge<TValue>
                                                                  where TValue : notnull
     {
-        public int Search(int[] list, int value);
+        public TValue Search(IGraph<TNode, TEdge, TValue> graph, TValue value);
     }
 }

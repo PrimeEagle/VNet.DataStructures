@@ -4,7 +4,7 @@
     //{
     //}
 
-    public interface IUnweightedNormalEdge<T> : INormalEdge<T> where T : notnull
+    public interface IUnweightedSimpleEdge<T> : INormalEdge<T> where T : notnull
     {
 
     }

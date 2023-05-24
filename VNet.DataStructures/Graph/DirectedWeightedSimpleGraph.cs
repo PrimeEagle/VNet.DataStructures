@@ -1,7 +1,7 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph
 {
-    public class DirectedWeightedGraph<TNode, TValue> : NormalGraphBase<TNode, IWeightedNormalEdge<TValue>, TValue>
+    public class DirectedWeightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IWeightedSimpleEdge<TValue>, TValue>
                                                         where TNode : notnull, INode<TValue>
                                                         where TValue : notnull
     {
@@ -12,18 +12,18 @@ namespace VNet.DataStructures.Graph
 
         public void AddEdge(TNode startNode, TNode endNode, double weight)
         {
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedSimpleEdge<TValue>>());
 
-            AdjacencyList[startNode].Add(new WeightedNormalEdge<TValue>(startNode, endNode, true, weight));
+            AdjacencyList[startNode].Add(new WeightedSimpleEdge<TValue>(startNode, endNode, true, weight));
         }
 
-        public void AddEdge(IWeightedNormalEdge<TValue> edge)
+        public void AddEdge(IWeightedSimpleEdge<TValue> edge)
         {
             if (!edge.Directed) throw new ArgumentException("Edge must be directed.");
 
             var startNode = (TNode)edge.StartNode;
 
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IWeightedSimpleEdge<TValue>>());
 
             AdjacencyList[startNode].Add(edge);
         }
@@ -36,9 +36,9 @@ namespace VNet.DataStructures.Graph
             }
         }
 
-        public override DirectedWeightedGraph<TNode, TValue> Clone()
+        public override DirectedWeightedSimpleGraph<TNode, TValue> Clone()
         {
-            var result = new DirectedWeightedGraph<TNode, TValue>();
+            var result = new DirectedWeightedSimpleGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {

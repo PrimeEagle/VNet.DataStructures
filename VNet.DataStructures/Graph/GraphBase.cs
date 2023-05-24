@@ -3,19 +3,11 @@ using VNet.DataStructures.Graph.Algorithms.Search;
 
 namespace VNet.DataStructures.Graph
 {
-    public abstract class GraphBase<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
-                                                          where TEdge : notnull, IEdge<TValue>
-                                                          where TValue : notnull
+    public abstract class GraphBase<TNode, TEdge, TValue> : IGraph<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
+                                                                                         where TEdge : notnull, IEdge<TValue>
+                                                                                         where TValue : notnull
     {
-        protected virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; }
-
-
-
-        protected GraphBase()
-        {
-            AdjacencyList = new Dictionary<TNode, List<TEdge>>();
-        }
-
+        public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
 
 
         public void AddNode(TNode node)
@@ -36,16 +28,14 @@ namespace VNet.DataStructures.Graph
         }
         public abstract GraphBase<TNode, TEdge, TValue> Clone();
         
-        public int Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm)
+        public TValue Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm, TValue value)
         {
-            var results = searchAlgorithm.Search(this);
-
-            return results;
+            return searchAlgorithm.Search(this, value);
         }
         
-        public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> pathFindingAlgorithm)
+        public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> pathFindingAlgorithm, INode<TValue> start, INode<TValue> end)
         {
-            var results = pathFindingAlgorithm.Find();
+            var results = pathFindingAlgorithm.Find(this, start, end);
 
             return results;
         }

@@ -4,6 +4,6 @@
                                                                       where TEdge : notnull, IEdge<TValue>
                                                                       where TValue : notnull
     {
-        public List<TNode> Find();
+        public List<TNode> Find(IGraph<TNode, TEdge, TValue> graph, INode<TValue> start, INode<TValue> end);
     }
 }

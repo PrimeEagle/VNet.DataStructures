@@ -1,23 +1,23 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class DirectedUnweightedGraph<TNode, TValue> : NormalGraphBase<TNode, IUnweightedNormalEdge<TValue>, TValue>
+    public class DirectedUnweightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue>
                                                           where TNode : notnull, INode<TValue>
                                                           where TValue : notnull
     {
         public override void AddEdge(TNode startNode, TNode endNode)
         {
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
 
-            AdjacencyList[startNode].Add(new UnweightedNormalEdge<TValue>(startNode, endNode, true));
+            AdjacencyList[startNode].Add(new UnweightedSimpleEdge<TValue>(startNode, endNode, true));
         }
 
-        public void AddEdge(IUnweightedNormalEdge<TValue> edge)
+        public void AddEdge(IUnweightedSimpleEdge<TValue> edge)
         {
             if (!edge.Directed) throw new ArgumentException("Edge must be directed.");
 
             var startNode = (TNode)edge.StartNode;
 
-            if(!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedNormalEdge<TValue>>());
+            if(!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
 
             AdjacencyList[startNode].Add(edge);
         }
@@ -30,9 +30,9 @@
             }
         }
 
-        public override DirectedUnweightedGraph<TNode, TValue> Clone()
+        public override DirectedUnweightedSimpleGraph<TNode, TValue> Clone()
         {
-            var result = new DirectedUnweightedGraph<TNode, TValue>();
+            var result = new DirectedUnweightedSimpleGraph<TNode, TValue>();
 
             foreach (var key in AdjacencyList.Keys)
             {
