@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph.SimpleGraph
 {
     public class DirectedUnweightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue>
                                                           where TNode : notnull, INode<TValue>
@@ -17,7 +17,7 @@
 
             var startNode = (TNode)edge.StartNode;
 
-            if(!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
 
             AdjacencyList[startNode].Add(edge);
         }
@@ -28,19 +28,6 @@
             {
                 edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
             }
-        }
-
-        public override DirectedUnweightedSimpleGraph<TNode, TValue> Clone()
-        {
-            var result = new DirectedUnweightedSimpleGraph<TNode, TValue>();
-
-            foreach (var key in AdjacencyList.Keys)
-            {
-                var edgeList = AdjacencyList[key].ToList();
-                result.AdjacencyList.Add(key, edgeList);
-            }
-
-            return result;
         }
     }
 }

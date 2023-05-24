@@ -1,6 +1,6 @@
-﻿namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph.ParallelHyperGraph
 {
-    public class DirectedWeightedHyperGraph<TNode, TValue> : HyperGraphBase<TNode, IWeightedHyperEdge<TValue>, TValue>
+    public class DirectedUnweightedParallelHyperGraph<TNode, TValue> : ParallelHyperGraphBase<TNode, IUnweightedHyperEdge<TValue>, TValue>
         where TNode : notnull, INode<TValue>
         where TValue : notnull
     {
@@ -15,11 +15,6 @@
         }
 
         public override void RemoveEdge(TNode startNode, TNode endNode)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override GraphBase<TNode, IWeightedHyperEdge<TValue>, TValue> Clone()
         {
             throw new NotImplementedException();
         }

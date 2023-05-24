@@ -26,7 +26,22 @@ namespace VNet.DataStructures.Graph
                 edgeList.RemoveAll(e => e.Equals(edge));
             }
         }
-        public abstract GraphBase<TNode, TEdge, TValue> Clone();
+
+        public virtual IGraph<TNode, TEdge, TValue> Clone()
+        {
+            var d1 = this.GetType();
+            var typeArgs = new[] { typeof(TNode), typeof(TEdge), typeof(TValue) };
+            var constructed = d1.MakeGenericType(typeArgs);
+            var result = Activator.CreateInstance(constructed) as IGraph<TNode, TEdge, TValue>;
+
+            foreach (var key in AdjacencyList.Keys)
+            {
+                var edgeList = AdjacencyList[key].ToList();
+                result.AdjacencyList.Add(key, edgeList);
+            }
+
+            return result ?? throw new InvalidOperationException();
+        }
         
         public TValue Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm, TValue value)
         {

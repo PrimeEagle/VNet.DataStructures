@@ -1,7 +1,8 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
-namespace VNet.DataStructures.Graph
+
+namespace VNet.DataStructures.Graph.SimpleGraph
 {
-    public class UndirectedWeightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IWeightedSimpleEdge<TValue>, TValue> 
+    public class UndirectedWeightedSimpleGraph<TNode, TValue> : SimpleGraphBase<TNode, IWeightedSimpleEdge<TValue>, TValue>
                                                           where TNode : notnull, INode<TValue>
                                                           where TValue : notnull
     {
@@ -40,19 +41,6 @@ namespace VNet.DataStructures.Graph
                 edgeList.RemoveAll(e => e.StartNode.Equals(endNode) && e.EndNode.Equals(startNode));
                 edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
             }
-        }
-
-        public override UndirectedWeightedSimpleGraph<TNode, TValue> Clone()
-        {
-            var result = new UndirectedWeightedSimpleGraph<TNode, TValue>();
-
-            foreach (var key in AdjacencyList.Keys)
-            {
-                var edgeList = AdjacencyList[key].ToList();
-                result.AdjacencyList.Add(key, edgeList);
-            }
-
-            return result;
         }
     }
 }

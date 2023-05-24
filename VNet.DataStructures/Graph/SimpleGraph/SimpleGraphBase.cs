@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph.SimpleGraph
 {
     public abstract class SimpleGraphBase<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
                                                                                                   where TEdge : notnull, INormalEdge<TValue>
