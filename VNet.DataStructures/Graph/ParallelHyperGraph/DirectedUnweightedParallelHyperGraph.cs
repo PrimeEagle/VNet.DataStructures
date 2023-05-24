@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph.ParallelHyperGraph
 {
-    public class DirectedUnweightedParallelHyperGraph<TNode, TValue> : ParallelHyperGraphBase<TNode, IUnweightedHyperEdge<TValue>, TValue>
+    public class DirectedUnweightedParallelHyperGraph<TNode, TValue> : GraphBase<TNode, IUnweightedHyperEdge<TValue>, TValue>
         where TNode : notnull, INode<TValue>
         where TValue : notnull
     {

@@ -9,5 +9,36 @@
         {
             Weight = weight;
         }
+
+
+        public new IWeightedHyperEdge<T> Clone()
+        {
+            return new WeightedHyperEdge<T>(StartNodes, EndNodes, Directed, Weight);
+        }
+
+        public new IWeightedHyperEdge<T> Reverse()
+        {
+            return new WeightedHyperEdge<T>(EndNodes, StartNodes, Directed, Weight);
+        }
+
+        IHyperEdge<T> IHyperEdge<T>.Reverse()
+        {
+            return Clone();
+        }
+
+        IHyperEdge<T> IHyperEdge<T>.Clone()
+        {
+            return Reverse();
+        }
+
+        IEdge<T> IEdge<T>.Reverse()
+        {
+            return Reverse();
+        }
+
+        IEdge<T> IEdge<T>.Clone()
+        {
+            return Clone();
+        }
     }
 }

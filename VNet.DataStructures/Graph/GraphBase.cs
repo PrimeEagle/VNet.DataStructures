@@ -10,22 +10,14 @@ namespace VNet.DataStructures.Graph
         public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
 
 
-        public void AddNode(TNode node)
-        {
-            if (!AdjacencyList.ContainsKey(node)) AdjacencyList[node] = new List<TEdge>();
-        }
-
+        public abstract void AddNode(TNode node);
         public abstract void RemoveNode(TNode node);
+        public abstract void AddEdge(TEdge edge);
         public abstract void AddEdge(TNode startNode, TNode endNode);
+        public abstract void RemoveEdge(TEdge edge);
         public abstract void RemoveEdge(TNode startNode, TNode endNode);
 
-        public virtual void RemoveEdge(TEdge edge)
-        {
-            foreach (var edgeList in AdjacencyList.Values)
-            {
-                edgeList.RemoveAll(e => e.Equals(edge));
-            }
-        }
+
 
         public virtual IGraph<TNode, TEdge, TValue> Clone()
         {
@@ -37,7 +29,7 @@ namespace VNet.DataStructures.Graph
             foreach (var key in AdjacencyList.Keys)
             {
                 var edgeList = AdjacencyList[key].ToList();
-                result.AdjacencyList.Add(key, edgeList);
+                result?.AdjacencyList.Add(key, edgeList);
             }
 
             return result ?? throw new InvalidOperationException();

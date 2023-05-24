@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph.HyperGraph
 {
-    public class DirectedWeightedHyperGraph<TNode, TValue> : HyperGraphBase<TNode, IWeightedHyperEdge<TValue>, TValue>
+    public class DirectedWeightedHyperGraph<TNode, TValue> : GraphBase<TNode, IWeightedHyperEdge<TValue>, TValue>
         where TNode : notnull, INode<TValue>
         where TValue : notnull
     {

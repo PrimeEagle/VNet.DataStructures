@@ -1,14 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.MultiGraph
 {
-    public class DirectedWeightedMultiGraph<TNode, TValue> : MultiGraphBase<TNode, IWeightedSimpleEdge<TValue>, TValue>
+    public class DirectedWeightedMultiGraph<TNode, TValue> : GraphBase<TNode, IWeightedSimpleEdge<TValue>, TValue>
                                                              where TNode : notnull, INode<TValue>
                                                              where TValue : notnull
     {
-        public override void RemoveNode(TNode node)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void AddEdge(TNode startNode, TNode endNode)
         {
             throw new NotImplementedException();
