@@ -6,7 +6,7 @@
         public double Weight { get; init; }
 
 
-        public WeightedHyperEdge(List<TNode> startNodes, List<TNode> endNodes, bool directed, double weight) : base(startNodes, endNodes, directed)
+        public WeightedHyperEdge(HashSet<TNode> startNodes, HashSet<TNode> endNodes, bool directed, double weight) : base(startNodes, endNodes, directed)
         {
             Weight = weight;
         }

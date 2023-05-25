@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Search;
+﻿namespace VNet.DataStructures.Algorithms.Search;
 
 // Interpolation search is an improved variant of binary search.
 // This search algorithm works on the probing position of the required value. For this algorithm to work properly, the data collection should be in sorted and equally distributed form.
@@ -13,7 +13,7 @@ public class Interpolation
 
         while (lo <= hi)
         {
-            mid = (int) (lo + (double) (hi - lo) / (list[hi] - list[lo]) * (value - list[lo]));
+            mid = (int)(lo + (double)(hi - lo) / (list[hi] - list[lo]) * (value - list[lo]));
 
             if (list[mid] == value)
             {

@@ -1,10 +1,10 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph.SimpleGraph
 {
-    public class UndirectedWeightedSimpleGraph<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue>
-                                                          where TNode : notnull, INode<TValue>
-                                                          where TEdge : notnull, IWeightedSimpleEdge<TNode, TValue>
-                                                          where TValue : notnull
+    public class UndirectedWeightedSimpleGraph<TNode, TEdge, TValue> : SimpleGraphBase<TNode, TEdge, TValue>
+                                                                       where TNode : notnull, INode<TValue>
+                                                                       where TEdge : notnull, IWeightedSimpleEdge<TNode, TValue>
+                                                                       where TValue : notnull
     {
         public void AddNode(TNode node)
         {

@@ -3,7 +3,7 @@
     public interface IHyperEdge<TNode, out TValue> : IEdge<TNode, TValue> where TNode : notnull, INode<TValue>
                                                                           where TValue : notnull
     {
-        public List<TNode> StartNodes { get; init; }
-        public List<TNode> EndNodes { get; init; }
+        public HashSet<TNode> StartNodes { get; init; }
+        public HashSet<TNode> EndNodes { get; init; }
     }
 }

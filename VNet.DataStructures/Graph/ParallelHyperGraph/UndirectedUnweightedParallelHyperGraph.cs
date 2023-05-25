@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph.ParallelHyperGraph
 {
-    public class UndirectedUnweightedParallelHyperGraph<TNode, TEdge, TValue> :GraphBase<TNode, TEdge, TValue>
+    public class UndirectedUnweightedParallelHyperGraph<TNode, TEdge, TValue> : HyperGraphBase<TNode, TEdge, TValue>
                                                                                where TNode : notnull, INode<TValue>
                                                                                where TEdge : notnull, IUnweightedHyperEdge<TNode, TValue>
                                                                                where TValue : notnull
@@ -10,7 +10,7 @@
             if (!AdjacencyList.ContainsKey(node)) AdjacencyList.Add(node, new List<TEdge>());
         }
 
-        public void AddEdge(List<TNode> startNode, List<TNode> endNode)
+        public void AddEdge(HashSet<TNode> startNode, HashSet<TNode> endNode)
         {
             var edge = (TEdge)(IUnweightedHyperEdge<TNode, TValue>)new UnweightedHyperEdge<TNode, TValue>(startNode, endNode, false);
             if (edge == null) throw new ArgumentNullException(nameof(edge));

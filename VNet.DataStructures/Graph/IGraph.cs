@@ -7,12 +7,12 @@ namespace VNet.DataStructures.Graph
                                                   where TEdge : notnull, IEdge<TNode, TValue>
                                                   where TValue : notnull
     {
-        public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init;  }
-
-
-        //public void AddNode(TNode node);
         public TValue Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm, TValue value);
         public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> pathFindingAlgorithm, INode<TValue> start, INode<TValue> end);
         public IGraph<TNode, TEdge, TValue> Clone();
+
+        List<TEdge> this[TNode node] { get; set; }
+
+        public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; }
     }
 }

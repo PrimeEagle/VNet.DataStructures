@@ -7,8 +7,30 @@ namespace VNet.DataStructures.Graph
                                                                                          where TEdge : notnull, IEdge<TNode, TValue>
                                                                                          where TValue : notnull
     {
-        public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
+        List<TEdge> IGraph<TNode, TEdge, TValue>.this[TNode node]
+        {
+            get
+            {
+                return AdjacencyList[node];
+            }
+            set
+            {
+                AdjacencyList[node] = value;
+            }
+        }
+        public List<TEdge> this[TNode node] 
+        {
+            get
+            {
+                return AdjacencyList[node];
+            }
+            set
+            {
+                AdjacencyList[node] = value;
+            }
+        }
 
+        public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
 
         public virtual IGraph<TNode, TEdge, TValue> Clone()
         {
