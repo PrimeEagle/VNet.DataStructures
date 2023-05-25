@@ -1,39 +1,57 @@
-﻿using VNet.DataStructures.Graph.Basic;
-
+﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph.MultiGraph
 {
-    public class UndirectedUnweightedMultiGraph<TNode, TValue> : GraphBase<TNode, IUnweightedSimpleEdge<TValue>, TValue>
+    public class UndirectedUnweightedMultiGraph<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue>
                                                                  where TNode : notnull, INode<TValue>
+                                                                 where TEdge : notnull, IUnweightedSimpleEdge<TNode, TValue>
                                                                  where TValue : notnull
     {
-        public override void AddEdge(IUnweightedSimpleEdge<TValue> edge)
+        public void AddNode(TNode node)
+        {
+            if (!AdjacencyList.ContainsKey(node)) AdjacencyList.Add(node, new List<TEdge>());
+        }
+
+        public void AddEdge(TNode startNode, TNode endNode)
+        {
+            var edge = (TEdge)(IUnweightedSimpleEdge<TNode, TValue>)new UnweightedSimpleEdge<TNode, TValue>(startNode, endNode, false);
+            if (edge == null) throw new ArgumentNullException(nameof(edge));
+            AddEdge(edge);
+        }
+
+        public void AddEdge(TEdge edge)
         {
             var startNode = (TNode)edge.StartNode;
             var endNode = (TNode)edge.EndNode;
 
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
-            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedSimpleEdge<TValue>>());
-
+            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<TEdge>());
+            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<TEdge>());
             AdjacencyList[startNode].Add(edge);
-            AdjacencyList[endNode].Add( new UnweightedSimpleEdge<TValue>(endNode, startNode, false));
+            AdjacencyList[endNode].Add((TEdge)edge.Reverse());
         }
 
-        public override void AddEdge(TNode startNode, TNode endNode)
+        public void RemoveNode(TNode node)
         {
-            if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<IUnweightedSimpleEdge<TValue>>());
-            if (!AdjacencyList.ContainsKey(endNode)) AdjacencyList.Add(endNode, new List<IUnweightedSimpleEdge<TValue>>());
+            AdjacencyList.Remove(node);
 
-            AdjacencyList[startNode].Add(new UnweightedSimpleEdge<TValue>(startNode, endNode, false));
-            AdjacencyList[endNode].Add(new UnweightedSimpleEdge<TValue>(endNode, startNode, false));
-        }
-
-        public override void RemoveEdge(TNode startNode, TNode endNode)
-        {
             foreach (var edgeList in AdjacencyList.Values)
             {
-                edgeList.RemoveAll(e => e.StartNode.Equals(startNode) && e.EndNode.Equals(endNode));
-                edgeList.RemoveAll(e => e.StartNode.Equals(endNode) && e.EndNode.Equals(startNode));
+                edgeList.RemoveAll(e => e.StartNode.Equals(node) || e.EndNode.Equals(node));
             }
+        }
+
+        public void RemoveEdge(TNode startNode, TNode endNode)
+        {
+            AdjacencyList[startNode].RemoveAll(e => e.EndNode.Equals(endNode));
+            AdjacencyList[endNode].RemoveAll(e => e.EndNode.Equals(startNode));
+        }
+
+        public void RemoveEdge(TEdge edge)
+        {
+            var startNode = (TNode)edge.StartNode;
+            var endNode = (TNode)edge.EndNode;
+
+            AdjacencyList[startNode].Remove(edge);
+            AdjacencyList[endNode].Remove((TEdge)edge.Reverse());
         }
     }
 }

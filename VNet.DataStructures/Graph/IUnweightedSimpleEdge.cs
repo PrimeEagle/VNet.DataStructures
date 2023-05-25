@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface IUnweightedSimpleEdge<T> : ISimpleEdge<T> where T : notnull
+    public interface IUnweightedSimpleEdge<TNode, out TValue> : ISimpleEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                           where TValue : notnull
     {
-        public new IUnweightedSimpleEdge<T> Reverse();
-        public new IUnweightedSimpleEdge<T> Clone();
+        public IUnweightedSimpleEdge<TNode, TValue> Reverse();
+        public IUnweightedSimpleEdge<TNode, TValue> Clone();
     }
 }

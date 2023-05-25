@@ -1,44 +1,24 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class WeightedHyperEdge<T> : UnweightedHyperEdge<T>, IWeightedHyperEdge<T> where T : notnull
+    public class WeightedHyperEdge<TNode, TValue> : UnweightedHyperEdge<TNode, TValue>, IWeightedHyperEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                                                          where TValue : notnull
     {
         public double Weight { get; init; }
 
 
-        public WeightedHyperEdge(IList<INode<T>> startNodes, IList<INode<T>> endNodes, bool directed, double weight) : base(startNodes, endNodes, directed)
+        public WeightedHyperEdge(List<TNode> startNodes, List<TNode> endNodes, bool directed, double weight) : base(startNodes, endNodes, directed)
         {
             Weight = weight;
         }
 
-
-        public new IWeightedHyperEdge<T> Clone()
+        public IWeightedHyperEdge<TNode, TValue> Clone()
         {
-            return new WeightedHyperEdge<T>(StartNodes, EndNodes, Directed, Weight);
+            return new WeightedHyperEdge<TNode, TValue>(StartNodes, EndNodes, Directed, Weight);
         }
 
-        public new IWeightedHyperEdge<T> Reverse()
+        public IWeightedHyperEdge<TNode, TValue> Reverse()
         {
-            return new WeightedHyperEdge<T>(EndNodes, StartNodes, Directed, Weight);
-        }
-
-        IHyperEdge<T> IHyperEdge<T>.Reverse()
-        {
-            return Clone();
-        }
-
-        IHyperEdge<T> IHyperEdge<T>.Clone()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Reverse()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Clone()
-        {
-            return Clone();
+            return new WeightedHyperEdge<TNode, TValue>(EndNodes, StartNodes, Directed, Weight);
         }
     }
 }

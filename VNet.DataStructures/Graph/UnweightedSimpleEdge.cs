@@ -1,47 +1,28 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class UnweightedSimpleEdge<T> : IUnweightedSimpleEdge<T> where T : notnull
+    public class UnweightedSimpleEdge<TNode, TValue> : IUnweightedSimpleEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                            where TValue : notnull
     {
         public bool Directed { get; init; }
-        public INode<T> StartNode { get; init; }
-        public INode<T> EndNode { get; init; }
+        public TNode StartNode { get; init; }
+        public TNode EndNode { get; init; }
 
 
-        public UnweightedSimpleEdge(INode<T> startNode, INode<T> endNode, bool directed)
+        public UnweightedSimpleEdge(TNode startNode, TNode endNode, bool directed)
         {
             Directed = directed;
             StartNode = startNode;
             EndNode = endNode;
         }
 
-        public new IUnweightedSimpleEdge<T> Clone()
+        public IUnweightedSimpleEdge<TNode, TValue> Clone()
         {
-            return new UnweightedSimpleEdge<T>(StartNode, EndNode, Directed);
+            return new UnweightedSimpleEdge<TNode, TValue>(StartNode, EndNode, Directed);
         }
 
-        public new IUnweightedSimpleEdge<T> Reverse()
+        public IUnweightedSimpleEdge<TNode, TValue> Reverse()
         {
-            return new UnweightedSimpleEdge<T>(EndNode, StartNode, Directed);
-        }
-
-        ISimpleEdge<T> ISimpleEdge<T>.Reverse()
-        {
-            return Clone();
-        }
-
-        ISimpleEdge<T> ISimpleEdge<T>.Clone()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Reverse()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Clone()
-        {
-            return Clone();
+            return new UnweightedSimpleEdge<TNode, TValue>(EndNode, StartNode, Directed);
         }
     }
 }

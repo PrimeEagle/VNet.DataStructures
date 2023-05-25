@@ -1,11 +1,8 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface IEdge<out T> where T : notnull
+    public interface IEdge<out TNode, out TValue> where TNode : notnull, INode<TValue>
+                                              where TValue : notnull
     {
-        public new bool Directed { get; init; }
-
-
-        public IEdge<T> Reverse();
-        public IEdge<T> Clone();
+        public bool Directed { get; init; }
     }
 }

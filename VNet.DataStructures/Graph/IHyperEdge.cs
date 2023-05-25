@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface IHyperEdge<T> : IEdge<T> where T : notnull
+    public interface IHyperEdge<TNode, out TValue> : IEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                          where TValue : notnull
     {
-        public new IList<INode<T>> StartNodes { get; init; }
-        public new IList<INode<T>> EndNodes { get; init; }
+        public List<TNode> StartNodes { get; init; }
+        public List<TNode> EndNodes { get; init; }
     }
 }

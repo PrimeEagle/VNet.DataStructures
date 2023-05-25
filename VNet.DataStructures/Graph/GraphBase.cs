@@ -4,19 +4,10 @@ using VNet.DataStructures.Graph.Algorithms.Search;
 namespace VNet.DataStructures.Graph
 {
     public abstract class GraphBase<TNode, TEdge, TValue> : IGraph<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
-                                                                                         where TEdge : notnull, IEdge<TValue>
+                                                                                         where TEdge : notnull, IEdge<TNode, TValue>
                                                                                          where TValue : notnull
     {
         public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
-
-
-        public abstract void AddNode(TNode node);
-        public abstract void RemoveNode(TNode node);
-        public abstract void AddEdge(TEdge edge);
-        public abstract void AddEdge(TNode startNode, TNode endNode);
-        public abstract void RemoveEdge(TEdge edge);
-        public abstract void RemoveEdge(TNode startNode, TNode endNode);
-
 
 
         public virtual IGraph<TNode, TEdge, TValue> Clone()

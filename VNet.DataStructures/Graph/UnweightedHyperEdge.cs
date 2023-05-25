@@ -1,51 +1,38 @@
 ﻿// ReSharper disable MemberCanBeProtected.Global
 
-using System.Collections;
-
 namespace VNet.DataStructures.Graph
 {
-    public class UnweightedHyperEdge<T> : IUnweightedHyperEdge<T> where T : notnull
+    public class UnweightedHyperEdge<TNode, TValue> : IUnweightedHyperEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                          where TValue : notnull
     {
-        public IList<INode<T>> StartNodes { get; init; }
-        public IList<INode<T>> EndNodes { get; init; }
+        public List<TNode> StartNodes { get; init; }
+        public List<TNode> EndNodes { get; init; }
 
 
-        public UnweightedHyperEdge(IList<INode<T>> startNodes, IList<INode<T>> endNodes, bool directed)
+        public UnweightedHyperEdge(List<TNode> startNodes, List<TNode> endNodes, bool directed)
         {
             StartNodes = startNodes;
             EndNodes = endNodes;
         }
 
+        public UnweightedHyperEdge(TNode startNode, TNode endNode, bool directed)
+        {
+            StartNodes = new List<TNode>() { startNode };
+            EndNodes = new List<TNode>() { endNode };
+        }
+
         public bool Directed { get; init; }
 
-        public new IUnweightedHyperEdge<T> Clone()
+
+
+        public IUnweightedHyperEdge<TNode, TValue> Clone()
         {
-            return new UnweightedHyperEdge<T>(StartNodes, EndNodes, Directed);
+            return new UnweightedHyperEdge<TNode, TValue>(StartNodes, EndNodes, Directed);
         }
 
-        public new IUnweightedHyperEdge<T> Reverse()
+        public IUnweightedHyperEdge<TNode, TValue> Reverse()
         {
-            return new UnweightedHyperEdge<T>(EndNodes, StartNodes, Directed);
-        }
-
-        IHyperEdge<T> IHyperEdge<T>.Reverse()
-        {
-            return Clone();
-        }
-
-        IHyperEdge<T> IHyperEdge<T>.Clone()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Reverse()
-        {
-            return Reverse();
-        }
-
-        IEdge<T> IEdge<T>.Clone()
-        {
-            return Clone();
+            return new UnweightedHyperEdge<TNode, TValue>(EndNodes, StartNodes, Directed);
         }
     }
 }
