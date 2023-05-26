@@ -1,4 +1,5 @@
-﻿using VNet.DataStructures.Graph.SimpleGraph;
+﻿using VNet.DataStructures.Graph.Algorithms.Traversal;
+using VNet.DataStructures.Graph.LineGraph;
 
 namespace VNet.DataStructures.Graph
 {
@@ -7,33 +8,38 @@ namespace VNet.DataStructures.Graph
                                                                  where TEdge : notnull, IHyperEdge<TNode, TValue>
                                                                  where TValue : notnull
     {
-        //public UndirectedUnweightedLineGraph<THyperEdgeNode, TOutputEdge, TValue> ToLineGraph<TOutputEdge>() where TOutputEdge : notnull, IUnweightedSimpleEdge<THyperEdgeNode, TValue>
-        //{
-        //    var lineGraph = new UndirectedUnweightedLineGraph<THyperEdgeNode, TOutputEdge, TValue>();
+        public TValue Search(IHyperGraphConnectivityAlgorithm<TNode, TValue> searchAlgorithm, TValue value)
+        {
+            return searchAlgorithm.Traverse(this, value);
+        }
 
-        //    // Add each hyperedge from the hypergraph as a node in the line graph.h
-        //    foreach (var hyperEdge in AdjacencyList.Values.SelectMany(e => e))
-        //    {
-        //        lineGraph.AddNode(hyperEdge);
-        //    }
+        public LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue> ToLineGraph()
+        {
+            var lineGraph = new LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue>();
 
-        //    // Connect two node in the line graph if their corresponding hyperedges in the hypergraph share at least one vertex.
-        //    foreach (var hyperEdge1 in lineGraph.AdjacencyList.Keys)
-        //    {
-        //        var h1Nodes = ((IHyperEdge<THyperEdgeNode, TValue>)hyperEdge1).StarTHyperEdgeNodes.Union(((IHyperEdge<THyperEdgeNode, TValue>)hyperEdge1).EndNodes).Distinct();
+            // Add each hyperedge from the hypergraph as a node in the line graph.h
+            foreach (var hyperEdge in AdjacencyList.Values.SelectMany(e => e))
+            {
+                lineGraph.AddNode(hyperEdge);
+            }
+
+            // Connect two node in the line graph if their corresponding hyperedges in the hypergraph share at least one vertex.
+            foreach (var hyperEdge1 in lineGraph.AdjacencyList.Keys)
+            {
+                var h1Nodes = ((IHyperEdge<TNode, TValue>)hyperEdge1).StartNodes.Union(((IHyperEdge<TNode, TValue>)hyperEdge1).EndNodes).Distinct();
                 
-        //        foreach (var hyperEdge2 in lineGraph.AdjacencyList.Keys)
-        //        {
-        //            var h2Nodes = ((IHyperEdge<THyperEdgeNode, TValue>)hyperEdge2).StarTHyperEdgeNodes.Union(((IHyperEdge<THyperEdgeNode, TValue>)hyperEdge2).EndNodes).Distinct();
+                foreach (var hyperEdge2 in lineGraph.AdjacencyList.Keys)
+                {
+                    var h2Nodes = ((IHyperEdge<TNode, TValue>)hyperEdge2).StartNodes.Union(((IHyperEdge<TNode, TValue>)hyperEdge2).EndNodes).Distinct();
 
-        //            if (!hyperEdge1.Equals(hyperEdge2) && h1Nodes.Any(vertex => h2Nodes.Contains(vertex)))
-        //            {
-        //                lineGraph.AddEdge(new LineEdge<IHyperEdge<THyperEdgeNode, TValue>, THyperEdgeNode, TValue>((IHyperEdge<THyperEdgeNode, TValue>)hyperEdge1, (IHyperEdge<THyperEdgeNode, TValue>)hyperEdge2));
-        //            }
-        //        }
-        //    }
+                    if (!hyperEdge1.Equals(hyperEdge2) && h1Nodes.Any(vertex => h2Nodes.Contains(vertex)))
+                    {
+                        lineGraph.AddEdge(new LineEdge<TEdge, TNode, TValue>(hyperEdge1, hyperEdge2));
+                    }
+                }
+            }
 
-        //    return lineGraph;
-        //}
+            return lineGraph;
+        }
     }
 }

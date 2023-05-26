@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    public interface IGraphTraversalAlgorithm<TNode, TValue> : IGraphAlgorithm<TNode, TValue>
+    public interface IStandardGraphCliqueAlgorithm<TNode, TValue> : IGraphColoringAlgorithm<TNode, TValue>
         where TNode : notnull, INode<TValue>
                                                              where TValue : notnull
     {
+        public void Traverse(TNode starTNode, Action<TNode> preVisit, Action<TNode> postVisit);
     }
 }

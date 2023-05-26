@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface ISimpleGraph<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
+    public interface IStandardGraph<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
                                                         where TEdge : notnull, IEdge<TNode, TValue>
                                                         where TValue : notnull
     {

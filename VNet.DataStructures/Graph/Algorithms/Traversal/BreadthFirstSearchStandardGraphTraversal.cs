@@ -1,7 +1,7 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
-                                                                                                                   where TEdge : notnull, ISimpleEdge<TNode, TValue>
+    public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                                                   where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                                                                    where TValue : notnull
     {
         IGraph<TNode, TEdge, TValue> _graph;

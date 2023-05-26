@@ -1,9 +1,9 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph.MultiGraph
 {
-    public class UndirectedUnweightedMultiGraph<TNode, TEdge, TValue> : SimpleGraphBase<TNode, TEdge, TValue>
+    public class UndirectedUnweightedMultiGraph<TNode, TEdge, TValue> : StandardGraphBase<TNode, TEdge, TValue>
                                                                         where TNode : notnull, INode<TValue>
-                                                                        where TEdge : notnull, IUnweightedSimpleEdge<TNode, TValue>
+                                                                        where TEdge : notnull, IUnweightedStandardEdge<TNode, TValue>
                                                                         where TValue : notnull
     {
         public void AddNode(TNode node)
@@ -13,7 +13,7 @@ namespace VNet.DataStructures.Graph.MultiGraph
 
         public void AddEdge(TNode startNode, TNode endNode)
         {
-            var edge = (TEdge)(IUnweightedSimpleEdge<TNode, TValue>)new UnweightedSimpleEdge<TNode, TValue>(startNode, endNode, false);
+            var edge = (TEdge)(IUnweightedStandardEdge<TNode, TValue>)new UnweightedStandardEdge<TNode, TValue>(startNode, endNode, false);
             if (edge == null) throw new ArgumentNullException(nameof(edge));
             AddEdge(edge);
         }

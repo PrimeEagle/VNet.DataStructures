@@ -1,6 +1,6 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public interface ISimpleEdge<TNode, out TValue> : IEdge<TNode, TValue> where TNode : notnull, INode<TValue>
+    public interface IStandardEdge<TNode, out TValue> : IEdge<TNode, TValue> where TNode : notnull, INode<TValue>
                                                                            where TValue : notnull
     {
         public TNode StartNode { get; init; }

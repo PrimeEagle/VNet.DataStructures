@@ -1,7 +1,4 @@
-﻿using VNet.DataStructures.Graph.Algorithms.PathFinding;
-using VNet.DataStructures.Graph.Algorithms.Search;
-
-namespace VNet.DataStructures.Graph
+﻿namespace VNet.DataStructures.Graph
 {
     public abstract class GraphBase<TNode, TEdge, TValue> : IGraph<TNode, TEdge, TValue> where TNode : notnull, INode<TValue>
                                                                                          where TEdge : notnull, IEdge<TNode, TValue>
@@ -46,18 +43,6 @@ namespace VNet.DataStructures.Graph
             }
 
             return result ?? throw new InvalidOperationException();
-        }
-        
-        public TValue Search(IGraphSearchAlgorithm<TNode, TEdge, TValue> searchAlgorithm, TValue value)
-        {
-            return searchAlgorithm.Search(this, value);
-        }
-        
-        public List<TNode> FindPath(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> pathFindingAlgorithm, INode<TValue> start, INode<TValue> end)
-        {
-            var results = pathFindingAlgorithm.Find(this, start, end);
-
-            return results;
         }
     }
 }

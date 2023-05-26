@@ -1,10 +1,10 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph.SimpleGraph
 {
-    public class UndirectedUnweightedLineGraph<TNode, TEdge, TValue> : SimpleGraphBase<TNode, TEdge, TValue>
-                                                                       where TNode : notnull, INode<TValue>
-                                                                       where TEdge : notnull, IUnweightedSimpleEdge<TNode, TValue>
-                                                                       where TValue : notnull
+    public class UndirectedUnweightedSimpleGraph<TNode, TEdge, TValue> : StandardGraphBase<TNode, TEdge, TValue>
+                                                where TNode : notnull, INode<TValue>
+                                                where TEdge : notnull, IUnweightedStandardEdge<TNode, TValue>
+                                                where TValue : notnull
     {
         public void AddNode(TNode node)
         {
@@ -13,7 +13,7 @@ namespace VNet.DataStructures.Graph.SimpleGraph
 
         public void AddEdge(TNode startNode, TNode endNode)
         {
-            var edge = (TEdge)(IUnweightedSimpleEdge<TNode, TValue>)new UnweightedSimpleEdge<TNode, TValue>(startNode, endNode, false);
+            var edge = (TEdge)(IUnweightedStandardEdge<TNode, TValue>)new UnweightedStandardEdge<TNode, TValue>(startNode, endNode, false);
             if (edge == null) throw new ArgumentNullException(nameof(edge));
             AddEdge(edge);
         }
@@ -26,7 +26,7 @@ namespace VNet.DataStructures.Graph.SimpleGraph
             if (AdjacencyList.Values.Any(edgeList => edgeList.Any(e => (e.StartNode.Equals(edge.StartNode) && e.EndNode.Equals(edge.EndNode)) ||
                                                                                                 (e.StartNode.Equals(edge.EndNode) && e.EndNode.Equals(edge.StartNode)))))
             {
-                throw new ArgumentException("Simple graphs can only have one edge between nodes.");
+                throw new ArgumentException("Standard graphs can only have one edge between nodes.");
             }
 
             if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<TEdge>());

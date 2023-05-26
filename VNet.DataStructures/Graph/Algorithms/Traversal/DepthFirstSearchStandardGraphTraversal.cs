@@ -2,13 +2,13 @@
 
 namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    internal class DepthFirstSearchSimpleGraph<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
-                                                                                                               where TEdge : notnull, ISimpleEdge<TNode, TValue>
+    internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
+                                                                                                               where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                                                                where TValue : notnull
     {
         IGraph<TNode, TEdge, TValue> _graph;
 
-        public DepthFirstSearchSimpleGraph(IGraph<TNode, TEdge, TValue> graph)
+        public DepthFirstSearchStandardGraphTraversal(IGraph<TNode, TEdge, TValue> graph)
         {
             _graph = graph;
         }

@@ -1,9 +1,9 @@
 ﻿// ReSharper disable MemberCanBePrivate.Global
 namespace VNet.DataStructures.Graph.SimpleGraph
 {
-    public class UndirectedWeightedSimpleGraph<TNode, TEdge, TValue> : SimpleGraphBase<TNode, TEdge, TValue>
+    public class UndirectedWeightedSimpleGraph<TNode, TEdge, TValue> : StandardGraphBase<TNode, TEdge, TValue>
                                                                        where TNode : notnull, INode<TValue>
-                                                                       where TEdge : notnull, IWeightedSimpleEdge<TNode, TValue>
+                                                                       where TEdge : notnull, IWeightedStandardEdge<TNode, TValue>
                                                                        where TValue : notnull
     {
         public void AddNode(TNode node)
@@ -13,7 +13,7 @@ namespace VNet.DataStructures.Graph.SimpleGraph
 
         public void AddEdge(TNode startNode, TNode endNode, double weight)
         {
-            var edge = (TEdge)(IWeightedSimpleEdge<TNode, TValue>)new WeightedSimpleEdge<TNode, TValue>(startNode, endNode, false, weight);
+            var edge = (TEdge)(IWeightedStandardEdge<TNode, TValue>)new WeightedStandardEdge<TNode, TValue>(startNode, endNode, false, weight);
             if (edge == null) throw new ArgumentNullException(nameof(edge));
             AddEdge(edge);
         }
@@ -26,7 +26,7 @@ namespace VNet.DataStructures.Graph.SimpleGraph
             if (AdjacencyList.Values.Any(edgeList => edgeList.Any(e => (e.StartNode.Equals(edge.StartNode) && e.EndNode.Equals(edge.EndNode)) ||
                                                                                               (e.StartNode.Equals(edge.EndNode) && e.EndNode.Equals(edge.StartNode)))))
             {
-                throw new ArgumentException("Simple graphs can only have one edge between nodes.");
+                throw new ArgumentException("Standard graphs can only have one edge between nodes.");
             }
 
             if (!AdjacencyList.ContainsKey(startNode)) AdjacencyList.Add(startNode, new List<TEdge>());
