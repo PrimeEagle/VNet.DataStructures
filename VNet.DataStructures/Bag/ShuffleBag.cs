@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using System.Numerics;
-using VNet.DataStructures.Algorithms.Shuffle;
+using VNet.DataStructures.List.Algorithms.Shuffle;
 using VNet.Mathematics.Randomization.Generation;
 using VNet.System;
 
@@ -18,7 +18,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
         _currentItem = default;
         RandomGenerator = new DotNet();
         _data = new List<T>(initCapacity);
-        ShuffleProvider = new FisherYates<T>(RandomGenerator);
+        ShuffleProvider = new FisherYatesShuffle<T>(RandomGenerator);
     }
 
     public ShuffleBag(int initCapacity, IShuffleAlgorithm<T> shuffle)

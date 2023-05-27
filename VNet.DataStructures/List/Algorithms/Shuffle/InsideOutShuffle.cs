@@ -1,19 +1,19 @@
 ﻿using System.Numerics;
 using VNet.Mathematics.Randomization.Generation;
 
-namespace VNet.DataStructures.Algorithms.Shuffle;
+namespace VNet.DataStructures.List.Algorithms.Shuffle;
 
-public class InsideOut<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
+public class InsideOutShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
 {
     private readonly IRandomGenerationAlgorithm _random;
 
-    public InsideOut()
+    public InsideOutShuffle()
     {
         _random = new DotNet();
         _random.MinValue = 0;
     }
 
-    public InsideOut(IRandomGenerationAlgorithm randomGenerator)
+    public InsideOutShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
         _random.MinValue = 0;
@@ -28,7 +28,7 @@ public class InsideOut<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
         {
             _random.MaxValue = i + 1;
 
-            var j = (int) _random.Next();
+            var j = _random.Next();
             if (i != j) (tempCollection[i], tempCollection[j]) = (tempCollection[j], tempCollection[i]);
         }
 

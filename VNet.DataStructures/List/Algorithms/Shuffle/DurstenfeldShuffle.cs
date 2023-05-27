@@ -1,21 +1,21 @@
 ﻿using System.Numerics;
 using VNet.Mathematics.Randomization.Generation;
 
-namespace VNet.DataStructures.Algorithms.Shuffle;
+namespace VNet.DataStructures.List.Algorithms.Shuffle;
 
-public class Durstenfeld<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
+public class DurstenfeldShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
 {
     private readonly IRandomGenerationAlgorithm _random;
     private int _currentPosition;
 
 
-    public Durstenfeld()
+    public DurstenfeldShuffle()
     {
         _random = new DotNet();
         _random.MinValue = 0;
     }
 
-    public Durstenfeld(IRandomGenerationAlgorithm randomGenerator)
+    public DurstenfeldShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
         _random.MinValue = 0;
@@ -42,6 +42,6 @@ public class Durstenfeld<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
     {
         _random.MaxValue = _currentPosition + 1;
 
-        return (int) _random.Next();
+        return _random.Next();
     }
 }

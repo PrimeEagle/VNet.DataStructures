@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Algorithms.Sort
+﻿namespace VNet.DataStructures.List.Algorithms.Sort
 {
     public interface ISortAlgorithm
     {

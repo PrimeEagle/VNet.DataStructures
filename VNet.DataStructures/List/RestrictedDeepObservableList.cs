@@ -4,9 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace VNet.DataStructures.List
 {
-    public class RestrictedDeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , IEnumerable<T> where T : notnull
+    public class RestrictedDeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , 
+                                                   IEnumerable<T> 
+                                                   where T : notnull
     {
-        private readonly List<T> _list;
         [AllowNull]
         private Type? _restrictedType;
 

@@ -4,10 +4,10 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.List
 {
-    public class ObservableList<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class ObservableList<T> : ObservableSingleTypeCollectionBase<T>,
+                                     IEnumerable<T> 
+                                     where T : notnull
     {
-        private readonly List<T> _list;
-
         public T this[int index]
         {
             get => _list[index];

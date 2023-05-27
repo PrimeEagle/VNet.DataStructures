@@ -3,9 +3,10 @@ using System.Collections.ObjectModel;
 
 namespace VNet.DataStructures.List
 {
-    public class RestrictedList<T> : IEnumerable<T> where T : notnull
+    public class RestrictedList<T> : ListBase<T>,
+                                     IEnumerable<T> 
+                                     where T : notnull
     {
-        private readonly List<T> _list;
         private Type? _restrictedType;
 
 

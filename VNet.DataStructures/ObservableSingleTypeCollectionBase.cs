@@ -1,10 +1,12 @@
 ﻿using System.Collections.Specialized;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using VNet.DataStructures.List;
 
 namespace VNet.DataStructures
 {
-    public abstract class ObservableSingleTypeCollectionBase<T> : IObservableSingleTypeCollection<T>,
+    public abstract class ObservableSingleTypeCollectionBase<T> : ListBase<T>,
+                                                                  IObservableSingleTypeCollection<T>,
                                                                   IReentrancyMonitorClient<ObservableSingleTypeCollectionBase<T>>
                                                                   where T : notnull
     {

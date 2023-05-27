@@ -3,10 +3,10 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.List
 {
-    public class DeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , IEnumerable<T> where T : notnull
+    public class DeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> ,
+                                         IEnumerable<T> 
+                                         where T : notnull
     {
-        private readonly List<T> _list;
-
         public T this[int index]
         {
             get => _list[index];

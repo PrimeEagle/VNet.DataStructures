@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Algorithms.Shuffle
+﻿namespace VNet.DataStructures.List.Algorithms.Shuffle
 {
     public interface IShuffleAlgorithm<T>
     {
