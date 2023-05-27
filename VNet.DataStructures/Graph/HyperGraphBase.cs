@@ -9,11 +9,6 @@ namespace VNet.DataStructures.Graph
                                                                  where TEdge : notnull, IHyperEdge<TNode, TValue>
                                                                  where TValue : notnull
     {
-        public TValue Search(IHyperGraphConnectivityAlgorithm<TNode, TValue> searchAlgorithm, TValue value)
-        {
-            return searchAlgorithm.Traverse(this, value);
-        }
-
         public LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue> ToLineGraph()
         {
             var lineGraph = new LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue>();

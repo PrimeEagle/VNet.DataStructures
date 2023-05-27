@@ -7,9 +7,5 @@ namespace VNet.DataStructures.Graph
                                                                   where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                   where TValue : notnull
     {
-        public TValue Search(IStandardGraphTraversalAlgorithm<TNode, TValue> searchAlgorithm, TValue value)
-        {
-            return searchAlgorithm.Traverse(this, value);
-        }
     }
 }

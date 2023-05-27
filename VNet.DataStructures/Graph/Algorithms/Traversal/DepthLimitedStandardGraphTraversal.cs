@@ -2,9 +2,10 @@
 
 namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
-                                                                                                                   where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                                                                   where TValue : notnull
+    public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
+                                                                            where TNode : notnull, INode<TValue>
+                                                                            where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                            where TValue : notnull
     {
         IGraph<TNode, TEdge, TValue> _graph;
 
@@ -30,20 +31,31 @@ namespace VNet.DataStructures.Graph.Algorithms.Traversal
             if (node.Equals(end))
                 return true;
 
-            if (depth > 0)
+            if (depth <= 0) return false;
+            foreach (var edge in _graph[node])
             {
-                foreach (var edge in _graph[node])
-                {
-                    var adjacentNode = edge.EndNode;
+                var adjacentNode = edge.EndNode;
 
-                    if (!visited.ContainsKey(adjacentNode))
-                    {
-                        if (DLS(adjacentNode, end, depth - 1, visited, onVisit))
-                            return true;
-                    }
-                }
+                if (visited.ContainsKey(adjacentNode)) continue;
+                if (DLS(adjacentNode, end, depth - 1, visited, onVisit))
+                    return true;
             }
             return false;
+        }
+
+        public bool Search(TNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(TValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(string value, bool hasWildcards)
+        {
+            throw new NotImplementedException();
         }
     }
 }

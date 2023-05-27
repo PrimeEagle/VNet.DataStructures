@@ -1,9 +1,10 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.TopologicalSorting
+﻿namespace VNet.DataStructures.Graph.Algorithms.MinimumSpanningTree
 {
-    public interface IStandardGraphTopologicalSortAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+    public interface IGraphMinimumSpanningTreeAlgorithmArgs<TNode, TEdge, TValue> : IGraphAlgorithmArgs<TNode, TEdge, TValue>
                                                                                     where TNode : notnull, INode<TValue>
                                                                                     where TEdge : notnull, IEdge<TNode, TValue>
                                                                                     where TValue : notnull
     {
+
     }
 }

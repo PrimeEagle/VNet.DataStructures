@@ -1,9 +1,10 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Partitioning
+﻿namespace VNet.DataStructures.Graph.Algorithms.Matching
 {
-    public interface IGraphPartitioningAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+    public interface IGraphMatchingAlgorithmArgs<TNode, TEdge, TValue> : IGraphAlgorithmArgs<TNode, TEdge, TValue>
                                                                          where TNode : notnull, INode<TValue>
                                                                          where TEdge : notnull, IEdge<TNode, TValue>
                                                                          where TValue : notnull
     {
+
     }
 }

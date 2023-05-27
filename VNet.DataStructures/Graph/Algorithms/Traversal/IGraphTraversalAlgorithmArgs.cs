@@ -1,9 +1,10 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Coloring
+﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    public interface IHyperGraphColoringAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+    public interface IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> : IGraphAlgorithmArgs<TNode, TEdge, TValue>
                                                                           where TNode : notnull, INode<TValue>
                                                                           where TEdge : notnull, IEdge<TNode, TValue>
                                                                           where TValue : notnull
     {
+        
     }
 }

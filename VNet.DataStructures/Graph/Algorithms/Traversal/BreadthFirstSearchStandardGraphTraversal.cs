@@ -2,9 +2,10 @@
 
 namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
-                                                                                                                   where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                                                                   where TValue : notnull
+    public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
+                                                                           where TNode : notnull, INode<TValue>
+                                                                           where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                           where TValue : notnull
     {
         IGraph<TNode, TEdge, TValue> _graph;
 
@@ -45,6 +46,21 @@ namespace VNet.DataStructures.Graph.Algorithms.Traversal
                     }
                 }
             }
+        }
+
+        public bool Search(TNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(TValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(string value, bool hasWildcards)
+        {
+            throw new NotImplementedException();
         }
     }
 }

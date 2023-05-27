@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.CycleDetection
 {
-    public interface IStandardGraphCycleDetectionAlgorithm<TNode, TValue> : IGraphCycleDetectionAlgorithm<TNode, TValue>
-        where TNode : notnull, INode<TValue>
-                                                             where TValue : notnull
+    public interface IStandardGraphCycleDetectionAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+                                                                                   where TNode : notnull, INode<TValue>
+                                                                                   where TEdge : notnull, IEdge<TNode, TValue>
+                                                                                   where TValue : notnull
     {
     }
 }

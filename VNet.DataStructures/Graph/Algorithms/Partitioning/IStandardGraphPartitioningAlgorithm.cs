@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Partitioning
 {
-    public interface IStandardGraphPartitioningAlgorithm<TNode, TValue> : IGraphPartitioningAlgorithm<TNode, TValue>
-        where TNode : notnull, INode<TValue>
-                                                             where TValue : notnull
+    public interface IStandardGraphPartitioningAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+                                                                                 where TNode : notnull, INode<TValue>
+                                                                                 where TEdge : notnull, IEdge<TNode, TValue>
+                                                                                 where TValue : notnull
     {
     }
 }

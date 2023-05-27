@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Search
 {
-    public interface IHyperGraphSearchAlgorithm<TNode, TValue> : IGraphSearchAlgorithm<TNode, TValue>
-        where TNode : notnull, INode<TValue>
-                                                             where TValue : notnull
+    public interface IHyperGraphSearchAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+                                                                        where TNode : notnull, INode<TValue>
+                                                                        where TEdge : notnull, IEdge<TNode, TValue>
+                                                                        where TValue : notnull
     {
     }
 }

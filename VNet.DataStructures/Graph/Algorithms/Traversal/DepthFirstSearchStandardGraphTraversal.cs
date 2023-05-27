@@ -3,9 +3,10 @@ using VNet.DataStructures.Graph.Algorithms.Search;
 
 namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
-    internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
-                                                                                                               where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                                                               where TValue : notnull
+    internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
+                                                                                  where TNode : notnull, INode<TValue>
+                                                                                  where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                                  where TValue : notnull
     {
         IGraph<TNode, TEdge, TValue> _graph;
 
@@ -46,6 +47,21 @@ namespace VNet.DataStructures.Graph.Algorithms.Traversal
 
             // Call the post-visit function, if provided.
             postVisit?.Invoke(node);
+        }
+
+        public bool Search(TNode node)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(TValue value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public TNode? SearchByValue(string value, bool hasWildcards)
+        {
+            throw new NotImplementedException();
         }
     }
 }

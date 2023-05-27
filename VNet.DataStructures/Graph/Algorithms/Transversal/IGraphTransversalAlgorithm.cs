@@ -1,8 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Transversal
 {
-    public interface IGraphTransversalAlgorithm<TNode, TValue> : IGraphAlgorithm<TNode, TValue>
-        where TNode : notnull, INode<TValue>
-                                                             where TValue : notnull
+    public interface IGraphTransversalAlgorithm<TNode, TEdge, TValue> : IGraphAlgorithm<TNode, TEdge, TValue>
+                                                                        where TNode : notnull, INode<TValue>
+                                                                        where TEdge : notnull, IEdge<TNode, TValue>
+                                                                        where TValue : notnull
     {
     }
 }
