@@ -3,7 +3,9 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Queue
 {
-    public class RestrictedObservableQueue<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class RestrictedObservableQueue<T> : ObservableSingleTypeCollectionBase<T>,
+                                                IEnumerable<T>
+                                                where T : notnull, IComparable<T>
     {
         private readonly Queue<T> _queue;
         private Type? _restrictedType;

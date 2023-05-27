@@ -4,7 +4,9 @@ using System.Runtime.Serialization;
 
 namespace VNet.DataStructures.Set
 {
-    public class DeepObservableHashSet<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class DeepObservableHashSet<T> : DeepObservableSingleTypeCollectionBase<T>,
+                                            IEnumerable<T>
+                                            where T : notnull, IComparable<T>
     {
         private readonly HashSet<T> _set;
 

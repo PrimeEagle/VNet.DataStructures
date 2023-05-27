@@ -7,7 +7,7 @@ namespace VNet.DataStructures.List
 {
     public static class ListExtensions
     {
-        public static IList<T> PerformSearch<T>(this IList<T> list, IListSearchAlgorithm<T> algorithm, IListSearchAlgorithmArgs args) where T : notnull
+        public static IList<T> PerformSearch<T>(this IList<T> list, IListSearchAlgorithm<T> algorithm, IListSearchAlgorithmArgs<T> args) where T : notnull, IComparable<T>
         {
             return algorithm.Search(list.Clone(), args);
         }

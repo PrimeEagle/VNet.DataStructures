@@ -6,7 +6,7 @@ namespace VNet.DataStructures.List
 {
     public class RestrictedDeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> , 
                                                    IEnumerable<T> 
-                                                   where T : notnull
+                                                   where T : notnull, IComparable<T>
     {
         [AllowNull]
         private Type? _restrictedType;

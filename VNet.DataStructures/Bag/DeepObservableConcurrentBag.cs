@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Bag
 {
-    public class DeepObservableConcurrentBag<T> : DeepObservableSingleTypeCollectionBase<T> , IEnumerable<T>
+    public class DeepObservableConcurrentBag<T> : DeepObservableSingleTypeCollectionBase<T> ,
+                                                  IEnumerable<T> 
+                                                  where T : notnull, IComparable<T>
     {
         private readonly ConcurrentBag<T> _bag;
 

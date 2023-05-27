@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Stack
 {
-    public class ObservableConcurrentStack<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T> where T : notnull
+    public class ObservableConcurrentStack<T> : ObservableSingleTypeCollectionBase<T>,
+                                                IEnumerable<T>
+                                                where T : notnull, IComparable<T>
     {
         private readonly ConcurrentStack<T> _stack;
 

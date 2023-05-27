@@ -5,8 +5,8 @@ using System.Collections.Specialized;
 namespace VNet.DataStructures.List
 {
     public class RestrictedObservableList<T> : ObservableSingleTypeCollectionBase<T>, 
-                                               IEnumerable<T> 
-                                               where T : notnull
+                                               IEnumerable<T>
+                                               where T : notnull, IComparable<T>
     {
         private Type? _restrictedType;
 

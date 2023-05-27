@@ -5,11 +5,11 @@ using VNet.Utility.Extensions;
 
 namespace VNet.DataStructures.List
 {
-    public abstract class ListBase<T> where T : notnull
+    public abstract class ListBase<T> where T : notnull, IComparable<T>
     {
         protected List<T> _list;
 
-        public virtual IList<T> PerformSearch(IListSearchAlgorithm<T> algorithm, IListSearchAlgorithmArgs args)
+        public virtual IList<T> PerformSearch(IListSearchAlgorithm<T> algorithm, IListSearchAlgorithmArgs<T> args)
         {
             return algorithm.Search(_list.Clone(), args);
         }

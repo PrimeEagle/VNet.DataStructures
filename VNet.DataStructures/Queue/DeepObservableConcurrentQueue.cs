@@ -4,7 +4,9 @@ using System.Collections.Specialized;
 
 namespace VNet.DataStructures.Queue
 {
-    public class DeepObservableConcurrentQueue<T> : DeepObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class DeepObservableConcurrentQueue<T> : DeepObservableSingleTypeCollectionBase<T>,
+                                                    IEnumerable<T>
+                                                    where T : notnull, IComparable<T>
     {
         private readonly ConcurrentQueue<T> _queue;
 

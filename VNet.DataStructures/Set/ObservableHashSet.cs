@@ -1,11 +1,12 @@
 ﻿using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 
 namespace VNet.DataStructures.Set
 {
-    public class ObservableHashSet<T> : ObservableSingleTypeCollectionBase<T>, IEnumerable<T>
+    public class ObservableHashSet<T> : ObservableSingleTypeCollectionBase<T>,
+                                        IEnumerable<T>
+                                        where T : notnull, IComparable<T>
     {
         private readonly HashSet<T> _set;
 

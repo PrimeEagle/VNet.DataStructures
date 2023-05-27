@@ -5,7 +5,7 @@ namespace VNet.DataStructures.List
 {
     public class RestrictedList<T> : ListBase<T>,
                                      IEnumerable<T> 
-                                     where T : notnull
+                                     where T : notnull, IComparable<T>
     {
         private Type? _restrictedType;
 

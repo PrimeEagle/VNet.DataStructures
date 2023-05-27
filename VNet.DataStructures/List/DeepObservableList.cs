@@ -4,8 +4,8 @@ using System.Collections.Specialized;
 namespace VNet.DataStructures.List
 {
     public class DeepObservableList<T> : DeepObservableSingleTypeCollectionBase<T> ,
-                                         IEnumerable<T> 
-                                         where T : notnull
+                                         IEnumerable<T>
+                                         where T : notnull, IComparable<T>
     {
         public T this[int index]
         {

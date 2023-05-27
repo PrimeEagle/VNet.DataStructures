@@ -8,7 +8,7 @@ namespace VNet.DataStructures
     public abstract class ObservableSingleTypeCollectionBase<T> : ListBase<T>,
                                                                   IObservableSingleTypeCollection<T>,
                                                                   IReentrancyMonitorClient<ObservableSingleTypeCollectionBase<T>>
-                                                                  where T : notnull
+                                                                  where T : notnull, IComparable<T>
     {
         public int BlockReentrancyCount { get; set; }
         [AllowNull]

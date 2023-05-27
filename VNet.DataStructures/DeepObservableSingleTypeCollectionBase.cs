@@ -5,7 +5,7 @@ namespace VNet.DataStructures
 {
     public abstract class DeepObservableSingleTypeCollectionBase<T> : ObservableSingleTypeCollectionBase<T>,
                                                                       IDeepObservableSingleTypeCollection<T>
-                                                                      where T : notnull
+                                                                      where T : notnull, IComparable<T>
     {
         public event PropertyChangingEventHandler? PropertyChanging;
         public event PropertyChangedEventHandler? PropertyChanged;
