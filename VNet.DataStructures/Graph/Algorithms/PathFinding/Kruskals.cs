@@ -1,4 +1,4 @@
-﻿using VNet.DataStructures.Graph.Basic;
+﻿using VNet.DataStructures.Graph.Old;
 
 namespace VNet.DataStructures.Graph.Algorithms.PathFinding;
 
@@ -50,7 +50,7 @@ public class Kruskals
         }
     }
 
-    public int[] Find(Basic.Graph graph, int source = 0)
+    public int[] Find(Old.Graph graph, int source = 0)
     {
         var verticesCount = graph.VertexCount;
         var result = new List<Edge>();

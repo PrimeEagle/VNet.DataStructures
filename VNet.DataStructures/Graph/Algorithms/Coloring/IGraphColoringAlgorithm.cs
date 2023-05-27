@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
+﻿namespace VNet.DataStructures.Graph.Algorithms.Coloring
 {
     public interface IGraphColoringAlgorithm<TNode, TValue> : IGraphAlgorithm<TNode, TValue>
         where TNode : notnull, INode<TValue>

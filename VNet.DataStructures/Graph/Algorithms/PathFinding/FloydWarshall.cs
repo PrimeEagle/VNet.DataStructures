@@ -25,7 +25,7 @@ public class FloydWarshall
         return distance;
     }
 
-    public int[,] Find(Basic.Graph graph, int source = 0)
+    public int[,] Find(Old.Graph graph, int source = 0)
     {
         var distance = new int[graph.VertexCount, graph.VertexCount];
 

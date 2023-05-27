@@ -1,4 +1,4 @@
-﻿namespace VNet.DataStructures.Graph.Basic
+﻿namespace VNet.DataStructures.Graph.Old
 {
     public class Subset
     {

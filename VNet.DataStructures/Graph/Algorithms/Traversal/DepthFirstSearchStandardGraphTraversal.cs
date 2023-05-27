@@ -1,4 +1,5 @@
 ﻿using System.Collections.Concurrent;
+using VNet.DataStructures.Graph.Algorithms.Search;
 
 namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {

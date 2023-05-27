@@ -1,4 +1,6 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
+﻿using VNet.DataStructures.Graph.Algorithms.Coloring;
+
+namespace VNet.DataStructures.Graph.Algorithms.Clique
 {
     public interface IStandardGraphCliqueAlgorithm<TNode, TValue> : IGraphColoringAlgorithm<TNode, TValue>
         where TNode : notnull, INode<TValue>

@@ -1,4 +1,6 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal
+﻿using VNet.DataStructures.Graph.Algorithms.Search;
+
+namespace VNet.DataStructures.Graph.Algorithms.Traversal
 {
     public class BidirectionalStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TValue> where TNode : notnull, INode<TValue>
                                                                                                                    where TEdge : notnull, IStandardEdge<TNode, TValue>

@@ -20,7 +20,7 @@ public class Dijkstra
         return minIndex;
     }
 
-    public int[] Find(Basic.Graph graph, int source = 0)
+    public int[] Find(Old.Graph graph, int source = 0)
     {
         var distance = new int[graph.VertexCount];
         var shortestPathTreeSet = new bool[graph.VertexCount];

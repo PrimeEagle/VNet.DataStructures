@@ -1,4 +1,5 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Traversal;
+﻿using VNet.DataStructures.Graph.Algorithms.Connectivity;
+using VNet.DataStructures.Graph.Algorithms.Traversal;
 using VNet.DataStructures.Graph.LineGraph;
 
 namespace VNet.DataStructures.Graph

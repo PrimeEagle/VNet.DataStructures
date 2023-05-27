@@ -27,7 +27,7 @@ public class BreadthFirst
         return _queueItemCount == 0;
     }
 
-    private int GetAdjacentUnvisitedVertex(Basic.Graph graph, int vertexIndex)
+    private int GetAdjacentUnvisitedVertex(Old.Graph graph, int vertexIndex)
     {
         int i;
 
@@ -40,7 +40,7 @@ public class BreadthFirst
         return -1;
     }
 
-    public int[] Find(Basic.Graph graph, int source = 0)
+    public int[] Find(Old.Graph graph, int source = 0)
     {
         int i;
 

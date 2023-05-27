@@ -4,7 +4,7 @@
 // One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking.
 public class DepthFirst
 {
-    private int GetAdjacentUnvisitedVertex(Basic.Graph graph, int vertexIndex)
+    private int GetAdjacentUnvisitedVertex(Old.Graph graph, int vertexIndex)
     {
         for (var i = 0; i < graph.VertexCount; ++i)
         {
@@ -15,7 +15,7 @@ public class DepthFirst
         return -1;
     }
 
-    public int[] Find(Basic.Graph graph, int source = 0)
+    public int[] Find(Old.Graph graph, int source = 0)
     {
         var result = new Stack<int>();
 

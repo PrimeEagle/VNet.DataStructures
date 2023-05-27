@@ -1,6 +1,6 @@
 ﻿using VNet.DataStructures.Algorithms;
 
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+namespace VNet.DataStructures.Graph.Algorithms
 {
     public interface IGraphAlgorithm<TNode, TValue> : IDataStructureAlgorithm
         where TNode : notnull, INode<TValue>

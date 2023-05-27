@@ -1,7 +1,4 @@
-﻿using VNet.DataStructures.Graph.Algorithms.PathFinding;
-using VNet.DataStructures.Graph.Basic;
-
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+﻿namespace VNet.DataStructures.Graph.Algorithms.PathFinding
 {
     public interface IStandardGraphPathFindingAlgorithm<TNode, TValue> : IGraphPathFindingAlgorithm<TNode, TValue>
         where TNode : notnull, INode<TValue>

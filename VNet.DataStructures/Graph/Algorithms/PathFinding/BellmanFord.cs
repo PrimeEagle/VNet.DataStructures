@@ -5,7 +5,7 @@
 
 public class BellmanFord
 {
-    public int[] Find(Basic.Graph graph, int source = 0)
+    public int[] Find(Old.Graph graph, int source = 0)
     {
         var vertices = graph.VertexCount;
         var distances = new int[vertices];
