@@ -2,6 +2,6 @@
 {
     public interface IShuffleAlgorithm<T>
     {
-        public IList<T> Shuffle(IList<T> collection);
+        public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args);
     }
 }

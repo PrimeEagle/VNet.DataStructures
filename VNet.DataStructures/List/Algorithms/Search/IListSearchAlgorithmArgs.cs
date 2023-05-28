@@ -1,9 +1,9 @@
 ﻿namespace VNet.DataStructures.List.Algorithms.Search
 {
-    public interface IListSearchAlgorithmArgs<T> : IListAlgorithmArgs
+    public interface IListSearchAlgorithmArgs<T> : IListAlgorithmArgs<T>
                                                    where T : notnull, IComparable<T>
     {
-        IList<T> List { get; init; }
-        T Value { get; init; }
+        T Value { get; set; }
+        public bool HasWildcards { get; set; }
     }
 }

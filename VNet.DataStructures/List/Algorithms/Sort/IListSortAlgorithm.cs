@@ -1,8 +1,8 @@
 ﻿namespace VNet.DataStructures.List.Algorithms.Sort
 {
     public interface IListSortAlgorithm<T> : IListAlgorithm
-        where T : notnull
+                                             where T : notnull
     {
-        public IList<T> Sort(IList<T> list, IListSortAlgorithmArgs args);
+        public IList<T> Sort(IListSortAlgorithmArgs<T> args);
     }
 }

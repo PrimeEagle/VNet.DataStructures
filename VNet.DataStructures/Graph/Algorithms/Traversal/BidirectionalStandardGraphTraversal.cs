@@ -7,7 +7,7 @@ namespace VNet.DataStructures.Graph.Algorithms.Traversal
                                                                              where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                              where TValue : notnull
     {
-        IGraph<TNode, TEdge, TValue> _graph;
+        private readonly IGraph<TNode, TEdge, TValue> _graph;
 
         public BidirectionalStandardGraphTraversal(IGraph<TNode, TEdge, TValue> graph)
         {

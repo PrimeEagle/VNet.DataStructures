@@ -19,9 +19,9 @@ public class GilbertShannonReedsUniformShuffle<T> : IShuffleAlgorithm<T> where T
         _random.MinValue = 0;
     }
 
-    public IList<T> Shuffle(IList<T> collection)
+    public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
     {
-        var tempCollection = new List<T>(collection);
+        var tempCollection = new List<T>(args.List);
 
         var n = tempCollection.Count;
         for (var i = 0; i < n - 1; i++)

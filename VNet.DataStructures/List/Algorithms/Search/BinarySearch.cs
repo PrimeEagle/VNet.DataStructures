@@ -1,4 +1,6 @@
-﻿namespace VNet.DataStructures.List.Algorithms.Search;
+﻿using VNet.System;
+
+namespace VNet.DataStructures.List.Algorithms.Search;
 
 // Binary search (a.k.a Half-Interval Search) algorithms finds the position of a target value within an array.
 public class BinarySearch<T> where T : notnull, IComparable<T>
@@ -11,7 +13,17 @@ public class BinarySearch<T> where T : notnull, IComparable<T>
         {
             var midpoint = low + (high - low) / 2;
 
-            switch (args.Value.CompareTo(args.List[midpoint]))
+            int strCompare;
+            if (typeof(T) == typeof(string) && args.HasWildcards && (args.Value.ToString() ?? string.Empty).EqualsWildcard(args.List[midpoint].ToString() ?? string.Empty))
+            {
+                strCompare = 0;
+            }
+            else
+            {
+                strCompare = args.Value.CompareTo(args.List[midpoint]);
+            }
+
+            switch (strCompare)
             {
                 case 0:
                     return midpoint;

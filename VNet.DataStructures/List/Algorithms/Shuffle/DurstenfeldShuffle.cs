@@ -21,21 +21,21 @@ public class DurstenfeldShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
         _random.MinValue = 0;
     }
 
-    public IList<T> Shuffle(IList<T> collection)
+    public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
     {
-        var shuffledCollection = new T[collection.Count()].ToList();
+        var shuffledCollection = new T[args.List.Count].ToList();
 
         for (_currentPosition = 0; _currentPosition < shuffledCollection.Count; _currentPosition++)
-            RollAndSwap(collection, shuffledCollection);
+            RollAndSwap(args.List, shuffledCollection);
 
         return shuffledCollection;
     }
 
-    private void RollAndSwap(IList<T> collection, IList<T> shuffledCollection)
+    private void RollAndSwap(IList<T> list, IList<T> shuffledList)
     {
         var roll = Roll();
-        shuffledCollection[_currentPosition] = shuffledCollection[roll];
-        shuffledCollection[roll] = collection[_currentPosition];
+        shuffledList[_currentPosition] = shuffledList[roll];
+        shuffledList[roll] = list[_currentPosition];
     }
 
     private int Roll()

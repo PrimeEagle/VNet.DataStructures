@@ -19,9 +19,9 @@ public class InsideOutShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumbe
         _random.MinValue = 0;
     }
 
-    public IList<T> Shuffle(IList<T> collection)
+    public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
     {
-        var tempCollection = new List<T>(collection);
+        var tempCollection = new List<T>((List<T>)args.List);
 
         var n = tempCollection.Count;
         for (var i = 0; i < n; i++)

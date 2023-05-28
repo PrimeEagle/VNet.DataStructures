@@ -19,9 +19,9 @@ public class FisherYatesShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
         _random.MinValue = 0;
     }
 
-    public IList<T> Shuffle(IList<T> collection)
+    public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
     {
-        var tempCollection = new List<T>(collection);
+        var tempCollection = new List<T>(args.List);
 
         for (var n = tempCollection.Count - 1; n > 0; --n)
         {

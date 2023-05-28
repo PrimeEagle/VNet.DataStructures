@@ -6,12 +6,10 @@ namespace VNet.DataStructures.List.Algorithms.Shuffle;
 public class SatolloShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<T>
 {
     private readonly IRandomGenerationAlgorithm _random;
-    private int _currentPosition;
 
 
     public SatolloShuffle(int currentPosition)
     {
-        _currentPosition = currentPosition;
         _random = new DotNet();
         _random.MinValue = 0;
     }
@@ -19,13 +17,12 @@ public class SatolloShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<
     public SatolloShuffle(IRandomGenerationAlgorithm randomGenerator, int currentPosition)
     {
         _random = randomGenerator;
-        _currentPosition = currentPosition;
         _random.MinValue = 0;
     }
 
-    public IList<T> Shuffle(IList<T> collection)
+    public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
     {
-        var tempCollection = new List<T>(collection);
+        var tempCollection = new List<T>((List<T>)args.List);
 
         var n = tempCollection.Count;
 

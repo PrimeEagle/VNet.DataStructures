@@ -15,6 +15,11 @@ namespace VNet.DataStructures.List
             _list = new List<T>();
         }
 
+        public RestrictedList(IList<T> list)
+        {
+            _list = new List<T>(list);
+        }
+
         public RestrictedList(IEnumerable<T> enumerable)
         {
             _list = new List<T>(enumerable);

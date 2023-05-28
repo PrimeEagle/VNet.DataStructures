@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Numerics;
+using VNet.DataStructures.List.Algorithms;
 using VNet.DataStructures.List.Algorithms.Shuffle;
 using VNet.Mathematics.Randomization.Generation;
 using VNet.System;
@@ -8,7 +9,7 @@ namespace VNet.DataStructures.Bag;
 
 internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : struct, INumber<T>
 {
-    private readonly List<T> _data;
+    private List<T> _data;
     private T _currentItem;
     private int _index = -1;
 
@@ -69,7 +70,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
     // ReSharper disable once MemberCanBePrivate.Global
     public void Shuffle()
     {
-        ShuffleProvider.Shuffle(_data);
+        _data = (List<T>)ShuffleProvider.Shuffle(new ListShuffleAlgorithmArgs<T>(_data));
     }
 
     public void Add(T item)
