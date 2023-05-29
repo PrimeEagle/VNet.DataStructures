@@ -3,7 +3,7 @@
     public class GraphConnectivityAlgorithmArgs<TNode, TEdge, TValue> : IGraphConnectivityAlgorithmArgs<TNode, TEdge, TValue>
                                                                         where TNode : notnull, INode<TValue>
                                                                         where TEdge : notnull, IEdge<TNode, TValue>
-                                                                        where TValue : notnull
+                                                                        where TValue : notnull, IComparable<TValue>
     {
         public GraphConnectivityAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

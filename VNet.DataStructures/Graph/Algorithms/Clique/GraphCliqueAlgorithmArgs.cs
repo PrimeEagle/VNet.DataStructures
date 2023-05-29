@@ -3,7 +3,7 @@
     public class GraphCliqueAlgorithmArgs<TNode, TEdge, TValue> : IGraphCliqueAlgorithmArgs<TNode, TEdge, TValue>
                                                                        where TNode : notnull, INode<TValue>
                                                                        where TEdge : notnull, IEdge<TNode, TValue>
-                                                                       where TValue : notnull
+                                                                       where TValue : notnull, IComparable<TValue>
     {
         public GraphCliqueAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

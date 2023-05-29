@@ -1,67 +1,50 @@
 ﻿using System.Collections.Concurrent;
-using VNet.DataStructures.Graph.Algorithms.Search;
 
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+namespace VNet.DataStructures.Graph.Algorithms.Traversal;
+
+internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TEdge, TValue>
+                                                                              where TNode : notnull, INode<TValue>
+                                                                              where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                              where TValue : notnull, IComparable<TValue>
 {
-    internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
-                                                                                  where TNode : notnull, INode<TValue>
-                                                                                  where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                                  where TValue : notnull
+    public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        IGraph<TNode, TEdge, TValue> _graph;
+        var visited = new ConcurrentBag<TNode>();
+        var parentMap = new ConcurrentDictionary<TNode, TNode>(); // For cycle detection.
+        DfsHelper(args.StartNode, visited, parentMap, args);
+    }
 
-        public DepthFirstSearchStandardGraphTraversal(IGraph<TNode, TEdge, TValue> graph)
+    private static void DfsHelper(TNode node, ConcurrentBag<TNode> visited, ConcurrentDictionary<TNode, TNode> parentMap, IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
+    {
+        visited.Add(node);
+         
+        // Call the pre-visit function, if provided.
+        args.OnVisitNode?.Invoke(node);
+
+        // If the current node is the endNode, stop the traversal.
+        var shouldStop = false;
+        if (args.ShouldStop is not null)
         {
-            _graph = graph;
+            shouldStop = args.ShouldStop(node);
         }
+        if (node.Equals(args.EndNode) || shouldStop)
+            return;
 
-        public void Traverse(TNode starTNode, Action<TNode> preVisit, Action<TNode> postVisit)
+        foreach (var neighbor in args.Graph[node].Select(edge => edge.EndNode))
         {
-            ConcurrentBag<TNode> visited = new ConcurrentBag<TNode>();
-            ConcurrentDictionary<TNode, TNode> parentMap = new ConcurrentDictionary<TNode, TNode>(); // For cycle detection.
-            DFSHelper(starTNode, visited, parentMap, preVisit, postVisit);
-        }
-
-        private void DFSHelper(TNode node, ConcurrentBag<TNode> visited, ConcurrentDictionary<TNode, TNode> parentMap, Action<TNode> preVisit, Action<TNode> postVisit)
-        {
-            visited.Add(node);
-
-            // Call the pre-visit function, if provided.
-            preVisit?.Invoke(node);
-            foreach (TEdge edge in _graph[node])
+            if (!visited.Contains(neighbor))
             {
-                TNode neighbor = edge.EndNode;
-
-                if (!visited.Contains(neighbor))
-                {
-                    parentMap[neighbor] = node; // Mark current node as the parent of its neighbor.
-                    DFSHelper(neighbor, visited, parentMap, preVisit, postVisit);
-                }
-                else if (parentMap[node].Equals(neighbor)) // If the neighbor was visited before and it's not the parent of the current node, then it's a cycle.
-                {
-                    // Handle cycle detection here...
-                    // You could throw an exception, print a message, call a provided callback function, etc.
-                    Console.WriteLine($"Cycle detected: {node} --> {neighbor}");
-                }
+                parentMap[neighbor] = node; // Mark current node as the parent of its neighbor.
+                DfsHelper(neighbor, visited, parentMap, args);
             }
-
-            // Call the post-visit function, if provided.
-            postVisit?.Invoke(node);
+            else if (parentMap[node].Equals(neighbor)) // If the neighbor was visited before and it's not the parent of the current node, then it's a cycle.
+            {
+                // Handle cycle detection here...
+                Console.WriteLine($"Cycle detected: {node} --> {neighbor}");
+            }
         }
 
-        public bool Search(TNode node)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TNode? SearchByValue(TValue value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TNode? SearchByValue(string value, bool hasWildcards)
-        {
-            throw new NotImplementedException();
-        }
+        // Call the post-visit function, if provided.
+        args.OnVisitedNode?.Invoke(node);
     }
 }

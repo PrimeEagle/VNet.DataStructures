@@ -3,7 +3,7 @@
     public class GraphMatchingAlgorithmArgs<TNode, TEdge, TValue> : IGraphMatchingAlgorithmArgs<TNode, TEdge, TValue>
                                                                     where TNode : notnull, INode<TValue>
                                                                     where TEdge : notnull, IEdge<TNode, TValue>
-                                                                    where TValue : notnull
+                                                                    where TValue : notnull, IComparable<TValue>
     {
         public GraphMatchingAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

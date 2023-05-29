@@ -3,7 +3,7 @@
     public class GraphColoringAlgorithmArgs<TNode, TEdge, TValue> : IGraphColoringAlgorithmArgs<TNode, TEdge, TValue>
                                                                     where TNode : notnull, INode<TValue>
                                                                     where TEdge : notnull, IEdge<TNode, TValue>
-                                                                    where TValue : notnull
+                                                                    where TValue : notnull, IComparable<TValue>
     {
         public GraphColoringAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

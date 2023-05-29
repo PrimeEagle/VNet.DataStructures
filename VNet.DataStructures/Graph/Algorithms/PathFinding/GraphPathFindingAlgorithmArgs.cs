@@ -3,7 +3,7 @@
     public class GraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> : IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue>
                                                                        where TNode : notnull, INode<TValue>
                                                                        where TEdge : notnull, IEdge<TNode, TValue>
-                                                                       where TValue : notnull
+                                                                       where TValue : notnull, IComparable<TValue>
     {
         public GraphPathFindingAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

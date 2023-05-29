@@ -4,7 +4,7 @@ namespace VNet.DataStructures.Graph.HyperGraph
     public class UndirectedUnweightedHyperGraph<TNode, TEdge, TValue> : HyperGraphBase<TNode, TEdge, TValue>
                                                                  where TNode : notnull, INode<TValue>
                                                                  where TEdge : notnull, IUnweightedHyperEdge<TNode, TValue>
-                                                                 where TValue : notnull
+                                                                 where TValue : notnull, IComparable<TValue>
     {
         public void AddNode(TNode node)
         {

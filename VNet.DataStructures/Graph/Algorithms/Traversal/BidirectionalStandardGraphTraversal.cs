@@ -1,86 +1,68 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Search;
+﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal;
 
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+public class BidirectionalStandardGraphTraversal<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TEdge, TValue>
+                                                                         where TNode : notnull, INode<TValue>
+                                                                         where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                         where TValue : notnull, IComparable<TValue>
 {
-    public class BidirectionalStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
-                                                                             where TNode : notnull, INode<TValue>
-                                                                             where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                             where TValue : notnull
+    public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        private readonly IGraph<TNode, TEdge, TValue> _graph;
+        var visitedFromStart = new Dictionary<TNode, bool>();
+        var visitedFromEnd = new Dictionary<TNode, bool>();
 
-        public BidirectionalStandardGraphTraversal(IGraph<TNode, TEdge, TValue> graph)
+        var queueFromStart = new Queue<TNode>();
+        var queueFromEnd = new Queue<TNode>();
+
+        queueFromStart.Enqueue(args.StartNode);
+        visitedFromStart[args.StartNode] = true;
+
+        queueFromEnd.Enqueue(args.EndNode);
+        visitedFromEnd[args.EndNode] = true;
+        
+        var shouldStop = false;
+        if (args.ShouldStop is not null)
         {
-            _graph = graph;
+            shouldStop = args.ShouldStop(queueFromStart.Peek()) || args.ShouldStop(queueFromEnd.Peek());
         }
 
-        public bool Traverse(TNode start, TNode end, Action<TNode>? onStartVisit = null, Action<TNode>? onEndVisit = null)
+        while ((queueFromStart.Count > 0 && queueFromEnd.Count > 0) || !shouldStop)
         {
-            var visitedFromStart = new Dictionary<TNode, bool>();
-            var visitedFromEnd = new Dictionary<TNode, bool>();
+            // Search from the start
+            if (SearchLevel(queueFromStart, visitedFromStart, visitedFromEnd, args))
+                return;
 
-            var queueFromStart = new Queue<TNode>();
-            var queueFromEnd = new Queue<TNode>();
+            // Search from the end
+            if (SearchLevel(queueFromEnd, visitedFromEnd, visitedFromStart, args))
+                return;
 
-            queueFromStart.Enqueue(start);
-            visitedFromStart[start] = true;
-
-            queueFromEnd.Enqueue(end);
-            visitedFromEnd[end] = true;
-
-            while (queueFromStart.Count > 0 && queueFromEnd.Count > 0)
+            if (args.ShouldStop is not null)
             {
-                // Search from the start
-                if (SearchLevel(queueFromStart, visitedFromStart, visitedFromEnd, onStartVisit))
-                    return true;
-
-                // Search from the end
-                if (SearchLevel(queueFromEnd, visitedFromEnd, visitedFromStart, onEndVisit))
-                    return true;
+                shouldStop = args.ShouldStop(queueFromStart.Peek()) || args.ShouldStop(queueFromEnd.Peek());
             }
-
-            return false;
         }
 
-        private bool SearchLevel(Queue<TNode> queue, Dictionary<TNode, bool> visitedFromThisSide, Dictionary<TNode, bool> visitedFromThatSide, Action<TNode> onVisit)
+        return;
+    }
+
+    private static bool SearchLevel(Queue<TNode> queue, IDictionary<TNode, bool> visitedFromThisSide, IReadOnlyDictionary<TNode, bool> visitedFromThatSide, IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
+    {
+        var node = queue.Dequeue();
+
+        args.OnVisitNode?.Invoke(node);
+
+        foreach (var adjacentNode in args.Graph[node].Select(edge => edge.EndNode))
         {
-            TNode node = queue.Dequeue();
+            if (visitedFromThatSide.ContainsKey(adjacentNode))
+                // We found the connection point between the two BFSs
+                return true;
 
-            onVisit?.Invoke(node);
-
-            foreach (var edge in _graph[node])
-            {
-                var adjacentNode = edge.EndNode;
-
-                if (visitedFromThatSide.ContainsKey(adjacentNode))
-                {
-                    // We found the connection point between the two BFSs
-                    return true;
-                }
-
-                if (!visitedFromThisSide.ContainsKey(adjacentNode))
-                {
-                    visitedFromThisSide[adjacentNode] = true;
-                    queue.Enqueue(adjacentNode);
-                }
-            }
-
-            return false;
+            if (visitedFromThisSide.ContainsKey(adjacentNode)) continue;
+            visitedFromThisSide[adjacentNode] = true;
+            queue.Enqueue(adjacentNode);
         }
 
-        public bool Search(TNode node)
-        {
-            throw new NotImplementedException();
-        }
+        args.OnVisitedNode?.Invoke(node);
 
-        public TNode? SearchByValue(TValue value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TNode? SearchByValue(string value, bool hasWildcards)
-        {
-            throw new NotImplementedException();
-        }
+        return false;
     }
 }

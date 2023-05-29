@@ -1,61 +1,49 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Search;
+﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal;
 
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IDepthLimitedGraphTraversalAlgorithm<TNode, TEdge, TValue>
+                                                                        where TNode : notnull, INode<TValue>
+                                                                        where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                        where TValue : notnull, IComparable<TValue>
 {
-    public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
-                                                                            where TNode : notnull, INode<TValue>
-                                                                            where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                            where TValue : notnull
+    public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        IGraph<TNode, TEdge, TValue> _graph;
+        throw new NotImplementedException();
+    }
 
-        public DepthLimitedStandardGraphTraversal(IGraph<TNode, TEdge, TValue> graph)
-        {
-            _graph = graph;
-        }
+    public void Traverse(IDepthLimitedGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
+    {
+        var visited = new Dictionary<TNode, bool>();
+        Dls(visited, args);
+    }
 
-        public bool Traverse(TNode start, TNode end, int maxDepth, Action<TNode>? onVisit = null)
-        {
-            var visited = new Dictionary<TNode, bool>();
-            return DLS(start, end, maxDepth, visited, onVisit);
-        }
-
-        private bool DLS(TNode node, TNode end, int depth, Dictionary<TNode, bool> visited, Action<TNode> onVisit)
-        {
-            if (depth < 0)
-                return false;
-
-            visited[node] = true;
-            onVisit?.Invoke(node);
-
-            if (node.Equals(end))
-                return true;
-
-            if (depth <= 0) return false;
-            foreach (var edge in _graph[node])
-            {
-                var adjacentNode = edge.EndNode;
-
-                if (visited.ContainsKey(adjacentNode)) continue;
-                if (DLS(adjacentNode, end, depth - 1, visited, onVisit))
-                    return true;
-            }
+    private static bool Dls(IDictionary<TNode, bool> visited, IDepthLimitedGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
+    {
+        if (args.MaxDepth < 0)
             return false;
+
+        visited[args.StartNode] = true;
+        args.OnVisitNode?.Invoke(args.StartNode);
+
+        var shouldStop = false;
+        if (args.ShouldStop is not null)
+        {
+            shouldStop = args.ShouldStop(args.StartNode);
         }
 
-        public bool Search(TNode node)
+        if (args.StartNode.Equals(args.EndNode) || shouldStop)
+            return true;
+
+        if (args.MaxDepth <= 0) return false;
+        foreach (var adjacentNode in args.Graph[args.StartNode].Select(edge => edge.EndNode).Where(adjacentNode => !visited.ContainsKey(adjacentNode)))
         {
-            throw new NotImplementedException();
+            args.OnVisitedNode?.Invoke(args.StartNode);
+
+            args.StartNode = adjacentNode;
+            args.MaxDepth -= 1;
+            if (Dls(visited, args))
+                return true;
         }
 
-        public TNode? SearchByValue(TValue value)
-        {
-            throw new NotImplementedException();
-        }
-
-        public TNode? SearchByValue(string value, bool hasWildcards)
-        {
-            throw new NotImplementedException();
-        }
+        return false;
     }
 }

@@ -1,66 +1,48 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Search;
+﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal;
 
-namespace VNet.DataStructures.Graph.Algorithms.Traversal
+public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TEdge, TValue>
+                                                                       where TNode : notnull, INode<TValue>
+                                                                       where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                       where TValue : notnull, IComparable<TValue>
 {
-    public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IStandardGraphSearchAlgorithm<TNode, TEdge, TValue> 
-                                                                           where TNode : notnull, INode<TValue>
-                                                                           where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                           where TValue : notnull
+    public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        IGraph<TNode, TEdge, TValue> _graph;
+        if (args.StartNode == null)
+            throw new ArgumentNullException(nameof(args.StartNode));
 
-        public BreadthFirstSearchSimpleAlgorithm(IGraph<TNode, TEdge, TValue> graph)
+        var visited = new HashSet<TNode>();
+        var queue = new Queue<TNode>();
+
+        visited.Add(args.StartNode);
+        queue.Enqueue(args.StartNode);
+
+        while (queue.Count > 0)
         {
-            _graph = graph;
-        }
+            var currentNode = queue.Dequeue();
 
-        public void Traverse(TNode starTNode, Action<TNode> visitAction, Action<TNode> dummyAction)
-        {
-            if (starTNode == null)
-                throw new ArgumentNullException(nameof(starTNode));
+            // Call the visit function.
+            args.OnVisitNode?.Invoke(currentNode);
 
-            if (visitAction == null)
-                throw new ArgumentNullException(nameof(visitAction));
-
-            HashSet<TNode> visited = new HashSet<TNode>();
-            Queue<TNode> queue = new Queue<TNode>();
-
-            visited.Add(starTNode);
-            queue.Enqueue(starTNode);
-
-            while (queue.Count > 0)
+            var shouldStop = false;
+            if (args.ShouldStop is not null)
             {
-                TNode vertex = queue.Dequeue();
-
-                // Call the visit function.
-                visitAction(vertex);
-
-                foreach (TEdge edge in _graph[vertex])
-                {
-                    TNode neighbor = edge.EndNode;
-
-                    if (!visited.Contains(neighbor))
-                    {
-                        visited.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
-                }
+                shouldStop = args.ShouldStop(currentNode);
             }
-        }
 
-        public bool Search(TNode node)
-        {
-            throw new NotImplementedException();
-        }
+            // If the current node is the endNode, stop the traversal.
+            if (((currentNode.Equals(args.EndNode)) || shouldStop))
+            {
+                args.EndNode = currentNode;
+                return;
+            }
 
-        public TNode? SearchByValue(TValue value)
-        {
-            throw new NotImplementedException();
-        }
+            foreach (var neighbor in args.Graph[currentNode].Select(edge => edge.EndNode).Where(neighbor => !visited.Contains(neighbor)))
+            {
+                visited.Add(neighbor);
+                queue.Enqueue(neighbor);
+            }
 
-        public TNode? SearchByValue(string value, bool hasWildcards)
-        {
-            throw new NotImplementedException();
+            args.OnVisitedNode?.Invoke(currentNode);
         }
     }
 }

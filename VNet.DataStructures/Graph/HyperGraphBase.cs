@@ -7,7 +7,7 @@ namespace VNet.DataStructures.Graph
     public abstract class HyperGraphBase<TNode, TEdge, TValue> : GraphBase<TNode, TEdge, TValue>, IHyperGraph<TNode, TEdge, TValue>
                                                                  where TNode : notnull, INode<TValue>
                                                                  where TEdge : notnull, IHyperEdge<TNode, TValue>
-                                                                 where TValue : notnull
+                                                                 where TValue : notnull, IComparable<TValue>
     {
         public LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue> ToLineGraph()
         {

@@ -4,7 +4,7 @@ namespace VNet.DataStructures.Graph.SimpleGraph
     public class UndirectedWeightedSimpleGraph<TNode, TEdge, TValue> : StandardGraphBase<TNode, TEdge, TValue>
                                                                        where TNode : notnull, INode<TValue>
                                                                        where TEdge : notnull, IWeightedStandardEdge<TNode, TValue>
-                                                                       where TValue : notnull
+                                                                       where TValue : notnull, IComparable<TValue>
     {
         public void AddNode(TNode node)
         {

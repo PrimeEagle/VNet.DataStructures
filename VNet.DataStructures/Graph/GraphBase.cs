@@ -17,7 +17,7 @@ namespace VNet.DataStructures.Graph
     public abstract class GraphBase<TNode, TEdge, TValue> : IGraph<TNode, TEdge, TValue>
                                                             where TNode : notnull, INode<TValue>
                                                             where TEdge : notnull, IEdge<TNode, TValue>
-                                                            where TValue : notnull
+                                                            where TValue : notnull, IComparable<TValue>
     {
         List<TEdge> IGraph<TNode, TEdge, TValue>.this[TNode node]
         {

@@ -3,7 +3,7 @@
     public class GraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> : IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue>
                                                                         where TNode : notnull, INode<TValue>
                                                                         where TEdge : notnull, IEdge<TNode, TValue>
-                                                                        where TValue : notnull
+                                                                        where TValue : notnull, IComparable<TValue>
     {
         public GraphShortestPathAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

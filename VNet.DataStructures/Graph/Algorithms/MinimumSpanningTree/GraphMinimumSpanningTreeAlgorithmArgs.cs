@@ -3,7 +3,7 @@
     public class GraphMinimumSpanningTreeAlgorithmArgs<TNode, TEdge, TValue> : IGraphMinimumSpanningTreeAlgorithmArgs<TNode, TEdge, TValue>
                                                                                where TNode : notnull, INode<TValue>
                                                                                where TEdge : notnull, IEdge<TNode, TValue>
-                                                                               where TValue : notnull
+                                                                               where TValue : notnull, IComparable<TValue>
     {
         public GraphMinimumSpanningTreeAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
         {

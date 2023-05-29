@@ -4,7 +4,7 @@ namespace VNet.DataStructures.Graph.MultiGraph
     public class UndirectedUnweightedMultiGraph<TNode, TEdge, TValue> : StandardGraphBase<TNode, TEdge, TValue>
                                                                         where TNode : notnull, INode<TValue>
                                                                         where TEdge : notnull, IUnweightedStandardEdge<TNode, TValue>
-                                                                        where TValue : notnull
+                                                                        where TValue : notnull, IComparable<TValue>
     {
         public void AddNode(TNode node)
         {
