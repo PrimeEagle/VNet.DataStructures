@@ -1,14 +1,14 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.ShortestPath;
+﻿namespace VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 // Dijkstra's algorithm, also known as single-source shortest paths, solves the problem of finding the shortest path from a point in a graph (the source) to a destination.
 // It is a greedy algorithm and similar to Prim's algorithm. Algorithm starts at the source vertex, s, it grows a tree, T, that ultimately spans all vertices reachable
 // from S. Vertices are added to T in order of distance i.e., first S, then the vertex closest to S, then the next closest, and so on.
 
-public class DijkstraStandardGraphShortestPath<TNode, TEdge, TValue> : IGraphShortestPathAlgorithm<TNode, TEdge, TValue>
+public class DijkstraStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue>
                                                                        where TNode : notnull, INode<TValue>
                                                                        where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                        where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindShortestPath(IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
         if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");

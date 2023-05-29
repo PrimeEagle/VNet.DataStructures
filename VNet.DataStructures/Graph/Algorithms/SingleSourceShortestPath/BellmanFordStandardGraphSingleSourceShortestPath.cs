@@ -1,14 +1,14 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.ShortestPath;
+﻿namespace VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 // Bellman–Ford algorithm, also known as Bellman–Ford–Moore algorithm, is an algorithm that computes shortest paths from a single source vertex to all
 // of the other vertices in a weighted digraph. It is slower than Dijkstra's algorithm for the same problem, but more versatile, as it is capable of
 // handling graphs in which some of the edge weights are negative numbers.
 
-public class BellmanFordStandardGraphShortestPath<TNode, TEdge, TValue> : IGraphShortestPathAlgorithm<TNode, TEdge, TValue>
+public class BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue>
                                                                           where TNode : notnull, INode<TValue>
                                                                           where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                           where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindShortestPath(IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
 

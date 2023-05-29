@@ -1,4 +1,5 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Clique;
+﻿using VNet.DataStructures.Graph.Algorithms.AllPairsShortestPath;
+using VNet.DataStructures.Graph.Algorithms.Clique;
 using VNet.DataStructures.Graph.Algorithms.Coloring;
 using VNet.DataStructures.Graph.Algorithms.Connectivity;
 using VNet.DataStructures.Graph.Algorithms.Matching;
@@ -7,7 +8,7 @@ using VNet.DataStructures.Graph.Algorithms.MinimumSpanningTree;
 using VNet.DataStructures.Graph.Algorithms.Partitioning;
 using VNet.DataStructures.Graph.Algorithms.PathFinding;
 using VNet.DataStructures.Graph.Algorithms.Search;
-using VNet.DataStructures.Graph.Algorithms.ShortestPath;
+using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 using VNet.DataStructures.Graph.Algorithms.TopologicalSorting;
 using VNet.DataStructures.Graph.Algorithms.Transversal;
 using VNet.DataStructures.Graph.Algorithms.Traversal;
@@ -73,7 +74,11 @@ namespace VNet.DataStructures.Graph
         {
             throw new NotImplementedException();
         }
-        public virtual void PerformShortestPath(IGraphShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+        public virtual void PerformSingleSourceShortestPath(IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual void PerformAllPairsShortestPath(IGraphAllPairsShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
         {
             throw new NotImplementedException();
         }

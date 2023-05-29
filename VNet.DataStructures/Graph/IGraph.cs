@@ -1,4 +1,5 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Clique;
+﻿using VNet.DataStructures.Graph.Algorithms.AllPairsShortestPath;
+using VNet.DataStructures.Graph.Algorithms.Clique;
 using VNet.DataStructures.Graph.Algorithms.Coloring;
 using VNet.DataStructures.Graph.Algorithms.Connectivity;
 using VNet.DataStructures.Graph.Algorithms.Matching;
@@ -7,7 +8,7 @@ using VNet.DataStructures.Graph.Algorithms.MinimumSpanningTree;
 using VNet.DataStructures.Graph.Algorithms.Partitioning;
 using VNet.DataStructures.Graph.Algorithms.PathFinding;
 using VNet.DataStructures.Graph.Algorithms.Search;
-using VNet.DataStructures.Graph.Algorithms.ShortestPath;
+using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 using VNet.DataStructures.Graph.Algorithms.TopologicalSorting;
 using VNet.DataStructures.Graph.Algorithms.Transversal;
 using VNet.DataStructures.Graph.Algorithms.Traversal;
@@ -38,7 +39,8 @@ namespace VNet.DataStructures.Graph
         public void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformTransversal(IGraphTransversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformTopologicalSort(IGraphTopologicalSortAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTopologicalSortAlgorithmArgs<TNode, TEdge, TValue> args);
-        public void PerformShortestPath(IGraphShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args);
+        public void PerformSingleSourceShortestPath(IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args);
+        public void PerformAllPairsShortestPath(IGraphAllPairsShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformSearch(IGraphSearchAlgorithm<TNode, TEdge, TValue> algorithm, IGraphSearchAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformPathFinding(IGraphPathFindingAlgorithm<TNode, TEdge, TValue> algorithm, IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformPartition(IGraphPartitioningAlgorithm<TNode, TEdge, TValue> algorithm, IGraphPartitioningAlgorithmArgs<TNode, TEdge, TValue> args);

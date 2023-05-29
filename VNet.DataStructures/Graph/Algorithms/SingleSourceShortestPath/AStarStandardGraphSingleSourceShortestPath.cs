@@ -1,19 +1,19 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.ShortestPath;
+﻿namespace VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 // A* is primarily designed for finding the shortest path from a starting node to a goal node. It's not just for finding any path, but for finding the most cost-effective (shortest) one based on a given cost function.
 // The primary characteristic that sets A* apart from other shortest path algorithms is its use of a heuristic function to estimate the cost from the current node to the goal.
 // This heuristic helps guide the algorithm's search towards the goal more efficiently, potentially reducing the number of nodes that have to be explored compared to algorithms like Dijkstra's or Bellman-Ford.
 
-public class AStarStandardGraphShortestPath<TNode, TEdge, TValue> : IAStarStandardGraphShortestPathAlgorithm<TNode, TEdge, TValue>
+public class AStarStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : IAStarStandardGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue>
                                                                     where TNode : notnull, INode<TValue>
                                                                     where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                     where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindShortestPath(IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         throw new NotImplementedException();
     }
 
-    public Path<TNode> FindShortestPath(IAStarStandardGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode> FindShortestPath(IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
         if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");

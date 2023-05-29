@@ -1,6 +1,6 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.ShortestPath
+﻿namespace VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath
 {
-    public interface IAStarStandardGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> : IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue>
+    public interface IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> : IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue>
                                                                                           where TNode : notnull, INode<TValue>
                                                                                           where TEdge : notnull, IEdge<TNode, TValue>
                                                                                           where TValue : notnull, IComparable<TValue>

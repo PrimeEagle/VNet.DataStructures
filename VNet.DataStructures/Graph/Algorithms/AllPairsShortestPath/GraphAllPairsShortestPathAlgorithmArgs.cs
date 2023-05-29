@@ -1,11 +1,11 @@
-﻿namespace VNet.DataStructures.Graph.Algorithms.ShortestPath
+﻿namespace VNet.DataStructures.Graph.Algorithms.AllPairsShortestPath
 {
-    public class GraphShortestPathAlgorithmArgs<TNode, TEdge, TValue> : IGraphShortestPathAlgorithmArgs<TNode, TEdge, TValue>
+    public class GraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> : IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue>
                                                                         where TNode : notnull, INode<TValue>
                                                                         where TEdge : notnull, IEdge<TNode, TValue>
                                                                         where TValue : notnull, IComparable<TValue>
     {
-        public GraphShortestPathAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph, TNode startNode, TNode endNode)
+        public GraphAllPairsShortestPathAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph, TNode startNode, TNode endNode)
         {
             Graph = graph;
             StartNode = startNode;
