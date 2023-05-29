@@ -18,6 +18,10 @@ namespace VNet.DataStructures.Graph
                                                   where TEdge : notnull, IEdge<TNode, TValue>
                                                   where TValue : notnull, IComparable<TValue>
     {
+        public bool IsStandardGraph { get; }
+        public bool IsHyperGraph { get; }
+        public bool IsLineGraph { get; }
+        public bool IsMultiOrParallelGraph { get; }
         public bool IsDirected { get; }
         public bool IsWeighted { get; }
         public List<TEdge> this[TNode node] { get; set; }

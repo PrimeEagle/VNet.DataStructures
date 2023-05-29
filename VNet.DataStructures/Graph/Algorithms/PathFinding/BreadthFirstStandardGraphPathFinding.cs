@@ -12,6 +12,8 @@ public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraph
 {
     public IEnumerable<TNode> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        if (!args.Graph.IsStandardGraph || args.Graph.IsWeighted) throw new ArgumentException("This path finding algorithm only works for unweighted standard graphs.");
+
         var predecessors = new Dictionary<TNode, TNode>();
         var found = false;
 
@@ -38,7 +40,7 @@ public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraph
 
         if (!found)
         {
-            return null;  // Return null or an empty list if there's no path.
+            return new List<TNode>();  // Return null or an empty list if there's no path.
         }
 
         var path = new List<TNode> { args.EndNode };

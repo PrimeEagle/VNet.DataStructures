@@ -5,6 +5,10 @@
                                                                               where TEdge : notnull, IWeightedHyperEdge<TNode, TValue>
                                                                               where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsStandardGraph => false;
+        public override bool IsHyperGraph => true;
+        public override bool IsLineGraph => false;
+        public override bool IsMultiOrParallelGraph => true;
         public override bool IsDirected => false;
         public override bool IsWeighted => true;
 

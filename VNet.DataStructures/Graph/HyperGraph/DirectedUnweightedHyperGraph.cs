@@ -6,6 +6,10 @@ namespace VNet.DataStructures.Graph.HyperGraph
                                                                       where TEdge : notnull, IUnweightedHyperEdge<TNode, TValue>
                                                                       where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsStandardGraph => false;
+        public override bool IsHyperGraph => true;
+        public override bool IsLineGraph => false;
+        public override bool IsMultiOrParallelGraph => false;
         public override bool IsDirected => true;
         public override bool IsWeighted => false;
 

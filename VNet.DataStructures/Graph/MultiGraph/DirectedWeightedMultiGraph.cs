@@ -6,6 +6,10 @@ namespace VNet.DataStructures.Graph.MultiGraph
                                                                     where TEdge : notnull, IWeightedStandardEdge<TNode, TValue>
                                                                     where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsStandardGraph => true;
+        public override bool IsHyperGraph => false;
+        public override bool IsLineGraph => false;
+        public override bool IsMultiOrParallelGraph => true;
         public override bool IsDirected => true;
         public override bool IsWeighted => true;
 

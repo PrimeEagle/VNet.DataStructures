@@ -6,6 +6,10 @@ namespace VNet.DataStructures.Graph.SimpleGraph
                                                                        where TEdge : notnull, IUnweightedStandardEdge<TNode, TValue>
                                                                        where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsStandardGraph => true;
+        public override bool IsHyperGraph => false;
+        public override bool IsLineGraph => false;
+        public override bool IsMultiOrParallelGraph => false;
         public override bool IsDirected => true;
         public override bool IsWeighted=> false;
 

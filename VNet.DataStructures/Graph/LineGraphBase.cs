@@ -6,16 +6,15 @@
                                                                                where TNode : notnull, INode<TValue>
                                                                                where TValue : notnull
     {
+        public bool IsStandardGraph => false;
+        public bool IsHyperGraph => false;
+        public bool IsLineGraph => true;
+        public bool IsMultiOrParallelGraph => false;
+
         List<TLineEdge> ILineGraph<TLineNode, TLineEdge, TNode, TValue>.this[TLineNode node]
         {
-            get
-            {
-                return AdjacencyList[node];
-            }
-            set
-            {
-                AdjacencyList[node] = value;
-            }
+            get => AdjacencyList[node];
+            set => AdjacencyList[node] = value;
         }
 
         public virtual Dictionary<TLineNode, List<TLineEdge>> AdjacencyList { get; init; } = new();
