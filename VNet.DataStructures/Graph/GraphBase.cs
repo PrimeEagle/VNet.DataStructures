@@ -19,6 +19,10 @@ namespace VNet.DataStructures.Graph
                                                             where TEdge : notnull, IEdge<TNode, TValue>
                                                             where TValue : notnull, IComparable<TValue>
     {
+        public abstract bool IsDirected { get; }
+        public abstract bool IsWeighted { get; }
+
+
         List<TEdge> IGraph<TNode, TEdge, TValue>.this[TNode node]
         {
             get => AdjacencyList[node];

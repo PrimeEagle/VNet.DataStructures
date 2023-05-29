@@ -5,6 +5,7 @@
                                                                             where TEdge : notnull, IEdge<TNode, TValue>
                                                                             where TValue : notnull, IComparable<TValue>
     {
-
+        public TNode StartNode { get; init; }
+        public TNode EndNode { get; init; }
     }
 }

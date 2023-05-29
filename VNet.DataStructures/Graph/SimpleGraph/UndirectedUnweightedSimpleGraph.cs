@@ -6,6 +6,10 @@ namespace VNet.DataStructures.Graph.SimpleGraph
                                                 where TEdge : notnull, IUnweightedStandardEdge<TNode, TValue>
                                                 where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsDirected => false;
+        public override bool IsWeighted => false;
+
+
         public void AddNode(TNode node)
         {
             if (!AdjacencyList.ContainsKey(node)) AdjacencyList.Add(node, new List<TEdge>());

@@ -18,6 +18,8 @@ namespace VNet.DataStructures.Graph
                                                   where TEdge : notnull, IEdge<TNode, TValue>
                                                   where TValue : notnull, IComparable<TValue>
     {
+        public bool IsDirected { get; }
+        public bool IsWeighted { get; }
         public List<TEdge> this[TNode node] { get; set; }
         public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; }
 

@@ -1,9 +1,9 @@
 ﻿namespace VNet.DataStructures.Graph.Algorithms.Traversal;
 
-public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TEdge, TValue>
-                                                                       where TNode : notnull, INode<TValue>
-                                                                       where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                       where TValue : notnull, IComparable<TValue>
+public class BreadthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IGraphTraversalAlgorithm<TNode, TEdge, TValue>
+                                                                              where TNode : notnull, INode<TValue>
+                                                                              where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                              where TValue : notnull, IComparable<TValue>
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
@@ -30,7 +30,7 @@ public class BreadthFirstSearchSimpleAlgorithm<TNode, TEdge, TValue> : IGraphTra
             }
 
             // If the current node is the endNode, stop the traversal.
-            if (((currentNode.Equals(args.EndNode)) || shouldStop))
+            if (((args.EndNode is not null && currentNode.Equals(args.EndNode)) || shouldStop))
             {
                 args.EndNode = currentNode;
                 return;

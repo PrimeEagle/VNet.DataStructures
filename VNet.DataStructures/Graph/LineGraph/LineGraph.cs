@@ -7,6 +7,10 @@ namespace VNet.DataStructures.Graph.LineGraph
                                                                   where TNode : notnull, INode<TValue>
                                                                   where TValue : notnull
     {
+        public bool IsDirected => true;
+        public bool IsWeighted => false;
+
+
         public override Dictionary<TLineNode, List<TLineEdge>> AdjacencyList { get; init; } = new();
 
         public void AddNode(TLineNode node)

@@ -5,6 +5,10 @@
                                                                             where TEdge : notnull, IWeightedHyperEdge<TNode, TValue>
                                                                             where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsDirected => true;
+        public override bool IsWeighted => true;
+
+
         public void AddNode(TNode node)
         {
             if (!AdjacencyList.ContainsKey(node)) AdjacencyList.Add(node, new List<TEdge>());

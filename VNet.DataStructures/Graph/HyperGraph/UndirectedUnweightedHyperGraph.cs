@@ -6,6 +6,10 @@ namespace VNet.DataStructures.Graph.HyperGraph
                                                                  where TEdge : notnull, IUnweightedHyperEdge<TNode, TValue>
                                                                  where TValue : notnull, IComparable<TValue>
     {
+        public override bool IsDirected => false;
+        public override bool IsWeighted => false;
+
+
         public void AddNode(TNode node)
         {
             if (!AdjacencyList.ContainsKey(node)) AdjacencyList.Add(node, new List<TEdge>());
