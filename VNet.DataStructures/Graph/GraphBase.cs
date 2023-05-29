@@ -25,13 +25,18 @@ namespace VNet.DataStructures.Graph
         public abstract bool IsMultiOrParallelGraph { get; }
         public abstract bool IsDirected { get; }
         public abstract bool IsWeighted { get; }
+        public abstract bool HasNegativeWeights { get; }
 
+        public int Count => AdjacencyList.Count;
 
         List<TEdge> IGraph<TNode, TEdge, TValue>.this[TNode node]
         {
             get => AdjacencyList[node];
             set => AdjacencyList[node] = value;
         }
+
+        public IEnumerable<TNode> Nodes => AdjacencyList.Keys;
+        public IEnumerable<TEdge> Edges => AdjacencyList.Values.SelectMany(e => e.Select(x => x));
         public List<TEdge> this[TNode node] 
         {
             get => AdjacencyList[node];

@@ -1,6 +1,4 @@
-﻿using VNet.DataStructures.Graph.Algorithms.Connectivity;
-using VNet.DataStructures.Graph.Algorithms.Traversal;
-using VNet.DataStructures.Graph.LineGraph;
+﻿using VNet.DataStructures.Graph.LineGraph;
 
 namespace VNet.DataStructures.Graph
 {
@@ -9,6 +7,14 @@ namespace VNet.DataStructures.Graph
                                                                  where TEdge : notnull, IHyperEdge<TNode, TValue>
                                                                  where TValue : notnull, IComparable<TValue>
     {
+        public override bool HasNegativeWeights
+        {
+            get
+            {
+                return IsWeighted && Edges.Any(e => (e.GetType() == typeof(IWeightedHyperEdge<TNode, TValue>) && ((IWeightedHyperEdge<TNode, TValue>)e).Weight < 0));
+            }
+        }
+
         public LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue> ToLineGraph()
         {
             var lineGraph = new LineGraph<TEdge, ILineEdge<TEdge, TNode, TValue>, TNode, TValue>();

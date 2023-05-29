@@ -2,17 +2,17 @@
 
 namespace VNet.DataStructures.Graph.Algorithms.PathFinding;
 
-// Breadth first traversal, also known as breadth first search or BFS, is an algorithm for traversing or searching tree or graph data structures.
-// It starts at the tree root (or some arbitrary node of a graph, sometimes referred to as a 'search key') and explores the neighbor nodes first,
-// before moving to the next level neighbors.
-public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraphPathFindingAlgorithm<TNode, TEdge, TValue>
-                                                                          where TNode : notnull, INode<TValue>
-                                                                          where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                          where TValue : notnull, IComparable<TValue>
+// Depth first traversal, also known as depth first search or DFS, is an algorithm for traversing or searching tree or graph data structures.
+// One starts at the root (selecting some arbitrary node as the root in the case of a graph) and explores as far as possible along each branch before backtracking.
+public class DepthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraphPathFindingAlgorithm<TNode, TEdge, TValue>
+                                                                        where TNode : notnull, INode<TValue>
+                                                                        where TEdge : notnull, IStandardEdge<TNode, TValue>
+                                                                        where TValue : notnull, IComparable<TValue>
 {
     public Path<TNode> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph || args.Graph.IsWeighted) throw new ArgumentException("This path finding algorithm only works for unweighted standard graphs.");
+
 
         var predecessors = new Dictionary<TNode, TNode>();
         var found = false;
@@ -29,10 +29,10 @@ public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraph
             },
             ShouldStop = node => found
         };
-        var traverseAlgorithm = new BreadthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue>();
+        var traverseAlgorithm = new DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue>();
         traverseAlgorithm.Traverse(traverseArgs);
 
-        if (!found) return new Path<TNode>();
+        if (!found) return null; // Return null or an empty list if there's no path.
 
         var path = new List<TNode> {args.EndNode};
         while (!path.Last().Equals(args.StartNode)) path.Add(predecessors[path.Last()]);

@@ -24,7 +24,11 @@ namespace VNet.DataStructures.Graph
         public bool IsMultiOrParallelGraph { get; }
         public bool IsDirected { get; }
         public bool IsWeighted { get; }
+        public bool HasNegativeWeights { get; }
         public List<TEdge> this[TNode node] { get; set; }
+        public IEnumerable<TNode> Nodes { get; }
+        public IEnumerable<TEdge> Edges { get;  }
+        public int Count { get; }
         public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; }
 
 
