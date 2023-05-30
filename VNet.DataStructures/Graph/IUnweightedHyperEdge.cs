@@ -4,6 +4,5 @@
                                                                                          where TValue : notnull
     {
         public new IUnweightedHyperEdge<TNode, TValue> Reverse();
-        public new IUnweightedHyperEdge<TNode, TValue> Clone();
     }
 }

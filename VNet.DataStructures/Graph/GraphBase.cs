@@ -12,6 +12,7 @@ using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 using VNet.DataStructures.Graph.Algorithms.TopologicalSorting;
 using VNet.DataStructures.Graph.Algorithms.Transversal;
 using VNet.DataStructures.Graph.Algorithms.Traversal;
+using VNet.Utility.Extensions;
 
 namespace VNet.DataStructures.Graph
 {
@@ -36,8 +37,8 @@ namespace VNet.DataStructures.Graph
             set => AdjacencyList[node] = value;
         }
 
-        public IEnumerable<TNode> Nodes => AdjacencyList.Keys;
-        public IEnumerable<TEdge> Edges => AdjacencyList.Values.SelectMany(e => e.Select(x => x));
+        public IList<TNode> Nodes => AdjacencyList.Keys.ToList();
+        public IList<TEdge> Edges => AdjacencyList.Values.SelectMany(e => e.Select(x => x)).ToList();
         public List<TEdge> this[TNode node] 
         {
             get => AdjacencyList[node];
@@ -46,7 +47,7 @@ namespace VNet.DataStructures.Graph
 
         public virtual Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; } = new();
 
-        public virtual IGraph<TNode, TEdge, TValue> Clone()
+        public virtual IGraph<TNode, TEdge, TValue> Clone(bool deep = false)
         {
             var d1 = this.GetType();
             var typeArgs = new[] { typeof(TNode), typeof(TEdge), typeof(TValue) };
@@ -55,8 +56,12 @@ namespace VNet.DataStructures.Graph
 
             foreach (var key in AdjacencyList.Keys)
             {
+                var newKey = deep ? key.Clone() : key;
+
                 var edgeList = AdjacencyList[key].ToList();
-                result?.AdjacencyList.Add(key, edgeList);
+                var newEdgeList = AdjacencyList[key].Select(edge => deep ? (TEdge)edge.Clone(deep) : edge).ToList<TEdge>();
+
+                result?.AdjacencyList.Add(newKey, newEdgeList);
             }
 
             return result ?? throw new InvalidOperationException();

@@ -1,23 +1,38 @@
 ﻿namespace VNet.DataStructures.Graph
 {
-    public class Path<TNode>
+    public class Path<TNode, TValue> where TNode : notnull, INode<TValue>
+                                     where TValue : notnull, IComparable<TValue>
     {
         private readonly List<TNode> _list;
         private int _index;
+        public Dictionary<TNode, double> Weights { get; init; }
+        public IList<TNode> Nodes => _list;
+        public double TotalWeight => Weights.Values.Sum();
+
+
 
         public Path()
         {
             _list = new List<TNode>();
+            Weights = new Dictionary<TNode, double>();
             _index = 0;
         }
 
         public Path(IEnumerable<TNode> list)
         {
             _list = new List<TNode>(list);
+            Weights = new Dictionary<TNode, double>();
             _index = 0;
         }
 
-        TNode this[int index] => _list[index];
+        public Path(IEnumerable<TNode> list, IDictionary<TNode, double> weights)
+        {
+            _list = new List<TNode>(list);
+            Weights = (Dictionary<TNode, double>)weights;
+            _index = 0;
+        }
+
+        public TNode this[int index] => _list[index];
 
         public TNode? First()
         {

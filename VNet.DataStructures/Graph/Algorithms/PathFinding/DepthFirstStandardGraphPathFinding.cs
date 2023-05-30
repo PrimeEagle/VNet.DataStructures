@@ -9,7 +9,7 @@ public class DepthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraphPa
                                                                         where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                         where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode, TValue> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph || args.Graph.IsWeighted) throw new ArgumentException("This path finding algorithm only works for unweighted standard graphs.");
 
@@ -38,6 +38,6 @@ public class DepthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraphPa
         while (!path.Last().Equals(args.StartNode)) path.Add(predecessors[path.Last()]);
 
         path.Reverse(); // Reverse the path to get it from start to end.
-        return new Path<TNode>(path);
+        return new Path<TNode, TValue>(path);
     }
 }

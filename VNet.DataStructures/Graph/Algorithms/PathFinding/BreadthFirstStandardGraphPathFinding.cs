@@ -10,7 +10,7 @@ public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraph
                                                                           where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                           where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode, TValue> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph || args.Graph.IsWeighted) throw new ArgumentException("This path finding algorithm only works for unweighted standard graphs.");
 
@@ -32,12 +32,12 @@ public class BreadthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraph
         var traverseAlgorithm = new BreadthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue>();
         traverseAlgorithm.Traverse(traverseArgs);
 
-        if (!found) return new Path<TNode>();
+        if (!found) return new Path<TNode, TValue>();
 
         var path = new List<TNode> {args.EndNode};
         while (!path.Last().Equals(args.StartNode)) path.Add(predecessors[path.Last()]);
 
         path.Reverse(); // Reverse the path to get it from start to end.
-        return new Path<TNode>(path);
+        return new Path<TNode, TValue>(path);
     }
 }

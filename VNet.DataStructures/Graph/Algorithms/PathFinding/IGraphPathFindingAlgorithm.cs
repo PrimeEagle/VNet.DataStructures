@@ -5,6 +5,6 @@
                                                                         where TEdge : notnull, IEdge<TNode, TValue>
                                                                         where TValue : notnull, IComparable<TValue>
     {
-        public Path<TNode> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args);
+        public Path<TNode, TValue> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args);
     }
 }

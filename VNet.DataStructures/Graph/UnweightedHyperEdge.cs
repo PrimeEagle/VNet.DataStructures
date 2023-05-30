@@ -1,5 +1,7 @@
 ﻿// ReSharper disable MemberCanBeProtected.Global
 
+using VNet.Utility.Extensions;
+
 namespace VNet.DataStructures.Graph
 {
     public class UnweightedHyperEdge<TNode, TValue> : IUnweightedHyperEdge<TNode, TValue> where TNode : notnull, INode<TValue>
@@ -25,9 +27,32 @@ namespace VNet.DataStructures.Graph
 
 
 
-        public IUnweightedHyperEdge<TNode, TValue> Clone()
+        public IEdge<TNode, TValue> Clone(bool deep = false)
         {
-            return new UnweightedHyperEdge<TNode, TValue>(StartNodes, EndNodes, Directed);
+            HashSet<TNode> startNodes;
+            HashSet<TNode> endNodes;
+
+            if (deep)
+            {
+                startNodes = new HashSet<TNode>();
+                foreach (var s in StartNodes)
+                {
+                    startNodes.Add(s.Clone());
+                }
+
+                endNodes = new HashSet<TNode>();
+                foreach (var e in EndNodes)
+                {
+                    endNodes.Add(e.Clone());
+                }
+            }
+            else
+            {
+                startNodes = StartNodes.ToHashSet();
+                endNodes = EndNodes.ToHashSet();
+            }
+
+            return new UnweightedHyperEdge<TNode, TValue>(startNodes, endNodes, Directed);
         }
 
         public IUnweightedHyperEdge<TNode, TValue> Reverse()

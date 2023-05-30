@@ -15,9 +15,9 @@
             EndNode = endNode;
         }
 
-        public IUnweightedStandardEdge<TNode, TValue> Clone()
+        public IEdge<TNode, TValue> Clone(bool deep = false)
         {
-            return new UnweightedStandardEdge<TNode, TValue>(StartNode, EndNode, Directed);
+            return (IEdge<TNode, TValue>)new UnweightedStandardEdge<TNode, TValue>(StartNode, EndNode, Directed);
         }
 
         public IUnweightedStandardEdge<TNode, TValue> Reverse()

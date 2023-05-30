@@ -18,9 +18,9 @@
         }
 
 
-        public ILineEdge<THyperEdge, TNode, TValue> Clone()
+        public IEdge<TNode, TValue> Clone(bool deep = false)
         {
-            return new LineEdge<THyperEdge, TNode, TValue>(StartEdge, EndEdge);
+            return (IEdge<TNode, TValue>)new LineEdge<THyperEdge, TNode, TValue>(StartEdge, EndEdge);
         }
 
         public ILineEdge<THyperEdge, TNode, TValue> Reverse()

@@ -27,14 +27,14 @@ namespace VNet.DataStructures.Graph
         public bool IsWeighted { get; }
         public bool HasNegativeWeights { get; }
         public List<TEdge> this[TNode node] { get; set; }
-        public IEnumerable<TNode> Nodes { get; }
-        public IEnumerable<TEdge> Edges { get;  }
+        public IList<TNode> Nodes { get; }
+        public IList<TEdge> Edges { get;  }
         public int Count { get; }
         public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; }
 
 
 
-        public IGraph<TNode, TEdge, TValue> Clone();
+        public IGraph<TNode, TEdge, TValue> Clone(bool deep = false);
 
         public void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformTransversal(IGraphTransversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);

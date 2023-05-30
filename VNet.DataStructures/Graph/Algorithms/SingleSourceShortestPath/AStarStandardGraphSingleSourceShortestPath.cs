@@ -8,12 +8,12 @@ public class AStarStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : 
                                                                     where TEdge : notnull, IStandardEdge<TNode, TValue>
                                                                     where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode, TValue> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         throw new NotImplementedException();
     }
 
-    public Path<TNode> FindShortestPath(IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode, TValue> FindShortestPath(IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
         if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");
@@ -47,7 +47,7 @@ public class AStarStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : 
                 }
                 path.Add(args.StartNode);
                 path.Reverse();
-                return new Path<TNode>(path);
+                return new Path<TNode, TValue>(path);
             }
 
             openSet.Remove(currentNode);
@@ -81,6 +81,6 @@ public class AStarStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : 
             }
         }
 
-        return new Path<TNode>();  // No path was found.
+        return new Path<TNode, TValue>();  // No path was found.
     }
 }

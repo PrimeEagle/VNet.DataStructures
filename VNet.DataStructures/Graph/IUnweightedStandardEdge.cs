@@ -4,6 +4,5 @@
                                                                                            where TValue : notnull
     {
         public IUnweightedStandardEdge<TNode, TValue> Reverse();
-        public IUnweightedStandardEdge<TNode, TValue> Clone();
     }
 }

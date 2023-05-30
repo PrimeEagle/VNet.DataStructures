@@ -1,4 +1,6 @@
-﻿namespace VNet.DataStructures.Graph
+﻿using VNet.Utility.Extensions;
+
+namespace VNet.DataStructures.Graph
 {
     public class WeightedHyperEdge<TNode, TValue> : UnweightedHyperEdge<TNode, TValue>, IWeightedHyperEdge<TNode, TValue> where TNode : notnull, INode<TValue>
                                                                                                                           where TValue : notnull
@@ -11,9 +13,32 @@
             Weight = weight;
         }
 
-        public IWeightedHyperEdge<TNode, TValue> Clone()
+        public new IEdge<TNode, TValue> Clone(bool deep = false)
         {
-            return new WeightedHyperEdge<TNode, TValue>(StartNodes, EndNodes, Directed, Weight);
+            HashSet<TNode> startNodes;
+            HashSet<TNode> endNodes;
+
+            if (deep)
+            {
+                startNodes = new HashSet<TNode>();
+                foreach (var s in StartNodes)
+                {
+                    startNodes.Add(s.Clone());
+                }
+
+                endNodes = new HashSet<TNode>();
+                foreach (var e in EndNodes)
+                {
+                    endNodes.Add(e.Clone());
+                }
+            }
+            else
+            {
+                startNodes = StartNodes.ToHashSet();
+                endNodes = EndNodes.ToHashSet();
+            }
+
+            return new WeightedHyperEdge<TNode, TValue>(startNodes, endNodes, Directed, Weight);
         }
 
         public IWeightedHyperEdge<TNode, TValue> Reverse()

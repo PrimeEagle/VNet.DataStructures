@@ -4,11 +4,11 @@
 // handling graphs in which some of the edge weights are negative numbers.
 
 public class BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue>
-                                                                          where TNode : notnull, INode<TValue>
-                                                                          where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                          where TValue : notnull, IComparable<TValue>
+    where TNode : notnull, INode<TValue>
+    where TEdge : notnull, IStandardEdge<TNode, TValue>
+    where TValue : notnull, IComparable<TValue>
 {
-    public Path<TNode> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
+    public Path<TNode, TValue> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
         if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
 
@@ -30,11 +30,9 @@ public class BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TVal
                     var neighbor = edge.EndNode;
                     var potentialDistance = distances[node] + weight;
 
-                    if (potentialDistance < distances[neighbor])
-                    {
-                        distances[neighbor] = potentialDistance;
-                        predecessors[neighbor] = node;
-                    }
+                    if (!(potentialDistance < distances[neighbor])) continue;
+                    distances[neighbor] = potentialDistance;
+                    predecessors[neighbor] = node;
                 }
             }
 
@@ -61,8 +59,8 @@ public class BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TVal
         }
 
         // Check if we found a path.
-        if (path.Count == 0 || !Equals(path[0], args.StartNode)) return null; // No path found.
+        if (path.Count == 0 || !Equals(path[0], args.StartNode)) return new Path<TNode, TValue>(); // No path found.
 
-        return new Path<TNode>(path);
+        return new Path<TNode, TValue>(path, distances);
     }
 }
