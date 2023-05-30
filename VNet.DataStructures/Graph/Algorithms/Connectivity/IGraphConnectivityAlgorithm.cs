@@ -5,5 +5,6 @@
                                                                          where TEdge : notnull, IEdge<TNode, TValue>
                                                                          where TValue : notnull, IComparable<TValue>
     {
+        public bool IsConnected(IGraphConnectivityAlgorithmArgs<TNode, TEdge, TValue> args);
     }
 }

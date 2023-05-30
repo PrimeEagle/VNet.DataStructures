@@ -7,7 +7,7 @@ public class GraphTraversalAlgorithmArgs<TNode, TEdge, TValue> : IGraphTraversal
 {
     public IGraph<TNode, TEdge, TValue> Graph { get; init; }
     public TNode StartNode { get; set; }
-    public TNode EndNode { get; set; }
+    public TNode? EndNode { get; set; }
     public Action<TNode>? OnVisitNode { get; set; }
     public Action<TNode>? OnVisitedNode { get; set; }
     public Func<TNode, bool>? ShouldStop { get; set; }
@@ -19,5 +19,17 @@ public class GraphTraversalAlgorithmArgs<TNode, TEdge, TValue> : IGraphTraversal
         Graph = graph;
         StartNode = startNode;
         EndNode = endNode;
+    }
+
+    public GraphTraversalAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph, TNode startNode)
+    {
+        Graph = graph;
+        StartNode = startNode;
+    }
+
+    public GraphTraversalAlgorithmArgs(IGraph<TNode, TEdge, TValue> graph)
+    {
+        Graph = graph;
+        StartNode = graph.Nodes.First();
     }
 }
