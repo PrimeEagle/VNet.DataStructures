@@ -12,10 +12,7 @@ public class BreadthFirstStandardGraphConnectivity<TNode, TEdge, TValue> : IGrap
 {
     public bool IsConnected(IGraphConnectivityAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (args.Graph.Count == 0)
-        {
-            return true;  // Empty graph is considered connected
-        }
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
 
         var bfsTraversal = new BreadthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue>();
         var visited = new HashSet<TNode>();

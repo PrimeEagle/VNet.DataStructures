@@ -5,12 +5,12 @@ using VNet.DataStructures.Graph.Algorithms.Connectivity;
 using VNet.DataStructures.Graph.Algorithms.Matching;
 using VNet.DataStructures.Graph.Algorithms.MaximumFlow;
 using VNet.DataStructures.Graph.Algorithms.MinimumSpanningTree;
+using VNet.DataStructures.Graph.Algorithms.Optimization;
 using VNet.DataStructures.Graph.Algorithms.Partitioning;
 using VNet.DataStructures.Graph.Algorithms.PathFinding;
 using VNet.DataStructures.Graph.Algorithms.Search;
 using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 using VNet.DataStructures.Graph.Algorithms.TopologicalSorting;
-using VNet.DataStructures.Graph.Algorithms.Transversal;
 using VNet.DataStructures.Graph.Algorithms.Traversal;
 
 namespace VNet.DataStructures.Graph
@@ -31,13 +31,14 @@ namespace VNet.DataStructures.Graph
         public IList<TEdge> Edges { get;  }
         public int Count { get; }
         public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init; }
+        public double GetEdgeWeight(TNode startNode, TNode endNode);
 
-
+        public void Validate(IGraphValidationArgs args);
 
         public IGraph<TNode, TEdge, TValue> Clone(bool deep = false);
 
-        public void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);
-        public void PerformTransversal(IGraphTransversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args);
+        public void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args);
+        public void PerformOptimization<TProblem, TSolution>(IGraphOptimizationAlgorithm<TNode, TEdge, TValue, TSolution> algorithm, IGraphOptimizationAlgorithmArgs<TNode, TEdge, TValue> args) where TSolution : notnull;
         public void PerformTopologicalSort(IGraphTopologicalSortAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTopologicalSortAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformSingleSourceShortestPath(IGraphSingleSourceShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args);
         public void PerformAllPairsShortestPath(IGraphAllPairsShortestPathAlgorithm<TNode, TEdge, TValue> algorithm, IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> args);

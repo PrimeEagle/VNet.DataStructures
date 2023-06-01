@@ -10,13 +10,12 @@ public class AStarStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue> : 
 {
     public Path<TNode, TValue> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("Use the overload FindShortestPath(IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args) instead.");
     }
 
     public Path<TNode, TValue> FindShortestPath(IAStarStandardGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
-        if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true, CannotHaveNegativeWeights = true});
 
         var openSet = new HashSet<TNode>();
         var closedSet = new HashSet<TNode>();

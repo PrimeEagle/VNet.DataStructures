@@ -10,7 +10,7 @@ public class BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TVal
 {
     public Path<TNode, TValue> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
 
         var distances = new Dictionary<TNode, double>();
         var predecessors = new Dictionary<TNode, TNode>();

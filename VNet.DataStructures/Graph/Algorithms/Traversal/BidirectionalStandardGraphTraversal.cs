@@ -7,6 +7,8 @@ public class BidirectionalStandardGraphTraversal<TNode, TEdge, TValue> : IGraphT
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         var visitedFromStart = new Dictionary<TNode, bool>();
         var visitedFromEnd = new Dictionary<TNode, bool>();
 
@@ -20,24 +22,31 @@ public class BidirectionalStandardGraphTraversal<TNode, TEdge, TValue> : IGraphT
         visitedFromEnd[args.EndNode] = true;
         
         var shouldStop = false;
-        if (args.ShouldStop is not null)
-        {
-            shouldStop = args.ShouldStop(queueFromStart.Peek()) || args.ShouldStop(queueFromEnd.Peek());
-        }
-
         while ((queueFromStart.Count > 0 && queueFromEnd.Count > 0) || !shouldStop)
         {
             // Search from the start
+            var currentNode = queueFromStart.Peek();
             if (SearchLevel(queueFromStart, visitedFromStart, visitedFromEnd, args))
                 return;
 
+            if (args.EndNode is not null) shouldStop = currentNode.Equals(args.EndNode);
+            if (args.ShouldStop is not null)
+            {
+                shouldStop &= args.ShouldStop(queueFromStart.Peek());
+            }
+
+            if (shouldStop) continue;
+
+
             // Search from the end
+            currentNode = queueFromEnd.Peek();
             if (SearchLevel(queueFromEnd, visitedFromEnd, visitedFromStart, args))
                 return;
 
+            if (args.EndNode is not null) shouldStop = currentNode.Equals(args.EndNode);
             if (args.ShouldStop is not null)
             {
-                shouldStop = args.ShouldStop(queueFromStart.Peek()) || args.ShouldStop(queueFromEnd.Peek());
+                shouldStop &= args.ShouldStop(queueFromEnd.Peek());
             }
         }
 

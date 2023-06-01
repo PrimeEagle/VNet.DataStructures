@@ -7,6 +7,8 @@ public class BreadthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IG
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         if (args.StartNode == null)
             throw new ArgumentNullException(nameof(args.StartNode));
 

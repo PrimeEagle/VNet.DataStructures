@@ -1,13 +1,14 @@
 ﻿using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 
 namespace VNet.DataStructures.Graph.Algorithms.AllPairsShortestPath;
+
 // Johnson's algorithm is useful for sparse graphs (i.e., graphs where the number of edges is much less than the number of nodes squared). It works by
 // reweighting the graph using a technique called "potential functions", then applying Dijkstra's algorithm from each vertex. Like Floyd-Warshall, it works
 // with negative weights but not negative cycles. Its time complexity is O(n^2 log n + n m), where n is the number of vertices and m is the number of edges.
 public class JohnsonStandardGraphAllPairsShortestPath<TNode, TEdge, TValue> : IGraphAllPairsShortestPathAlgorithm<TNode, TEdge, TValue>
-                                                                              where TNode : notnull, INode<TValue>
-                                                                              where TEdge : notnull, IStandardEdge<TNode, TValue>
-                                                                              where TValue : notnull, IComparable<TValue>
+    where TNode : notnull, INode<TValue>
+    where TEdge : notnull, IStandardEdge<TNode, TValue>
+    where TValue : notnull, IComparable<TValue>
 {
     private readonly Dictionary<TNode, double> _h;
     private readonly Dictionary<TNode, IList<TNode>> _paths;
@@ -20,14 +21,13 @@ public class JohnsonStandardGraphAllPairsShortestPath<TNode, TEdge, TValue> : IG
 
     public AllPairsResult<TNode, TValue> FindShortestPath(IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() {MustBeStandardGraph = true});
+
         var bfArgs = new GraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue>(args.Graph, args.StartNode, args.EndNode);
         var bfAlgorithm = new BellmanFordStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue>();
         var h = bfAlgorithm.FindShortestPath(bfArgs).Weights;
 
-        if (h.Count == 0)
-        {
-            return new AllPairsResult<TNode, TValue>(); // Negative cycle detected
-        }
+        if (h.Count == 0) return new AllPairsResult<TNode, TValue>(); // Negative cycle detected
 
         var reweightedGraph = ReweightEdges(args, h);
         var nodeCount = args.Graph.Nodes.Count;
@@ -72,15 +72,14 @@ public class JohnsonStandardGraphAllPairsShortestPath<TNode, TEdge, TValue> : IG
     {
         var reweightedGraph = args.Graph.Clone(true);
         foreach (var node in reweightedGraph.Nodes)
+        foreach (var edge in reweightedGraph[node])
         {
-            foreach (var edge in reweightedGraph[node])
-            {
-                var weight = 1.0d;
-                if (args.Graph.IsWeighted) weight = ((IWeightedStandardEdge<TNode, TValue>) edge).Weight;
-                var newWeight = weight + h[edge.StartNode] - h[edge.EndNode];
-                ((IWeightedStandardEdge<TNode, TValue>)edge).Weight = newWeight;
-            }
+            var weight = 1.0d;
+            if (args.Graph.IsWeighted) weight = ((IWeightedStandardEdge<TNode, TValue>) edge).Weight;
+            var newWeight = weight + h[edge.StartNode] - h[edge.EndNode];
+            ((IWeightedStandardEdge<TNode, TValue>) edge).Weight = newWeight;
         }
+
         return reweightedGraph;
     }
 
@@ -96,15 +95,17 @@ public class JohnsonStandardGraphAllPairsShortestPath<TNode, TEdge, TValue> : IG
                 var edge = graph[path.Value.Nodes[i]].First(e => e.EndNode.Equals(path.Value.Nodes[i + 1]));
 
                 var weight = 1.0d;
-                if (args.Graph.IsWeighted) weight = ((IWeightedStandardEdge<TNode, TValue>)edge).Weight;
+                if (args.Graph.IsWeighted) weight = ((IWeightedStandardEdge<TNode, TValue>) edge).Weight;
 
                 var newWeight = weight + h[edge.EndNode] - h[edge.StartNode];
-                ((IWeightedStandardEdge<TNode, TValue>)edge).Weight = newWeight;
+                ((IWeightedStandardEdge<TNode, TValue>) edge).Weight = newWeight;
                 reweightedPath.Nodes.Add(path.Value.Nodes[i]);
             }
+
             reweightedPath.Nodes.Add(path.Value.Nodes.Last()); // add the last node
             reweightedPaths[path.Key] = reweightedPath;
         }
+
         return reweightedPaths;
     }
 }

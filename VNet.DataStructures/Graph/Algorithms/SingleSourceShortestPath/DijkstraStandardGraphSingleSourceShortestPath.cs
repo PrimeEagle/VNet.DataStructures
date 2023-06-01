@@ -10,8 +10,7 @@ public class DijkstraStandardGraphSingleSourceShortestPath<TNode, TEdge, TValue>
 {
     public Path<TNode, TValue> FindShortestPath(IGraphSingleSourceShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
-        if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true, CannotHaveNegativeWeights = true });
 
         var predecessors = new Dictionary<TNode, TNode>();
         var distances = new Dictionary<TNode, double>();

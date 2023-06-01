@@ -5,12 +5,12 @@ using VNet.DataStructures.Graph.Algorithms.Connectivity;
 using VNet.DataStructures.Graph.Algorithms.Matching;
 using VNet.DataStructures.Graph.Algorithms.MaximumFlow;
 using VNet.DataStructures.Graph.Algorithms.MinimumSpanningTree;
+using VNet.DataStructures.Graph.Algorithms.Optimization;
 using VNet.DataStructures.Graph.Algorithms.Partitioning;
 using VNet.DataStructures.Graph.Algorithms.PathFinding;
 using VNet.DataStructures.Graph.Algorithms.Search;
 using VNet.DataStructures.Graph.Algorithms.SingleSourceShortestPath;
 using VNet.DataStructures.Graph.Algorithms.TopologicalSorting;
-using VNet.DataStructures.Graph.Algorithms.Transversal;
 using VNet.DataStructures.Graph.Algorithms.Traversal;
 using VNet.Utility.Extensions;
 
@@ -28,6 +28,26 @@ namespace VNet.DataStructures.Graph
         public abstract bool IsDirected { get; }
         public abstract bool IsWeighted { get; }
         public abstract bool HasNegativeWeights { get; }
+
+        public void Validate(IGraphValidationArgs args)
+        {
+            if(AdjacencyList.Count == 0) throw new InvalidOperationException("Graph has no nodes or edges.");
+            if(!AdjacencyList.Values.SelectMany(e => e.Select(v => v)).Any()) throw new InvalidOperationException("Graph has no edges.");
+            if (args.MustBeStandardGraph && !IsStandardGraph) throw new InvalidOperationException("Graph must be a standard graph.");
+            if (args.MustBeHyperGraph && !IsHyperGraph) throw new InvalidOperationException("Graph must be a hyper graph.");
+            if (args.MustBeLineGraph && !IsLineGraph) throw new InvalidOperationException("Graph must be a line graph.");
+            if (args.MustBeMultiOrParallelGraph && !IsMultiOrParallelGraph) throw new InvalidOperationException("Graph must be a multi graph or a parallel graph.");
+            if (args.MustBeDirected && !IsDirected) throw new InvalidOperationException("Graph must be a directed graph.");
+            if (args.MustBeWeighted && !IsWeighted) throw new InvalidOperationException("Graph must be weighted.");
+            if (args.MustHaveNegativeWeights && !HasNegativeWeights) throw new InvalidOperationException("Graph must have negative weights.");
+            if (args.CannotBeStandardGraph && IsStandardGraph) throw new InvalidOperationException("Graph cannot be a standard graph.");
+            if (args.CannotBeHyperGraph && IsHyperGraph) throw new InvalidOperationException("Graph cannot be a hyper graph.");
+            if (args.CannotBeLineGraph && IsLineGraph) throw new InvalidOperationException("Graph cannot be a line graph.");
+            if (args.CannotBeMultiOrParallelGraph && IsMultiOrParallelGraph) throw new InvalidOperationException("Graph cannot be a multi graph or a parallel graph.");
+            if (args.CannotBeDirected && IsDirected) throw new InvalidOperationException("Graph cannot be a directed graph.");
+            if (args.CannotBeWeighted && IsWeighted) throw new InvalidOperationException("Graph cannot be weighted.");
+            if (args.CannotHaveNegativeWeights && HasNegativeWeights) throw new InvalidOperationException("Graph cannot have negative weights.");
+        }
 
         public int Count => AdjacencyList.Count;
 
@@ -66,12 +86,28 @@ namespace VNet.DataStructures.Graph
 
             return result ?? throw new InvalidOperationException();
         }
+          
+        public double GetEdgeWeight(TNode startNode, TNode endNode)
+        {
+            if (!IsWeighted) return 1.0d;
 
-        public virtual void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args)
+            var edge = AdjacencyList[startNode].Where(e => ((IStandardEdge<TNode, TValue>)e).EndNode.Equals(endNode)).FirstOrDefault();
+            if (edge is null && !IsDirected)
+            {
+                edge = AdjacencyList[endNode].Where(e => ((IStandardEdge<TNode, TValue>)e).EndNode.Equals(startNode)).FirstOrDefault();
+            }
+
+            if (edge is null) throw new ArgumentException("Edge not found.");
+
+            return ((IWeightedStandardEdge<TNode, TValue>)edge).Weight;
+        }
+
+        public virtual void PerformTraversal(IGraphTraversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
         {
             throw new NotImplementedException();
         }
-        public virtual void PerformTransversal(IGraphTransversalAlgorithm<TNode, TEdge, TValue> algorithm, IGraphTransversalAlgorithmArgs<TNode, TEdge, TValue> args)
+
+        public void PerformOptimization<TProblem, TSolution>(IGraphOptimizationAlgorithm<TNode, TEdge, TValue, TSolution> algorithm, IGraphOptimizationAlgorithmArgs<TNode, TEdge, TValue> args) where TSolution : notnull
         {
             throw new NotImplementedException();
         }

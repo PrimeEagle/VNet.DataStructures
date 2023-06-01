@@ -6,5 +6,7 @@
     {
         public Dictionary<TNode, List<TEdge>> AdjacencyList { get; init;  }
         public List<TEdge> this[TNode node] { get; set; }
+        public TEdge? GetEdge(TNode startNode, TNode endNode);
+        public double[,] GetWeightMatrix();
     }
 }

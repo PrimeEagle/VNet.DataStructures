@@ -12,6 +12,7 @@ namespace VNet.DataStructures.Graph.Algorithms.Search
     {
         public IEnumerable<TNode> Search(IGraphSearchAlgorithmArgs<TNode, TEdge, TValue> args)
         {
+            args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
             if (!IsValid(args)) throw new ArgumentNullException(nameof(args), "Search arguments are not configured properly.");
 
             return (List<TNode>)FindNodes(args);

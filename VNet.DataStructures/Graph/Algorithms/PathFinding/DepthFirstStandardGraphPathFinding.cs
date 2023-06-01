@@ -11,7 +11,7 @@ public class DepthFirstStandardGraphPathFinding<TNode, TEdge, TValue> : IGraphPa
 {
     public Path<TNode, TValue> FindPath(IGraphPathFindingAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (!args.Graph.IsStandardGraph || args.Graph.IsWeighted) throw new ArgumentException("This path finding algorithm only works for unweighted standard graphs.");
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true, CannotBeWeighted = true });
 
 
         var predecessors = new Dictionary<TNode, TNode>();

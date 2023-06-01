@@ -8,8 +8,7 @@ public class FloydWarshallStandardGraphAllPairsShortestPath<TNode, TEdge, TValue
 {
     public AllPairsResult<TNode, TValue> FindShortestPath(IGraphAllPairsShortestPathAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        if (!args.Graph.IsStandardGraph) throw new ArgumentException("This shortest path algorithm only works for standard graphs.");
-        if (!args.Graph.HasNegativeWeights) throw new ArgumentException("This shortest path finding only works for standard graphs with positive weights.");
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true, CannotHaveNegativeWeights = true });
 
         var nodes = args.Graph.Nodes;
         var size = args.Graph.Count;

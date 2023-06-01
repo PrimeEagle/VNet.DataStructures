@@ -7,6 +7,8 @@ public class UniformCostSearchWeightedStandardGraphTraversal<TNode, TEdge, TValu
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         var visited = new HashSet<TNode>();
         var priorityQueue = new PriorityQueue<TNode, double>();
 
@@ -25,7 +27,7 @@ public class UniformCostSearchWeightedStandardGraphTraversal<TNode, TEdge, TValu
             var shouldStop = false;
             if (args.ShouldStop is not null) shouldStop = args.ShouldStop(currentNode);
 
-            if (currentNode.Equals(args.EndNode) || shouldStop)
+            if ((args.EndNode is not null && currentNode.Equals(args.EndNode)) || shouldStop)
                 return;
 
             foreach (var edge in args.Graph[currentNode].Where(edge => !visited.Contains(edge.EndNode)))

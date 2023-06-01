@@ -9,6 +9,8 @@ internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IG
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         var visited = new ConcurrentBag<TNode>();
         var parentMap = new ConcurrentDictionary<TNode, TNode>(); // For cycle detection.
         DfsHelper(args.StartNode, visited, parentMap, args);
@@ -27,7 +29,7 @@ internal class DepthFirstSearchStandardGraphTraversal<TNode, TEdge, TValue> : IG
         {
             shouldStop = args.ShouldStop(node);
         }
-        if (node.Equals(args.EndNode) || shouldStop)
+        if ((args.EndNode is not null && node.Equals(args.EndNode)) || shouldStop)
             return;
 
         foreach (var neighbor in args.Graph[node].Select(edge => edge.EndNode))

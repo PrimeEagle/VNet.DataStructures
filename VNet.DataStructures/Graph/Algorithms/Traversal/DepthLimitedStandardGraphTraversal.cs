@@ -7,11 +7,13 @@ public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IDepthLi
 {
     public void Traverse(IGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
-        throw new NotImplementedException();
+        throw new NotImplementedException("Use the overload Traverse(IDepthLimitedGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args) instead.");
     }
 
     public void Traverse(IDepthLimitedGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         var visited = new Dictionary<TNode, bool>();
         Dls(visited, args);
     }
@@ -30,7 +32,7 @@ public class DepthLimitedStandardGraphTraversal<TNode, TEdge, TValue> : IDepthLi
             shouldStop = args.ShouldStop(args.StartNode);
         }
 
-        if (args.StartNode.Equals(args.EndNode) || shouldStop)
+        if ((args.EndNode is not null && args.StartNode.Equals(args.EndNode)) || shouldStop)
             return true;
 
         if (args.MaxDepth <= 0) return false;

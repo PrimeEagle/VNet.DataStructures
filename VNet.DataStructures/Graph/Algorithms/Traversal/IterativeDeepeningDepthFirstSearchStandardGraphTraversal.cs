@@ -12,6 +12,8 @@ public class IterativeDeepeningDepthFirstSearchStandardGraphTraversal<TNode, TEd
 
     public void Traverse(IDepthLimitedGraphTraversalAlgorithmArgs<TNode, TEdge, TValue> args)
     {
+        args.Graph.Validate(new GraphValidationArgs() { MustBeStandardGraph = true });
+
         // DLS for each depth from 0 to maxDepth
         for (var depth = 0; depth <= args.MaxDepth; depth++)
         {
@@ -38,7 +40,7 @@ public class IterativeDeepeningDepthFirstSearchStandardGraphTraversal<TNode, TEd
             shouldStop = args.ShouldStop(args.StartNode);
         }
 
-        if (args.StartNode.Equals(args.EndNode) || shouldStop)
+        if ((args.EndNode is not null && args.StartNode.Equals(args.EndNode)) || shouldStop)
             return true;
 
         if (args.MaxDepth <= 0) return false;
