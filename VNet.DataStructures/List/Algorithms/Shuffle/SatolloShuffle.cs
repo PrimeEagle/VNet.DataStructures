@@ -10,7 +10,7 @@ public class SatolloShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<
 
     public SatolloShuffle(int currentPosition)
     {
-        _random = new DotNet();
+        _random = new DotNetGenerator();
         _random.MinValue = 0;
     }
 

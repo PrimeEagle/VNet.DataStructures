@@ -9,7 +9,7 @@ public class FisherYatesShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
 
     public FisherYatesShuffle()
     {
-        _random = new DotNet();
+        _random = new DotNetGenerator();
         _random.MinValue = 0;
     }
 

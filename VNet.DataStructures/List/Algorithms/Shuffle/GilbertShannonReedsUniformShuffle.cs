@@ -9,7 +9,7 @@ public class GilbertShannonReedsUniformShuffle<T> : IShuffleAlgorithm<T> where T
 
     public GilbertShannonReedsUniformShuffle()
     {
-        _random = new DotNet();
+        _random = new DotNetGenerator();
         _random.MinValue = 0;
     }
 

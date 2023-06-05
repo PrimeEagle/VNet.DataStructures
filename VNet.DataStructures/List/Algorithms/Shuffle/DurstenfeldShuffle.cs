@@ -11,7 +11,7 @@ public class DurstenfeldShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
 
     public DurstenfeldShuffle()
     {
-        _random = new DotNet();
+        _random = new DotNetGenerator();
         _random.MinValue = 0;
     }
 

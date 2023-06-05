@@ -17,7 +17,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
     public ShuffleBag(int initCapacity)
     {
         _currentItem = default;
-        RandomGenerator = new DotNet();
+        RandomGenerator = new DotNetGenerator();
         _data = new List<T>(initCapacity);
         ShuffleProvider = new FisherYatesShuffle<T>(RandomGenerator);
     }
@@ -25,7 +25,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
     public ShuffleBag(int initCapacity, IShuffleAlgorithm<T> shuffle)
     {
         _currentItem = default;
-        RandomGenerator = new DotNet();
+        RandomGenerator = new DotNetGenerator();
         _data = new List<T>(initCapacity);
         ShuffleProvider = shuffle;
     }

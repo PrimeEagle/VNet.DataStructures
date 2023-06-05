@@ -9,7 +9,7 @@ public class InsideOutShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumbe
 
     public InsideOutShuffle()
     {
-        _random = new DotNet();
+        _random = new DotNetGenerator();
         _random.MinValue = 0;
     }
 
