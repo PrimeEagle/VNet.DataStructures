@@ -1,4 +1,5 @@
 ﻿using VNet.System.Extensions;
+
 // ReSharper disable ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
 #pragma warning disable CS8601
 #pragma warning disable CS8602

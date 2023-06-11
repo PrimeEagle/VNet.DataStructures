@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace VNet.DataStructures.Tree
+﻿namespace VNet.DataStructures.Tree
 {
     internal class OneDimentionalRangeTree<T> where T : IComparable
     {

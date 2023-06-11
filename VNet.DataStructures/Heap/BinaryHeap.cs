@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace VNet.DataStructures.Heap
+﻿namespace VNet.DataStructures.Heap
 {
     public class BinaryHeap
     {

@@ -1,4 +1,5 @@
 ﻿using VNet.DataStructures.Graph.Algorithms.Traversal;
+
 #pragma warning disable CS8618
 
 namespace VNet.DataStructures.Graph.Algorithms.Search

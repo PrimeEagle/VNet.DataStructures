@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Numerics;
-using VNet.DataStructures.List.Algorithms;
 using VNet.DataStructures.List.Algorithms.Shuffle;
 using VNet.Mathematics.Randomization.Generation;
 using VNet.System.Conversion;

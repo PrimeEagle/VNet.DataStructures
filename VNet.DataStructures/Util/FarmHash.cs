@@ -1,11 +1,5 @@
 ﻿// from: https://github.com/nickbabcock/FarmHash.Sharp/tree/master
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 // ReSharper disable InconsistentNaming
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable SuggestVarOrType_BuiltInTypes
