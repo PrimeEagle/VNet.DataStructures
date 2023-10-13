@@ -89,9 +89,7 @@ internal class ShuffleBag<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : 
         }
         else
         {
-            RandomGenerator.MinValue = 0;
-            RandomGenerator.MaxValue = _index;
-            var pos = (int) RandomGenerator.Next();
+            var pos = (int) RandomGenerator.NextInclusive(0, _index);
 
             _currentItem = _data[pos];
             _data[pos] = _data[_index];

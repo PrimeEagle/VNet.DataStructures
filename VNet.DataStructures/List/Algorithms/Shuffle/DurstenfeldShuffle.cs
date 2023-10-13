@@ -12,13 +12,11 @@ public class DurstenfeldShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
     public DurstenfeldShuffle()
     {
         _random = new DotNetGenerator();
-        _random.MinValue = 0;
     }
 
     public DurstenfeldShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
-        _random.MinValue = 0;
     }
 
     public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
@@ -40,8 +38,6 @@ public class DurstenfeldShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
 
     private int Roll()
     {
-        _random.MaxValue = _currentPosition + 1;
-
-        return _random.Next();
+        return _random.NextInclusive(0, _currentPosition + 1);
     }
 }

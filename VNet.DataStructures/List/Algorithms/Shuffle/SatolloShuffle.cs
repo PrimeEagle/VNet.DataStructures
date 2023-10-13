@@ -8,16 +8,14 @@ public class SatolloShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<
     private readonly IRandomGenerationAlgorithm _random;
 
 
-    public SatolloShuffle(int currentPosition)
+    public SatolloShuffle()
     {
         _random = new DotNetGenerator();
-        _random.MinValue = 0;
     }
 
-    public SatolloShuffle(IRandomGenerationAlgorithm randomGenerator, int currentPosition)
+    public SatolloShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
-        _random.MinValue = 0;
     }
 
     public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
@@ -28,8 +26,7 @@ public class SatolloShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumber<
 
         for (var i = n - 1; i > 0; i--)
         {
-            _random.MaxValue = i;
-            var j = _random.Next();
+            var j = _random.NextInclusive(0, i);
             (tempCollection[i], tempCollection[j]) = (tempCollection[j], tempCollection[i]);
         }
 

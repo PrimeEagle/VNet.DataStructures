@@ -10,13 +10,11 @@ public class FisherYatesShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
     public FisherYatesShuffle()
     {
         _random = new DotNetGenerator();
-        _random.MinValue = 0;
     }
 
     public FisherYatesShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
-        _random.MinValue = 0;
     }
 
     public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
@@ -25,8 +23,7 @@ public class FisherYatesShuffle<T> : IShuffleAlgorithm<T> where T : struct, INum
 
         for (var n = tempCollection.Count - 1; n > 0; --n)
         {
-            _random.MaxValue = n + 1;
-            var k = _random.Next();
+            var k = _random.NextInclusive(0, n + 1);
 
             (tempCollection[n], tempCollection[k]) = (tempCollection[k], tempCollection[n]);
         }

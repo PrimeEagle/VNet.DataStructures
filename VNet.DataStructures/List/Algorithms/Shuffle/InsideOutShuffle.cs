@@ -10,13 +10,11 @@ public class InsideOutShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumbe
     public InsideOutShuffle()
     {
         _random = new DotNetGenerator();
-        _random.MinValue = 0;
     }
 
     public InsideOutShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
-        _random.MinValue = 0;
     }
 
     public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
@@ -26,9 +24,7 @@ public class InsideOutShuffle<T> : IShuffleAlgorithm<T> where T : struct, INumbe
         var n = tempCollection.Count;
         for (var i = 0; i < n; i++)
         {
-            _random.MaxValue = i + 1;
-
-            var j = _random.Next();
+            var j = _random.NextInclusive(0, i + 1);
             if (i != j) (tempCollection[i], tempCollection[j]) = (tempCollection[j], tempCollection[i]);
         }
 

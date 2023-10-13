@@ -10,13 +10,11 @@ public class GilbertShannonReedsUniformShuffle<T> : IShuffleAlgorithm<T> where T
     public GilbertShannonReedsUniformShuffle()
     {
         _random = new DotNetGenerator();
-        _random.MinValue = 0;
     }
 
     public GilbertShannonReedsUniformShuffle(IRandomGenerationAlgorithm randomGenerator)
     {
         _random = randomGenerator;
-        _random.MinValue = 0;
     }
 
     public IList<T> Shuffle(IListShuffleAlgorithmArgs<T> args)
@@ -36,7 +34,6 @@ public class GilbertShannonReedsUniformShuffle<T> : IShuffleAlgorithm<T> where T
     {
         // Modify the probability distribution as per your requirements
         // Here, we use a uniform distribution (50% probability of swapping)
-        _random.MaxValue = 2;
-        return _random.Next() == 0;
+        return _random.NextInclusive(0, 2) == 0;
     }
 }
