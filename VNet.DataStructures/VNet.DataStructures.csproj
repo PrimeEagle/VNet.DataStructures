@@ -7,14 +7,14 @@
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\VNet.CommandLine\VNet.CommandLine\VNet.CommandLine.csproj" />
-    <ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
-    <ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
-  </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
   </Target>
+
+  <ItemGroup>
+    <PackageReference Include="VNet.Mathematics" Version="1.0.0" />
+    <PackageReference Include="VNet.System" Version="1.0.0" />
+    <PackageReference Include="VNet.Utility" Version="1.0.1" />
+  </ItemGroup>
 
 </Project>

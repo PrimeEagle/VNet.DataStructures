@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNet.DataStructures", "VNet.DataStructures\VNet.DataStructures.csproj", "{D650DFC5-1F72-49C2-B624-68C3D1F8F750}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VNet.DataStructures", "VNet.DataStructures\VNet.DataStructures.csproj", "{D650DFC5-1F72-49C2-B624-68C3D1F8F750}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VNet.DataStructures.Tests", "VNet.DataStructures.Tests\VNet.DataStructures.Tests.csproj", "{86F810D8-3813-47A4-86C4-BAC3560FA236}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VNet.DataStructures.Tests", "VNet.DataStructures.Tests\VNet.DataStructures.Tests.csproj", "{86F810D8-3813-47A4-86C4-BAC3560FA236}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".version", ".version", "{B28BCDEB-6B40-4614-B0D6-3409C61A937A}"
+	ProjectSection(SolutionItems) = preProject
+		.version\version.json = .version\version.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
