@@ -1,20 +1,27 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+	</PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<PropertyGroup Condition="'$(ServerBuild)' != ''">
+	</PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
-  </Target>
+	<ItemGroup Condition="'$(ServerBuild)' != ''">
+		<PackageReference Include="VNet.Mathematics" Version="1.0.0" />
+		<PackageReference Include="VNet.System" Version="1.0.0" />
+		<PackageReference Include="VNet.Utility" Version="1.0.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="VNet.Mathematics" Version="1.0.0" />
-    <PackageReference Include="VNet.System" Version="1.0.0" />
-    <PackageReference Include="VNet.Utility" Version="1.0.1" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(ServerBuild)' == ''">
+		<ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
+		<ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
+		<ProjectReference Include="..\..\VNet.Utility\VNet.Utility\VNet.Utility.csproj" />
+	</ItemGroup>
 
+	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(ServerBuild)' == ''">
+		<Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
+	</Target>
 </Project>
