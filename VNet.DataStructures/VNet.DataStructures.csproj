@@ -6,6 +6,27 @@
 		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
 	</PropertyGroup>
 
+	<PropertyGroup>
+		<PackageId>VNet.DataStructures</PackageId>
+		<Authors>PrimeEagle</Authors>
+		<Product>VNet.DataStructures</Product>
+		<Description>A class library that provides many data structures not found in the .NET standard libraries.</Description>
+		<PackageTags>dotnet;dotnet-core;dotnet-library;data-structures</PackageTags>
+		<PackageReleaseNotes>Add NuGet metadata.</PackageReleaseNotes>
+		<PackageIcon>icon.png</PackageIcon>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/PrimeEagle/VNet.DataStructures</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/PrimeEagle/VNet.DataStructures</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+		<TargetFramework>net8.0</TargetFramework>
+		<AssemblyName>VNet.DataStructures</AssemblyName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="icon.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+	
 	<PropertyGroup Condition="'$(ServerBuild)' != ''">
 	</PropertyGroup>
 
