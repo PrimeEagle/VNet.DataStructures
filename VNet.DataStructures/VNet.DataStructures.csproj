@@ -1,48 +1,42 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<TargetFramework>net8.0</TargetFramework>
-		<ImplicitUsings>enable</ImplicitUsings>
-		<Nullable>enable</Nullable>
-		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-	</PropertyGroup>
-
-	<PropertyGroup>
-		<PackageId>VNet.DataStructures</PackageId>
-		<Authors>PrimeEagle</Authors>
-		<Product>VNet.DataStructures</Product>
-		<Description>A class library that provides many data structures not found in the .NET standard libraries.</Description>
-		<PackageTags>dotnet;dotnet-core;dotnet-library;data-structures</PackageTags>
-		<PackageReleaseNotes>Add NuGet metadata.</PackageReleaseNotes>
-		<PackageIcon>icon.png</PackageIcon>
-		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-		<PackageProjectUrl>https://github.com/PrimeEagle/VNet.DataStructures</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/PrimeEagle/VNet.DataStructures</RepositoryUrl>
-		<RepositoryType>git</RepositoryType>
-		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-		<TargetFramework>net8.0</TargetFramework>
-		<AssemblyName>VNet.DataStructures</AssemblyName>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<None Include="icon.png" Pack="true" PackagePath="" />
-	</ItemGroup>
-	
-	<PropertyGroup Condition="'$(ServerBuild)' != ''">
-	</PropertyGroup>
-
-	<ItemGroup Condition="'$(ServerBuild)' != ''">
-		<PackageReference Include="VNet.Mathematics" Version="1.0.0" />
-		<PackageReference Include="VNet.System" Version="1.0.0" />
-		<PackageReference Include="VNet.Utility" Version="1.0.1" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(ServerBuild)' == ''">
-		<ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
-		<ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
-		<ProjectReference Include="..\..\VNet.Utility\VNet.Utility\VNet.Utility.csproj" />
-	</ItemGroup>
-
-	<Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(ServerBuild)' == ''">
-		<Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
-	</Target>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageId>VNet.DataStructures</PackageId>
+    <Authors>PrimeEagle</Authors>
+    <Product>VNet.DataStructures</Product>
+    <Description>A class library that provides many data structures not found in the .NET standard libraries.</Description>
+    <PackageTags>dotnet;dotnet-core;dotnet-library;data-structures</PackageTags>
+    <PackageReleaseNotes>Add NuGet metadata.</PackageReleaseNotes>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/PrimeEagle/VNet.DataStructures</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/PrimeEagle/VNet.DataStructures</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>VNet.DataStructures</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(ServerBuild)' != ''">
+  </PropertyGroup>
+  <ItemGroup Condition="'$(ServerBuild)' != ''">
+    <PackageReference Include="VNet.Mathematics" Version="1.0.0" />
+    <PackageReference Include="VNet.System" Version="1.0.0" />
+    <PackageReference Include="VNet.Utility" Version="1.0.1" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(ServerBuild)' == ''">
+    <ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
+    <ProjectReference Include="..\..\VNet.System\VNet.System\VNet.System.csproj" />
+    <ProjectReference Include="..\..\VNet.Utility\VNet.Utility\VNet.Utility.csproj" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(ServerBuild)' == ''">
+    <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;D:\My Code\VNet bin\&quot;" />
+  </Target>
 </Project>
