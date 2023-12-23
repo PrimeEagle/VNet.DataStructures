@@ -27,9 +27,9 @@
   <PropertyGroup Condition="'$(ServerBuild)' != ''">
   </PropertyGroup>
   <ItemGroup Condition="'$(ServerBuild)' != ''">
-    <PackageReference Include="VNet.Mathematics" Version="1.0.0" />
-    <PackageReference Include="VNet.System" Version="1.0.0" />
-    <PackageReference Include="VNet.Utility" Version="1.0.1" />
+    <PackageReference Include="VNet.Mathematics" Version="VNet.Mathematics" />
+    <PackageReference Include="VNet.System" Version="VNet.System" />
+    <PackageReference Include="VNet.Utility" Version="VNet.Utility" />
   </ItemGroup>
   <ItemGroup Condition="'$(ServerBuild)' == ''">
     <ProjectReference Include="..\..\VNet.Mathematics\VNet.Mathematics\VNet.Mathematics.csproj" />
